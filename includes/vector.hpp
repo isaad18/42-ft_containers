@@ -1,59 +1,54 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <exception>
-#include <iostream>
-#include <string>
+#include "general.hpp"
 
 namespace ft{
 	template <typename T>
 	class vector{
 		private:
-			unsigned int size;
+			size_t _size;
 			T* data;
-			unsigned int pb;
+			size_t _capacity;
 		public:
 			vector(){
-				size = 0;
-				pb = 0;
+				_size = 0;
+				_capacity = 0;
 			}
+
 			~vector(){
 				delete[] data;
 			}
-			// vector(unsigned int size) : size(size){
-			// 	if (size > 0) {
-			// 		pb = 0;
-			// 		data = new T[size];
-			// 	}
-			// 	else {	
-			// 		throw std::exception();
-			// 	}
-			// }
 
-			/******* add an element at the end *******/
-			void	push_back(T const j){
-				size++;
-				T *new_data = new T[size];
-				for (int i = 0; i < size - 1; i++){
-					new_data[i] = data[i];
+			size_t capacity(){ return _capacity; }
+
+			size_t size(){ return _size; }
+
+			void reserve(size_t toReserve){
+				if (toReserve <= _capacity)
+					return ;
+				else{
+					_reallocate(data, _capacity, toReserve);
+					_capacity = toReserve;
 				}
-				new_data[size - 1] = j;
-				if (size > 1)
-					delete[] data;
-				data = new_data;
 			}
-			/******* add an element at the end *******/
+
+			void	push_back(T const j){
+				_size++;
+				reserve(_size);
+				data[_size - 1] = j;
+			}
+
 			void	pop_back(){
-				if (size > 0){
-					size--;
+				if (_size > 0){
+					_size--;
 				}
 				else{
 					throw std::exception();
 				}
 			}
+
 			T &operator[](unsigned int index){
-				if (index >= size)
-					throw std::exception();
 				return data[index];
 			}
 	};
