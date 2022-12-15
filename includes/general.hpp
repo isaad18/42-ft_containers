@@ -5,6 +5,7 @@
 #include<iostream>
 #include<string>
 #include <exception>
+#include <algorithm>
 
 template <typename T>
 void _reallocate(T*& array, size_t oldSize, size_t newSize)

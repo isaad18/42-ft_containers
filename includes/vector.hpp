@@ -16,8 +16,22 @@ namespace ft{
 				_capacity = 0;
 			}
 
+			vector(ft::vector<T> &other): _size(0), _capacity(0){
+				reserve(other._capacity);
+				this->_size = other._size;
+				this->_capacity = other._capacity;
+				std::copy(other.data, other.data + other._size, this->data);
+			}
+
+			vector(T n, const T& val): _size(n), _capacity(0){
+				reserve(_size);
+				std::fill(data, data + n, val);
+				_size = n;
+			}
+
 			~vector(){
-				delete[] data;
+				if (_capacity > 0)
+					delete[] data;
 			}
 
 			size_t capacity(){ return _capacity; }
@@ -35,7 +49,10 @@ namespace ft{
 
 			void	push_back(T const j){
 				_size++;
-				reserve(_size);
+				if (_size <= _capacity)
+					reserve(_size);
+				else
+					reserve(_size + ((2 * _size) / 5));
 				data[_size - 1] = j;
 			}
 
@@ -49,6 +66,10 @@ namespace ft{
 			}
 
 			T &operator[](unsigned int index){
+				return data[index];
+			}
+
+			T &operator[](unsigned int index) const{
 				return data[index];
 			}
 	};
