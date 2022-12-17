@@ -3,8 +3,8 @@
 #include "./includes/vector.hpp"
 
 int main(){
-	// std::vector<int> d(6, 66);
-	std::vector<int> v;
+	ft::vector<int> d(6, 66);
+	ft::vector<int> v(d);
 	// std::vector<int> jj;
 
 
@@ -19,10 +19,10 @@ int main(){
 	std::cout << "size " << v.size() << std::endl;
 	std::cout << "capacity " << v.capacity() << std::endl;
 
-	// v.reserve(10);
+	v.reserve(10);
 
-	// for (int i = 0; i < int(v.size()); i++)
-	// 	std::cout << v[i] << std::endl;
-	// std::cout << "size " << v.size() << std::endl;
-	// std::cout << "capacity " << v.capacity() << std::endl;
+	for (int i = 0; i < int(v.size()); i++)
+		std::cout << v[i] << std::endl;
+	std::cout << "size " << v.size() << std::endl;
+	std::cout << "capacity " << v.capacity() << std::endl;
 }

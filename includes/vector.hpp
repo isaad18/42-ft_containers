@@ -1,7 +1,8 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include "general.hpp"
+#include "ft.hpp"
+#include "iterator.hpp"
 
 namespace ft{
 	template <typename T>
@@ -10,6 +11,9 @@ namespace ft{
 			size_t _size;
 			T* data;
 			size_t _capacity;
+		public:
+			typedef T value_type;
+			// typedef Alloc allocator_type;
 		public:
 			vector(){
 				_size = 0;
@@ -20,12 +24,12 @@ namespace ft{
 				reserve(other._capacity);
 				this->_size = other._size;
 				this->_capacity = other._capacity;
-				std::copy(other.data, other.data + other._size, this->data);
+				ft::copy(other.data, other.data + other._size, this->data);
 			}
 
 			vector(T n, const T& val): _size(n), _capacity(0){
 				reserve(_size);
-				std::fill(data, data + n, val);
+				ft::fill(data, data + n, val);
 				_size = n;
 			}
 
@@ -42,17 +46,16 @@ namespace ft{
 				if (toReserve <= _capacity)
 					return ;
 				else{
-					_reallocate(data, _capacity, toReserve);
+					ft::realloc(data, _capacity, toReserve);
 					_capacity = toReserve;
 				}
 			}
 
 			void	push_back(T const j){
+				if (_size == _capacity)
+					reserve((2 * _size));
 				_size++;
-				if (_size <= _capacity)
-					reserve(_size);
-				else
-					reserve(_size + ((2 * _size) / 5));
+				reserve(_size);
 				data[_size - 1] = j;
 			}
 
