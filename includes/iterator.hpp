@@ -2,17 +2,30 @@
 
 #define ITERATOR_HPP
 
+#include <cstring>
+
 namespace ft{
 	template <typename T>
 	class iterator{
 		private:
 			T *ptr;
+			size_t size;
+			T current;
 		public:
-			iterator(T *ptr) : ptr(ptr){}
-			T &operator*(){ return *ptr; }
-			bool &operator==(T const &other){ return *ptr == other; }
-			bool &operator!=(T const &other){ return *ptr != other; }
-			iterator &operator++(){ ++ptr; return *this; }
+			iterator(){}
+			iterator(T *ptr, size_t size) : ptr(ptr), size(size){ current = *ptr;}
+			T &operator*(){ return current; }
+			bool operator==(iterator other){ return this->current == other.current; }
+			bool operator!=(iterator other){ return this->current != other.current; }
+			iterator &operator++(){
+				current = *(++ptr);
+				return *this;
+			}
+			iterator operator++(int){
+				iterator tmp(ptr, size);
+				current = *(++ptr);
+				return tmp;
+			}
 	};
 }
 

@@ -14,8 +14,9 @@ int main(){
 	v.push_back(4);
 	v.push_back(5);
 
-	for (int i = 0; i < int(v.size()); i++)
-		std::cout << v[i] << std::endl;
+	ft::vector<int>::iterator it = v.end();
+	for (ft::vector<int>::iterator it2 = v.begin(); it2 != it; it2++)
+		std::cout << *it2 << std::endl;
 	std::cout << "size " << v.size() << std::endl;
 	std::cout << "capacity " << v.capacity() << std::endl;
 

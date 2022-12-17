@@ -13,7 +13,7 @@ namespace ft{
 			size_t _capacity;
 		public:
 			typedef T value_type;
-			// typedef Alloc allocator_type;
+			typedef ft::iterator<T> iterator;
 		public:
 			vector(){
 				_size = 0;
@@ -74,6 +74,17 @@ namespace ft{
 
 			T &operator[](unsigned int index) const{
 				return data[index];
+			}
+
+			ft::iterator<T> begin(){
+				return ((ft::iterator<T>(data, _size)));
+			}
+
+			ft::iterator<T> end(){
+				ft::iterator<T> j(data, _size);
+				for (size_t i = 0; i < _size; i++)
+					++j;
+				return (j);
 			}
 	};
 }
