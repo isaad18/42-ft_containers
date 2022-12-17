@@ -14,6 +14,7 @@ namespace ft{
 		public:
 			typedef T value_type;
 			typedef ft::iterator<T> iterator;
+			typedef ft::iterator<T const> const_iterator;
 		public:
 			vector(){
 				_size = 0;
@@ -76,15 +77,24 @@ namespace ft{
 				return data[index];
 			}
 
-			ft::iterator<T> begin(){
-				return ((ft::iterator<T>(&data, _size)));
+			iterator begin(){
+				return (iterator(data));
 			}
 
-			ft::iterator<T> end(){
-				ft::iterator<T> j(&data, _size);
-				for (size_t i = 0; i < _size; i++)
-					++j;
-				return (j);
+			const_iterator begin() const{
+				return (const_iterator(data));
+			}
+
+			iterator end(){
+				return (iterator(&(data[this->_size - 1])));
+			}
+
+			const_iterator end() const{
+				return (const_iterator(&(data[this->_size - 1])));
+			}
+
+			bool empty(){
+				return (this->_size == 0);
 			}
 	};
 }
