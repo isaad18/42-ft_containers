@@ -7,7 +7,6 @@ int main(){
 	ft::vector<int> v(d);
 	// std::vector<int> jj;
 
-
 	v.push_back(1);
 	v.push_back(2);
 	v.push_back(3);
@@ -15,8 +14,10 @@ int main(){
 	v.push_back(5);
 
 	ft::vector<int>::iterator it = v.end();
-	for (ft::vector<int>::iterator it2 = v.begin(); it2 != it; it2++)
+	for (ft::vector<int>::iterator it2 = v.begin(); it2 != it; it2++){
 		std::cout << *it2 << std::endl;
+		*it2 = 1;
+	}
 	std::cout << "size " << v.size() << std::endl;
 	std::cout << "capacity " << v.capacity() << std::endl;
 

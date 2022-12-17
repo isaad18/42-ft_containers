@@ -77,11 +77,11 @@ namespace ft{
 			}
 
 			ft::iterator<T> begin(){
-				return ((ft::iterator<T>(data, _size)));
+				return ((ft::iterator<T>(&data, _size)));
 			}
 
 			ft::iterator<T> end(){
-				ft::iterator<T> j(data, _size);
+				ft::iterator<T> j(&data, _size);
 				for (size_t i = 0; i < _size; i++)
 					++j;
 				return (j);

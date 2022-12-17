@@ -10,19 +10,40 @@ namespace ft{
 		private:
 			T *ptr;
 			size_t size;
-			T current;
+			// T current;
 		public:
-			iterator(){}
-			iterator(T *ptr, size_t size) : ptr(ptr), size(size){ current = *ptr;}
-			T &operator*(){ return current; }
-			bool operator==(iterator other){ return this->current == other.current; }
-			bool operator!=(iterator other){ return this->current != other.current; }
+			iterator(T **ptr, size_t size) : ptr(*ptr), size(size){}
+			T &operator*(){ return *ptr; }
+			bool operator==(iterator other){ return *(this->ptr) == *(other.ptr); }
+			bool operator!=(iterator other){ return *(this->ptr) != *(other.ptr); }
 			iterator &operator++(){
-				current = *(++ptr);
+				++ptr;
 				return *this;
 			}
 			iterator operator++(int){
-				iterator tmp(ptr, size);
+				iterator tmp(&ptr, size);
+				++ptr;
+				return tmp;
+			}
+	};
+
+	template <typename T>
+	class const_iterator{
+		private:
+			T *ptr;
+			size_t size;
+			T current;
+		public:
+			const_iterator(T* ptr, size_t size) : ptr(ptr), size(size){ current = *ptr;}
+			T &operator*()const{ return current; }
+			bool operator==(const const_iterator other) const{ return this->current == other.current; }
+			bool operator!=(const const_iterator other) const{ return this->current != other.current; }
+			const_iterator &operator++() const{
+				current = *(++ptr);
+				return *this;
+			}
+			const_iterator operator++(int) const{
+				const_iterator tmp(ptr, size);
 				current = *(++ptr);
 				return tmp;
 			}
