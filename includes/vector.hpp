@@ -52,6 +52,28 @@ namespace ft{
 				}
 			}
 
+			void resize(size_t resize){
+				while (resize < _size){
+					pop_back();
+				}
+				if (resize > _size){
+					reserve(resize);
+					ft::fill(data + _size, data + resize, 0);
+					_size = resize;
+				}
+			}
+
+			void resize(size_t resize, T val){
+				while (resize < _size){
+					pop_back();
+				}
+				if (resize > _size){
+					reserve(resize);
+					ft::fill(data + _size, data + resize, val);
+					_size = resize;
+				}
+			}
+
 			void	push_back(T const j){
 				if (_size == _capacity)
 					reserve((2 * _size));
@@ -61,12 +83,7 @@ namespace ft{
 			}
 
 			void	pop_back(){
-				if (_size > 0){
-					_size--;
-				}
-				else{
-					throw std::exception();
-				}
+				_size--;
 			}
 
 			T &operator[](unsigned int index){
@@ -86,11 +103,11 @@ namespace ft{
 			}
 
 			iterator end(){
-				return (iterator(&(data[this->_size - 1])));
+				return (iterator(&(data[this->_size])));
 			}
 
 			const_iterator end() const{
-				return (const_iterator(&(data[this->_size - 1])));
+				return (const_iterator(&(data[this->_size])));
 			}
 
 			bool empty(){

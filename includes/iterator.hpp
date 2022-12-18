@@ -26,6 +26,15 @@ namespace ft{
 				++ptr;
 				return tmp;
 			}
+			iterator &operator--(){
+				--ptr;
+				return *this;
+			}
+			iterator operator--(int){
+				iterator tmp(ptr);
+				--ptr;
+				return tmp;
+			}
 	};
 
 	// template <typename T>
