@@ -122,6 +122,18 @@ namespace ft{
 				data[_size - 1] = j;
 			}
 
+			void swap(ft::vector<value_type> &other){
+				value_type *tmp = data;
+				size_t tmpcp = _capacity;
+				size_t tmpsize = _size;
+				data = other.data;
+				_capacity = other._capacity;
+				_size = other._size;
+				other.data = tmp;
+				other._capacity = tmpcp;
+				other._size = tmpsize;
+			}
+
 			void	pop_back(){
 				_size--;
 			}
