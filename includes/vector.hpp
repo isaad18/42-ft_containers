@@ -43,13 +43,13 @@ namespace ft{
 
 			size_t size(){ return _size; }
 
+			size_t max_size(){ return static_cast<std::size_t>(-1) / sizeof(T); }
+
 			void reserve(size_t toReserve){
-				if (toReserve <= _capacity)
+				if (toReserve < _capacity)
 					return ;
-				else{
-					ft::realloc(data, _capacity, toReserve);
-					_capacity = toReserve;
-				}
+				ft::realloc(data, _capacity, toReserve);
+				_capacity = toReserve;
 			}
 
 			void resize(size_t resize){
@@ -57,9 +57,49 @@ namespace ft{
 					pop_back();
 				}
 				if (resize > _size){
-					reserve(resize);
+					size_t newCapacity = resize;
+					if (resize > _capacity * 2) {
+					    newCapacity = resize + (_capacity / 2);
+					}
+					else if (resize > _capacity) {
+					    newCapacity = _capacity * 2;
+					}
+					reserve(newCapacity);
 					ft::fill(data + _size, data + resize, 0);
 					_size = resize;
+				}
+			}
+
+			void clear(){
+				_size = 0;
+			}
+
+			void assign(int count, value_type val){
+				if (count < 0)
+					throw std::length_error("vector");
+				clear();
+				reserve(count);
+				resize(count);
+				ft::fill(data, data + count, val);
+			}
+
+			template <typename T1>
+			void assign(T1 first, T1 last){
+				if (first > last)
+					throw std::length_error("vector");
+				clear();
+				reserve(ft::distance(first, last));
+				resize(ft::distance(first, last));
+				ft::copy(first, last, this->data);
+			}
+
+			void assign(iterator first, iterator last){
+				clear();
+				reserve(ft::distance(first, last));
+				while (first != last){
+					_size++;
+					data[_size - 1] = *first;
+					first++;
 				}
 			}
 
@@ -76,7 +116,7 @@ namespace ft{
 
 			void	push_back(T const j){
 				if (_size == _capacity)
-					reserve((2 * _size));
+					reserve(_capacity * 2);
 				_size++;
 				reserve(_size);
 				data[_size - 1] = j;

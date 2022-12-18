@@ -14,6 +14,7 @@
 // #include <stdexcept>
 // #include <type_traits>
 // #include <version>
+#include <iostream>
 
 namespace ft{
 	template <typename _InputIterator,typename _OutputIterator>
@@ -32,6 +33,16 @@ namespace ft{
 			*__first = __value_;
 			__first++;
 		}
+	}
+
+	template <typename _ForwardIterator>
+	inline size_t distance(_ForwardIterator __first, _ForwardIterator __last){
+		size_t dist = 0;
+		while (__first != __last){
+			__first++;
+			dist++;
+		}
+		return ++dist;
 	}
 
 	template <typename _Type>

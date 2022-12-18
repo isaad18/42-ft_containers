@@ -15,8 +15,10 @@ namespace ft{
 			// iterator(T const *ptr, size_t size) : ptr(*ptr), size(size){}
 			T &operator*(){ return *ptr; }
 			T &operator*() const{ return *ptr; }
-			bool operator==(iterator other) const{ return *(this->ptr) == *(other.ptr); }
-			bool operator!=(iterator other) const{ return *(this->ptr) != *(other.ptr); }
+			bool operator==(iterator other) const{ return &(*(this->ptr)) == &(*(other.ptr)); }
+			bool operator!=(iterator other) const{ return &(*(this->ptr)) != &(*(other.ptr)); }
+			bool operator>(iterator other) const{ return &(*(this->ptr)) > &(*(other.ptr)); }
+			bool operator<(iterator other) const{ return &(*(this->ptr)) < &(*(other.ptr)); }
 			iterator &operator++(){
 				++ptr;
 				return *this;

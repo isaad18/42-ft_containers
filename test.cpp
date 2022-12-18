@@ -13,12 +13,12 @@ int main(){
 	v.push_back(4);
 	v.push_back(5);
 
-	ft::vector<int>::iterator it = v.end();
-	ft::vector<int>::iterator it2 = v.begin();
-	for (; it2 != it; it2++){
-		std::cout << *it2 << std::endl;
-		// *it2 = 1;
-	}
+	// ft::vector<int>::iterator it = v.end();
+	// ft::vector<int>::iterator it2 = v.begin();
+	// for (; it2 != it; it2++){
+	// 	std::cout << *it2 << std::endl;
+	// 	// *it2 = 1;
+	// }
 	std::cout << "size " << v.size() << std::endl;
 	std::cout << "capacity " << v.capacity() << std::endl;
 
@@ -35,9 +35,20 @@ int main(){
 		std::cout << v[i] << std::endl;
 	std::cout << "size " << v.size() << std::endl;
 	std::cout << "capacity " << v.capacity() << std::endl;
-	v.resize(17, 6);
+	// v.resize(17, 6);
+	// v.assign(5, 88);
+	// int arr[] = {1, 8, 3, 4};
+	std::cout << "last" << std::endl;
+	v.assign(v.begin(), v.end());
+	// v.push_back(5);
 	for (int i = 0; i < int(v.size()); i++)
 		std::cout << v[i] << std::endl;
 	std::cout << "size " << v.size() << std::endl;
 	std::cout << "capacity " << v.capacity() << std::endl;
+	// v.resize(4);
+	// v.assign(v.begin(), v.end());
+	// for (int i = 0; i < int(v.size()); i++)
+	// 	std::cout << v[i] << std::endl;
+	// std::cout << "size " << v.size() << std::endl;
+	// std::cout << "capacity " << v.capacity() << std::endl;
 }
