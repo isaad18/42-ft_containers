@@ -60,6 +60,13 @@ namespace ft{
 		}
 		array = newArray;
 	}
+
+	template <typename T>
+	inline void swap(T &v1, T &v2){
+		T tmp = v1;
+		v1 = v2;
+		v2 = tmp;
+	}
 }
 
 #endif
