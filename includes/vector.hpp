@@ -11,6 +11,26 @@ namespace ft{
 			size_t _size;
 			T* data;
 			size_t _capacity;
+
+			void resize(size_t resize){
+				if (resize > max_size())
+					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
+				while (resize < _size){
+					pop_back();
+				}
+				if (resize > _size){
+					size_t newCapacity = resize;
+					if (resize > _capacity * 2) {
+					    newCapacity = resize + (_capacity / 2);
+					}
+					else if (resize > _capacity) {
+					    newCapacity = _capacity * 2;
+					}
+					reserve(newCapacity);
+					ft::fill(data + _size, data + resize, 0);
+					_size = resize;
+				}
+			}
 		public:
 			typedef T value_type;
 			typedef ft::iterator<T> iterator;
@@ -47,6 +67,44 @@ namespace ft{
 
 			size_t max_size(){ return static_cast<std::size_t>(-1) / sizeof(T); }
 
+			iterator insert( iterator pos, const T& value ){
+				size_t index = ft::distance(begin(), pos) - 1;
+				resize(_size + 1);
+				for (size_t i = _size; i > index - 1; --i)
+					data[i] = data[i - 1];
+				data[index] = value;
+				return begin();
+			}
+
+			iterator insert( iterator pos, size_t n, const T& value ){
+				size_t index = ft::distance(begin(), pos) - 1;
+				size_t tmp = index + n;
+				resize(_size + n);
+				for (size_t i = _size; i > tmp - 1; --i)
+					data[i] = data[i - n];
+				while (index < tmp){
+					data[index] = value;
+					index++;
+				}
+				return begin();
+			}
+
+			// template< class InputIt >
+			// iterator insert( iterator pos, InputIt first, InputIt last ){
+			// 	size_t index = ft::distance(begin(), pos) - 1;
+			// 	size_t dis = ft::distance(first, last);
+			// 	size_t tmp = index + dis;
+			// 	resize(_size + dis);
+			// 	for (size_t i = _size; i > tmp - 1; --i)
+			// 		data[i] = data[i - dis];
+			// 	while (index < tmp){
+			// 		data[index] = *first;
+			// 		index++;
+			// 		first++;
+			// 	}
+			// 	return begin();
+			// }
+
 			void reserve(size_t toReserve){
 				if (toReserve > max_size())
 					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
@@ -56,23 +114,13 @@ namespace ft{
 				_capacity = toReserve;
 			}
 
-			void resize(size_t resize){
-				if (resize > max_size())
-					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
-				while (resize < _size){
-					pop_back();
-				}
-				if (resize > _size){
-					size_t newCapacity = resize;
-					if (resize > _capacity * 2) {
-					    newCapacity = resize + (_capacity / 2);
-					}
-					else if (resize > _capacity) {
-					    newCapacity = _capacity * 2;
-					}
-					reserve(newCapacity);
-					ft::fill(data + _size, data + resize, 0);
-					_size = resize;
+			void assign(const_iterator first, const_iterator last){
+				clear();
+				reserve(ft::distance(first, last));
+				while (first != last){
+					_size++;
+					data[_size - 1] = *first;
+					first++;
 				}
 			}
 
@@ -89,16 +137,6 @@ namespace ft{
 				ft::fill(data, data + count, val);
 			}
 
-			// template <typename T1>
-			// void assign(T1 first, T1 last){
-			// 	if (first > last)
-			// 		throw std::length_error("vector");
-			// 	clear();
-			// 	reserve(ft::distance(first, last));
-			// 	resize(ft::distance(first, last));
-			// 	ft::copy(first, last, this->data);
-			// }
-
 			void assign(iterator first, iterator last){
 				clear();
 				reserve(ft::distance(first, last));
@@ -109,18 +147,38 @@ namespace ft{
 				}
 			}
 
-			void resize(size_t resize, T val){
-				if (resize > max_size())
-					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
-				while (resize < _size){
-					pop_back();
-				}
-				if (resize > _size){
-					reserve(resize);
-					ft::fill(data + _size, data + resize, val);
-					_size = resize;
-				}
+			void resize(size_t newSize, T val) {
+			    if (newSize > max_size())
+			        throw std::length_error("vector::resize 'newSize' exceeds maximum supported size");
+			    if (newSize > capacity()) {
+			        size_t newCapacity = std::max(newSize, static_cast<size_t>(capacity() * 1.5));
+			        reserve(newCapacity);
+			        _capacity = newCapacity;
+			    }
+			    if (newSize > _size) {
+			        std::fill(data + _size, data + newSize, val);
+			        _size = newSize;
+			    } else if (newSize < _size) {
+			        while (_size > newSize) {
+			            pop_back();
+			        }
+			    } else {
+			        ;
+			    }
 			}
+
+			// void resize(size_t resize, T val){
+			// 	if (resize > max_size())
+			// 		throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
+			// 	while (resize < _size){
+			// 		pop_back();
+			// 	}
+			// 	if (resize > _size){
+			// 		reserve(resize);
+			// 		ft::fill(data + _size, data + resize, val);
+			// 		_size = resize;
+			// 	}
+			// }
 
 			void	push_back(T const j){
 				if (_size == _capacity)
@@ -155,11 +213,11 @@ namespace ft{
 			}
 
 			iterator begin(){
-				return (iterator(data));
+				return (iterator(&(*data)));
 			}
 
 			const_iterator begin() const{
-				return (const_iterator(data));
+				return (const_iterator(&(*data)));
 			}
 
 			iterator end(){

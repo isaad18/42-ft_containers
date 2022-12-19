@@ -5,12 +5,21 @@
 
 int main(){
 	std::vector<int> v;
+	ft::vector<int> v6;
 
 	v.push_back(1);
 	v.push_back(2);
 	v.push_back(3);
 
-	v.assign(-4, 88);
+	v6.push_back(4);
+	v6.push_back(5);
+	v6.push_back(6);
+
+	std::vector<int>::iterator it = v.begin();
+	// v.insert(it, v6.begin(), v6.end());
+	v.insert(it, 66, 122);
+
+	// v.assign(v.begin(), v.end());
 
 	// try{
 	// 	v.reserve(-2);
@@ -18,13 +27,15 @@ int main(){
 	// catch(std::exception &e){
 	// 	std::cout << e.what() << std::endl;
 	// }
-	std::cout << v.max_size() << std::endl;
+	// v.insert()
+	// std::cout << v.max_size() << std::endl;
 
-	std::cout << v.capacity() << std::endl;
-
-	std::cout << v[2] << std::endl;
-
-	// for (int i = 0; i < 100; i++)
-	// 	std::cout << v[i] << std::endl;
 	// std::cout << v.capacity() << std::endl;
+
+	// std::cout << v[2] << std::endl;
+
+	for (int i = 0; i < int(v.size()); i++)
+		std::cout << v[i] << std::endl;
+	std::cout << "size: " << v.size() << std::endl;
+	std::cout << "capacity: " << v.capacity() << std::endl;
 }

@@ -18,12 +18,9 @@
 
 namespace ft{
 	template <typename _InputIterator,typename _OutputIterator>
-	inline _OutputIterator copy(_InputIterator __first, _InputIterator __last, _OutputIterator __result){
-		while (__first != __last){
+	 _OutputIterator copy(_InputIterator __first, _InputIterator __last, _OutputIterator __result){
+		for (;__first != __last; __first++, (void) __result++)
 			*__result = *__first;
-			__first++;
-			__result++;
-		}
 		return __result;
 	}
 
