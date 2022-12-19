@@ -28,7 +28,9 @@ namespace ft{
 				ft::copy(other.data, other.data + other._size, this->data);
 			}
 
-			vector(T n, const T& val): _size(n), _capacity(0){
+			vector(size_t n, const T& val): _size(n), _capacity(0){
+				if (n >= max_size())
+					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 				reserve(_size);
 				ft::fill(data, data + n, val);
 				_size = n;
@@ -46,6 +48,8 @@ namespace ft{
 			size_t max_size(){ return static_cast<std::size_t>(-1) / sizeof(T); }
 
 			void reserve(size_t toReserve){
+				if (toReserve > max_size())
+					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 				if (toReserve < _capacity)
 					return ;
 				ft::realloc(data, _capacity, toReserve);
@@ -53,6 +57,8 @@ namespace ft{
 			}
 
 			void resize(size_t resize){
+				if (resize > max_size())
+					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 				while (resize < _size){
 					pop_back();
 				}
@@ -104,6 +110,8 @@ namespace ft{
 			}
 
 			void resize(size_t resize, T val){
+				if (resize > max_size())
+					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 				while (resize < _size){
 					pop_back();
 				}
@@ -137,6 +145,12 @@ namespace ft{
 			}
 
 			T &operator[](unsigned int index) const{
+				return data[index];
+			}
+
+			T &at(unsigned int index){
+				if (index < 0 || index >= _size)
+					throw std::out_of_range("vector");
 				return data[index];
 			}
 
