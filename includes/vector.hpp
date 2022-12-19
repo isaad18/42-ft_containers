@@ -80,24 +80,24 @@ namespace ft{
 				_size = 0;
 			}
 
-			void assign(int count, value_type val){
-				if (count < 0)
-					throw std::length_error("vector");
+			void assign(size_t count, value_type val){
+				if (count > max_size())
+					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 				clear();
 				reserve(count);
 				resize(count);
 				ft::fill(data, data + count, val);
 			}
 
-			template <typename T1>
-			void assign(T1 first, T1 last){
-				if (first > last)
-					throw std::length_error("vector");
-				clear();
-				reserve(ft::distance(first, last));
-				resize(ft::distance(first, last));
-				ft::copy(first, last, this->data);
-			}
+			// template <typename T1>
+			// void assign(T1 first, T1 last){
+			// 	if (first > last)
+			// 		throw std::length_error("vector");
+			// 	clear();
+			// 	reserve(ft::distance(first, last));
+			// 	resize(ft::distance(first, last));
+			// 	ft::copy(first, last, this->data);
+			// }
 
 			void assign(iterator first, iterator last){
 				clear();
@@ -140,15 +140,15 @@ namespace ft{
 				_size--;
 			}
 
-			T &operator[](unsigned int index){
+			T &operator[](size_t index){
 				return data[index];
 			}
 
-			T &operator[](unsigned int index) const{
+			T &operator[](size_t index) const{
 				return data[index];
 			}
 
-			T &at(unsigned int index){
+			T &at(size_t index){
 				if (index < 0 || index >= _size)
 					throw std::out_of_range("vector");
 				return data[index];

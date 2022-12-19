@@ -22,7 +22,7 @@ int main(){
 
 	std::cout << v.capacity() << std::endl;
 
-	std::cout << v.at(2) << std::endl;
+	std::cout << v[2] << std::endl;
 
 	// for (int i = 0; i < 100; i++)
 	// 	std::cout << v[i] << std::endl;
