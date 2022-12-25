@@ -35,6 +35,7 @@ namespace ft{
 	template <typename _ForwardIterator>
 	inline size_t distance(_ForwardIterator __first, _ForwardIterator __last){
 		size_t dist = 0;
+		size_t it = 0;
 		while (__first != __last){
 			__first++;
 			dist++;
@@ -48,14 +49,16 @@ namespace ft{
 	}
 
 	template <typename T>
-	inline void realloc(T*& array, size_t oldSize, size_t newSize)
+	inline void realloc(T*& array, size_t oldSize, size_t newSize, size_t capacity)
 	{
 		T* newArray = alloc<T>(newSize);
-		if (oldSize > 0){
+		if (capacity > 0){
 			copy(array, array + oldSize, newArray);
-			delete[] array;
+			ft::fill(newArray + oldSize, newArray + newSize, 0);
+			if (capacity > 0)
+				delete[] array;
 		}
-		array = newArray;
+		array = &(*newArray);
 	}
 
 	template <typename T>

@@ -12,6 +12,8 @@ namespace ft{
 		public:
 			T *ptr;
 			iterator(T *ptr) : ptr(ptr){}
+			template<class U>
+			iterator(const iterator<U> &other): ptr(other.ptr){}
 			// iterator(T const *ptr, size_t size) : ptr(*ptr), size(size){}
 			T &operator*(){ return *ptr; }
 			T &operator*() const{ return *ptr; }

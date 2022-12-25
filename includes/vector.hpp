@@ -21,10 +21,10 @@ namespace ft{
 				if (resize > _size){
 					size_t newCapacity = resize;
 					if (resize > _capacity * 2) {
-					    newCapacity = resize + (_capacity / 2);
+						newCapacity = resize + (_capacity / 2);
 					}
 					else if (resize > _capacity) {
-					    newCapacity = _capacity * 2;
+						newCapacity = _capacity * 2;
 					}
 					reserve(newCapacity);
 					ft::fill(data + _size, data + resize, 0);
@@ -56,7 +56,7 @@ namespace ft{
 				_size = n;
 			}
 
-			~vector(){
+			virtual ~vector(){
 				if (_capacity > 0)
 					delete[] data;
 			}
@@ -90,7 +90,7 @@ namespace ft{
 			}
 
 			// template< class InputIt >
-			// iterator insert( iterator pos, InputIt first, InputIt last ){
+			// iterator insert( const_iterator pos, InputIt first, InputIt last ){
 			// 	size_t index = ft::distance(begin(), pos) - 1;
 			// 	size_t dis = ft::distance(first, last);
 			// 	size_t tmp = index + dis;
@@ -108,9 +108,12 @@ namespace ft{
 			void reserve(size_t toReserve){
 				if (toReserve > max_size())
 					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
-				if (toReserve < _capacity)
+				if (toReserve < _capacity || toReserve == _capacity)
 					return ;
-				ft::realloc(data, _capacity, toReserve);
+				if (_capacity == 0)
+					data = ft::alloc<value_type>(toReserve);
+				else
+					ft::realloc(data, _capacity, toReserve, _capacity);
 				_capacity = toReserve;
 			}
 
@@ -148,37 +151,26 @@ namespace ft{
 			}
 
 			void resize(size_t newSize, T val) {
-			    if (newSize > max_size())
-			        throw std::length_error("vector::resize 'newSize' exceeds maximum supported size");
-			    if (newSize > capacity()) {
-			        size_t newCapacity = std::max(newSize, static_cast<size_t>(capacity() * 1.5));
-			        reserve(newCapacity);
-			        _capacity = newCapacity;
-			    }
-			    if (newSize > _size) {
-			        std::fill(data + _size, data + newSize, val);
-			        _size = newSize;
-			    } else if (newSize < _size) {
-			        while (_size > newSize) {
-			            pop_back();
-			        }
-			    } else {
-			        ;
-			    }
+				if (newSize > max_size())
+					throw std::length_error("vector::resize 'newSize' exceeds maximum supported size");
+				if(newSize > _capacity)
+					{
+						if(newSize > _size*2)
+							this->reserve(newSize);
+						else
+							this->reserve(_size * 2);
+					}
+				if (newSize > _size) {
+					std::fill(data + _size, data + newSize, val);
+					_size = newSize;
+				} else if (newSize < _size) {
+					while (_size > newSize) {
+						pop_back();
+					}
+				} else {
+					;
+				}
 			}
-
-			// void resize(size_t resize, T val){
-			// 	if (resize > max_size())
-			// 		throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
-			// 	while (resize < _size){
-			// 		pop_back();
-			// 	}
-			// 	if (resize > _size){
-			// 		reserve(resize);
-			// 		ft::fill(data + _size, data + resize, val);
-			// 		_size = resize;
-			// 	}
-			// }
 
 			void	push_back(T const j){
 				if (_size == _capacity)
@@ -192,6 +184,21 @@ namespace ft{
 				ft::swap(_size, other._size);
 				ft::swap(_capacity, other._capacity);
 				ft::swap(data, other.data);
+			}
+
+			void erase(iterator pos){
+				size_t index = ft::distance(begin(), pos);
+				for (size_t i = index - 1; i < _size - 1; i++)
+					data[i] = data[i + 1];
+				_size--;
+			}
+
+			void erase(iterator begin, iterator end){
+				size_t index = ft::distance(this->begin(), begin);
+				size_t range = ft::distance(begin, end) - 1;
+				for (size_t i = index - 1; i < _size - range; i++)
+					data[i] = data[i + range];
+				_size -= range;
 			}
 
 			void	pop_back(){
