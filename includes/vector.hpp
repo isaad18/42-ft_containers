@@ -3,9 +3,13 @@
 
 #include "ft.hpp"
 #include "iterator.hpp"
+#include <exception>
+#include <stdexcept>
+#include <memory>
+#include <cstddef>
 
 namespace ft{
-	template <typename T>
+	template <typename T, class Alloc=std::allocator<T> >
 	class vector{
 		private:
 			size_t _size;
@@ -33,6 +37,7 @@ namespace ft{
 			}
 		public:
 			typedef T value_type;
+			typedef Alloc allocator_type
 			typedef ft::iterator<T> iterator;
 			typedef ft::iterator<T const> const_iterator;
 		public:

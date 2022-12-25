@@ -43,12 +43,12 @@ namespace ft{
 		return ++dist;
 	}
 
-	template <typename _Type>
+	template <typename _Type, class Alloc=std::allocator<_Type> >
 	inline _Type *alloc(size_t size){
-		return (new _Type[size]);
+		return (Alloc _Type[size]);
 	}
 
-	template <typename T>
+	template <typename T, class Alloc=std::allocator<T> >
 	inline void realloc(T*& array, size_t oldSize, size_t newSize, size_t capacity)
 	{
 		T* newArray = alloc<T>(newSize);
