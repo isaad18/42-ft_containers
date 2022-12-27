@@ -15,6 +15,8 @@
 // #include <type_traits>
 // #include <version>
 #include <iostream>
+#include <memory>
+#include <string>
 
 namespace ft{
 	template <typename _InputIterator,typename _OutputIterator>
@@ -33,33 +35,33 @@ namespace ft{
 	}
 
 	template <typename _ForwardIterator>
-	inline size_t distance(_ForwardIterator __first, _ForwardIterator __last){
+	inline size_t distance(_ForwardIterator __first, _ForwardIterator __last) {
 		size_t dist = 0;
-		size_t it = 0;
-		while (__first != __last){
+		while (__first != __last) {
 			__first++;
 			dist++;
 		}
-		return ++dist;
+		return dist;
 	}
 
-	template <typename _Type, class Alloc=std::allocator<_Type> >
-	inline _Type *alloc(size_t size){
-		return (Alloc _Type[size]);
-	}
+	// template <typename _Type>
+	// inline _Type *alloc(size_t size){
+	// 	std::allocator<_Type> alloc1;
+	// 	return (alloc1.allocate(size));
+	// }
 
-	template <typename T, class Alloc=std::allocator<T> >
-	inline void realloc(T*& array, size_t oldSize, size_t newSize, size_t capacity)
-	{
-		T* newArray = alloc<T>(newSize);
-		if (capacity > 0){
-			copy(array, array + oldSize, newArray);
-			ft::fill(newArray + oldSize, newArray + newSize, 0);
-			if (capacity > 0)
-				delete[] array;
-		}
-		array = &(*newArray);
+	template <typename T>
+inline void realloc(T*& array, size_t oldSize, size_t newSize, size_t capacity, std::allocator<T> alloc) {
+	T* newArray = alloc.allocate(newSize);
+	if (oldSize > 0) {
+		std::copy(array, array + oldSize, newArray);
+		std::fill(newArray + oldSize, newArray + newSize, 0);
 	}
+	if (capacity > 0) {
+		alloc.deallocate(array, capacity);
+	}
+	array = newArray;
+}
 
 	template <typename T>
 	inline void swap(T &v1, T &v2){

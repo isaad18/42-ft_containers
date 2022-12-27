@@ -8,19 +8,21 @@ namespace ft{
 	template <typename T>
 	class iterator{
 		private:
-			// T current;
-		public:
 			T *ptr;
+		public:
 			iterator(T *ptr) : ptr(ptr){}
 			template<class U>
-			iterator(const iterator<U> &other): ptr(other.ptr){}
-			// iterator(T const *ptr, size_t size) : ptr(*ptr), size(size){}
-			T &operator*(){ return *ptr; }
-			T &operator*() const{ return *ptr; }
-			bool operator==(iterator other) const{ return &(*(this->ptr)) == &(*(other.ptr)); }
-			bool operator!=(iterator other) const{ return &(*(this->ptr)) != &(*(other.ptr)); }
-			bool operator>(iterator other) const{ return &(*(this->ptr)) > &(*(other.ptr)); }
-			bool operator<(iterator other) const{ return &(*(this->ptr)) < &(*(other.ptr)); }
+			iterator(const U &other): ptr(const_cast<T *>(other.getptr())){}
+			// template<class U>
+			// iterator(U &other): ptr((other.getptr())){}
+
+			T &operator*(){ return *getptr(); }
+			T &operator*() const{ return *getptr(); }
+			bool operator==(iterator other) const{ return &(*(this->ptr)) == &(*(other.getptr())); }
+			bool operator!=(iterator other) const{ return &(*(this->ptr)) != &(*(other.getptr())); }
+			bool operator>(iterator other) const{ return &(*(this->ptr)) > &(*(other.getptr())); }
+			bool operator<(iterator other) const{ return &(*(this->ptr)) < &(*(other.getptr())); }
+			T *getptr() const{ return ptr; }
 			iterator &operator++(){
 				++ptr;
 				return *this;

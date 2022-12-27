@@ -9,7 +9,7 @@
 #include <cstddef>
 
 namespace ft{
-	template <typename T, class Alloc=std::allocator<T> >
+	template <typename T, class Alloc = std::allocator<T> >
 	class vector{
 		private:
 			size_t _size;
@@ -37,9 +37,10 @@ namespace ft{
 			}
 		public:
 			typedef T value_type;
-			typedef Alloc allocator_type
+			typedef Alloc allocator_type;
 			typedef ft::iterator<T> iterator;
 			typedef ft::iterator<T const> const_iterator;
+			Alloc _alloc;
 		public:
 			vector(){
 				_size = 0;
@@ -63,7 +64,7 @@ namespace ft{
 
 			virtual ~vector(){
 				if (_capacity > 0)
-					delete[] data;
+					_alloc.deallocate(data, _capacity);
 			}
 
 			size_t capacity(){ return _capacity; }
@@ -81,34 +82,52 @@ namespace ft{
 				return begin();
 			}
 
-			iterator insert( iterator pos, size_t n, const T& value ){
-				size_t index = ft::distance(begin(), pos) - 1;
-				size_t tmp = index + n;
-				resize(_size + n);
-				for (size_t i = _size; i > tmp - 1; --i)
-					data[i] = data[i - n];
-				while (index < tmp){
-					data[index] = value;
-					index++;
-				}
-				return begin();
-			}
-
-			// template< class InputIt >
-			// iterator insert( const_iterator pos, InputIt first, InputIt last ){
+			// iterator insert( iterator pos, size_t n, const T& value ){
 			// 	size_t index = ft::distance(begin(), pos) - 1;
-			// 	size_t dis = ft::distance(first, last);
-			// 	size_t tmp = index + dis;
-			// 	resize(_size + dis);
+			// 	size_t tmp = index + n;
+			// 	resize(_size + n);
 			// 	for (size_t i = _size; i > tmp - 1; --i)
-			// 		data[i] = data[i - dis];
+			// 		data[i] = data[i - n];
 			// 	while (index < tmp){
-			// 		data[index] = *first;
+			// 		data[index] = value;
 			// 		index++;
-			// 		first++;
 			// 	}
 			// 	return begin();
 			// }
+
+			void insert( iterator pos, iterator first, iterator last ){
+				size_t index = ft::distance(begin(), pos);
+				size_t dis = ft::distance(first, last);
+				size_t tmp = index + (dis);
+				resize(_size + (dis));
+				for (size_t i = _size - 1; i >= tmp; --i) {
+					data[i] = data[i - (dis)];
+				}
+				while (index < tmp) {
+					data[index] = *first;
+					++index;
+					++first;
+				}
+				_size += (dis);
+				return ;
+			}
+
+			void insert( iterator pos, const_iterator first, const_iterator last ){
+				size_t index = ft::distance(begin(), pos);
+				size_t dis = ft::distance(first, last);
+				size_t tmp = index + (dis);
+				resize(_size + (dis));
+				for (size_t i = _size - 1; i >= tmp; --i) {
+					data[i] = data[i - (dis)];
+				}
+				while (index < tmp) {
+					data[index] = *first;
+					++index;
+					++first;
+				}
+				_size += (dis);
+				return ;
+			}
 
 			void reserve(size_t toReserve){
 				if (toReserve > max_size())
@@ -116,9 +135,9 @@ namespace ft{
 				if (toReserve < _capacity || toReserve == _capacity)
 					return ;
 				if (_capacity == 0)
-					data = ft::alloc<value_type>(toReserve);
+					ft::realloc(data, _capacity, toReserve, _capacity, _alloc);
 				else
-					ft::realloc(data, _capacity, toReserve, _capacity);
+					ft::realloc(data, _capacity, toReserve, _capacity, _alloc);
 				_capacity = toReserve;
 			}
 
@@ -192,13 +211,34 @@ namespace ft{
 			}
 
 			void erase(iterator pos){
+				bool ok = false;
+				iterator tmpS = this->begin();
+				iterator tmpE = this->end();
+				while (tmpS != tmpE){
+					if (pos == tmpS)
+						ok = true;
+					tmpS++;
+				}
+				if (!ok)
+					return;
 				size_t index = ft::distance(begin(), pos);
-				for (size_t i = index - 1; i < _size - 1; i++)
+				for (size_t i = index - 1; i < _size - 1; i++){
 					data[i] = data[i + 1];
+				}
 				_size--;
 			}
 
 			void erase(iterator begin, iterator end){
+				bool ok = false;
+				iterator tmpS = this->begin();
+				iterator tmpE = this->end();
+				while (tmpS != tmpE){
+					if (begin == tmpS)
+						ok = true;
+					tmpS++;
+				}
+				if (!ok)
+					return;
 				size_t index = ft::distance(this->begin(), begin);
 				size_t range = ft::distance(begin, end) - 1;
 				for (size_t i = index - 1; i < _size - range; i++)
