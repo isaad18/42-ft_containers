@@ -96,36 +96,54 @@ namespace ft{
 			// }
 
 			void insert( iterator pos, iterator first, iterator last ){
+				int i = 0;
+				iterator tmp1 = first;
+				value_type* test = _alloc.allocate(ft::distance(first, last));
+				while (tmp1 != last) {
+					test[i] = *tmp1;
+					i++;
+					tmp1++;
+				}
 				size_t index = ft::distance(begin(), pos);
 				size_t dis = ft::distance(first, last);
 				size_t tmp = index + (dis);
 				resize(_size + (dis));
-				for (size_t i = _size - 1; i >= tmp; --i) {
+				for (size_t i = _size - 1; i >= tmp; i--) {
 					data[i] = data[i - (dis)];
 				}
+				i = 0;
 				while (index < tmp) {
-					data[index] = *first;
-					++index;
-					++first;
+					data[index] = test[i];
+					index++;
+					i++;
 				}
-				_size += (dis);
+				_alloc.deallocate(test, ft::distance(first, last));
 				return ;
 			}
 
 			void insert( iterator pos, const_iterator first, const_iterator last ){
+				int i = 0;
+				iterator tmp1 = first;
+				value_type* test = _alloc.allocate(ft::distance(first, last));
+				while (tmp1 != last) {
+					test[i] = *tmp1;
+					i++;
+					tmp1++;
+				}
 				size_t index = ft::distance(begin(), pos);
 				size_t dis = ft::distance(first, last);
 				size_t tmp = index + (dis);
 				resize(_size + (dis));
-				for (size_t i = _size - 1; i >= tmp; --i) {
+				for (size_t i = _size - 1; i >= tmp; i--) {
 					data[i] = data[i - (dis)];
 				}
+				i = 0;
 				while (index < tmp) {
-					data[index] = *first;
-					++index;
-					++first;
+					data[index] = test[i];
+					index++;
+					i++;
 				}
-				_size += (dis);
+				_alloc.deallocate(test, ft::distance(first, last));
 				return ;
 			}
 
