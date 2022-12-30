@@ -42,9 +42,11 @@ namespace ft{
 			typedef ft::iterator<T const> const_iterator;
 			Alloc _alloc;
 		public:
-			vector(){
+
+			vector (const allocator_type& alloc = allocator_type()){
 				_size = 0;
 				_capacity = 0;
+				_alloc = alloc;
 			}
 
 			vector(ft::vector<T> &other): _size(0), _capacity(0){
@@ -54,12 +56,13 @@ namespace ft{
 				ft::copy(other.data, other.data + other._size, this->data);
 			}
 
-			vector(size_t n, const T& val): _size(n), _capacity(0){
+			vector (size_t n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(n), _capacity(0){
 				if (n >= max_size())
 					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 				reserve(_size);
 				ft::fill(data, data + n, val);
 				_size = n;
+				_alloc = alloc;
 			}
 
 			virtual ~vector(){
