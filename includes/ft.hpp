@@ -17,6 +17,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include "enable_if.hpp"
 
 namespace ft{
 	template <typename _InputIterator,typename _OutputIterator>
@@ -44,6 +45,14 @@ namespace ft{
 		return dist;
 	}
 
+	template <typename _InputIterator>
+	bool equal( _InputIterator s1, _InputIterator s2, _InputIterator n){
+		while (s1 != s2)
+			if (*s1++ != *n++)
+				return false;
+		return true;
+	}
+
 	// template <typename _Type>
 	// inline _Type *alloc(size_t size){
 	// 	std::allocator<_Type> alloc1;
@@ -64,7 +73,7 @@ inline void realloc(T*& array, size_t oldSize, size_t newSize, size_t capacity, 
 }
 
 	template <typename T>
-	inline void swap(T &v1, T &v2){
+	inline void swaps(T &v1, T &v2){
 		T tmp = v1;
 		v1 = v2;
 		v2 = tmp;

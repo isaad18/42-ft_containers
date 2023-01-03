@@ -10,11 +10,12 @@ namespace ft{
 		private:
 			T *ptr;
 		public:
+			iterator(): ptr(NULL){}
 			iterator(T *ptr) : ptr(ptr){}
 			template<class U>
 			iterator(const U &other): ptr(const_cast<T *>(other.getptr())){}
-			// template<class U>
-			// iterator(U &other): ptr((other.getptr())){}
+			template<class U>
+			iterator(U &other): ptr((other.getptr())){}
 
 			T &operator*(){ return *getptr(); }
 			T &operator*() const{ return *getptr(); }
@@ -39,6 +40,16 @@ namespace ft{
 			iterator operator--(int){
 				iterator tmp(ptr);
 				--ptr;
+				return tmp;
+			}
+			iterator operator+(int n){
+				iterator tmp(ptr);
+				tmp.ptr += n;
+				return tmp;
+			}
+			iterator operator-(int n){
+				iterator tmp(ptr);
+				tmp.ptr -= n;
 				return tmp;
 			}
 	};
