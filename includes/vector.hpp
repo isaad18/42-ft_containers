@@ -19,8 +19,15 @@ namespace ft{
 		public:
 			typedef T value_type;
 			typedef Alloc allocator_type;
+			typedef value_type& reference;
+			typedef const value_type& const_reference;
+			typedef value_type* pointer;
+			typedef const value_type* const_pointer;
 			typedef ft::iterator<T> iterator;
 			typedef ft::iterator<T const> const_iterator;
+			typedef ft::reverse_iterator<T> reverse_iterator;
+			typedef ft::reverse_iterator<T const> const_reverse_iterator;
+			typedef ptrdiff_t difference_type;
 			typedef size_t size_type;
 			Alloc _alloc;
 		public:
@@ -103,16 +110,16 @@ namespace ft{
 			size_t max_size(){ return static_cast<std::size_t>(-1) / sizeof(T); }
 
 			iterator insert( iterator pos, const T& value ){
-				size_t index = ft::distance(begin(), pos) - 1;
+				size_t index = ft::distance(begin(), pos);
 				resize(_size + 1);
-				for (size_t i = _size; i > index - 1; --i)
+				for (size_t i = _size; i > index; i--)
 					data[i] = data[i - 1];
 				data[index] = value;
 				return begin();
 			}
 
-			iterator insert( iterator pos, size_t n, const T& value ){
-				size_t index = ft::distance(begin(), pos) - 1;
+			void insert( iterator pos, size_t n, const T& value ){
+				size_t index = ft::distance(begin(), pos);
 				size_t tmp = index + n;
 				resize(_size + n);
 				for (size_t i = _size; i > tmp - 1; --i)
@@ -121,7 +128,6 @@ namespace ft{
 					data[index] = value;
 					index++;
 				}
-				return begin();
 			}
 
 			template <typename it>
@@ -151,32 +157,6 @@ namespace ft{
 				return ;
 			}
 
-			// void insert( iterator pos, const_iterator first, const_iterator last ){
-			// 	int i = 0;
-			// 	iterator tmp1 = first;
-			// 	value_type* test = _alloc.allocate(ft::distance(first, last));
-			// 	while (tmp1 != last) {
-			// 		test[i] = *tmp1;
-			// 		i++;
-			// 		tmp1++;
-			// 	}
-			// 	size_t index = ft::distance(begin(), pos);
-			// 	size_t dis = ft::distance(first, last);
-			// 	size_t tmp = index + (dis);
-			// 	resize(_size + (dis));
-			// 	for (size_t i = _size - 1; i >= tmp; i--) {
-			// 		data[i] = data[i - (dis)];
-			// 	}
-			// 	i = 0;
-			// 	while (index < tmp) {
-			// 		data[index] = test[i];
-			// 		index++;
-			// 		i++;
-			// 	}
-			// 	_alloc.deallocate(test, ft::distance(first, last));
-			// 	return ;
-			// }
-
 			void reserve(size_t toReserve){
 				if (toReserve > max_size())
 					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
@@ -199,16 +179,6 @@ namespace ft{
 					first++;
 				}
 			}
-
-			// void assign(const_iterator first, const_iterator last){
-			// 	clear();
-			// 	reserve(ft::distance(first, last));
-			// 	while (first != last){
-			// 		_size++;
-			// 		data[_size - 1] = *first;
-			// 		first++;
-			// 	}
-			// }
 
 			void assign(size_t count, value_type val){
 				if (count > max_size())
@@ -259,40 +229,21 @@ namespace ft{
 				ft::swaps(data, other.data);
 			}
 
-			void erase(iterator pos){
-				bool ok = false;
-				iterator tmpS = this->begin();
-				iterator tmpE = this->end();
-				while (tmpS != tmpE){
-					if (pos == tmpS)
-						ok = true;
-					tmpS++;
-				}
-				if (!ok)
-					return;
-				size_t index = ft::distance(begin(), pos);
-				for (size_t i = index - 1; i < _size - 1; i++){
-					data[i] = data[i + 1];
-				}
-				_size--;
+			iterator erase(iterator pos){
+				iterator tmp(pos);
+				++tmp;
+				return (this->erase(pos, tmp));
 			}
 
-			void erase(iterator begin, iterator end){
-				bool ok = false;
-				iterator tmpS = this->begin();
-				iterator tmpE = this->end();
-				while (tmpS != tmpE){
-					if (begin == tmpS)
-						ok = true;
-					tmpS++;
-				}
-				if (!ok)
-					return;
-				size_t index = ft::distance(this->begin(), begin);
-				size_t range = ft::distance(begin, end) - 1;
-				for (size_t i = index - 1; i < _size - range; i++)
-					data[i] = data[i + range];
-				_size -= range;
+			iterator erase(iterator begin, iterator end) {
+				if (begin == end)
+					return begin;
+
+				// size_t index = ft::distance(this->begin(), begin);
+				size_t num_elements = ft::distance(begin, end);
+				ft::copy(begin + num_elements, this->end(), begin);
+				_size -= num_elements;
+				return begin;
 			}
 
 			void	pop_back(){
@@ -329,6 +280,22 @@ namespace ft{
 				return (const_iterator(&(data[this->_size])));
 			}
 
+			reverse_iterator rbegin(void) {
+				return (reverse_iterator(&(data[this->_size - 1])));
+			}
+
+			const_reverse_iterator rbegin(void) const {
+				return (const_reverse_iterator(&(data[this->_size - 1])));
+			}
+
+			reverse_iterator rend(void) {
+				return (reverse_iterator((data - 1)));
+			}
+
+			const_reverse_iterator rend(void) const {
+				return (const_reverse_iterator((data - 1)));
+			}
+
 			bool empty(){
 				return (this->_size == 0);
 			}
@@ -351,12 +318,47 @@ namespace ft{
 
 	};
 
-	template <class T>
-	bool operator==(const vector<T> &other, const vector<T> &other2){
-		if (other.size() != other2.size())
-			return false;
-		return ft::equal(other.begin(), other.end(), other2.begin());
-	}
+	// template <class T>
+	// bool operator==(const vector<T> &other, const vector<T> &other2){
+	// 	if (other.size() != other2.size())
+	// 		return false;
+	// 	return ft::equal(other.begin(), other.end(), other2.begin());
+	// }
+
+	template < class T, class Alloc >
+		bool	operator== ( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ){
+			if (lhs.size() != rhs.size())
+				return (false);
+			for (size_t i = 0; i < lhs.size(); i++)
+				if (lhs[i] != rhs[i])
+					return (false);
+			return (true);
+		}
+	template < class T, class Alloc >
+		bool	operator!= ( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ){
+			return !(lhs == rhs);
+		}
+	template < class T, class Alloc >
+		bool	operator< ( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ){
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		}
+	template < class T, class Alloc >
+		bool	operator<= ( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ){
+			return (!(rhs < lhs));
+		}
+	template < class T, class Alloc >
+		bool	operator> ( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ){
+			return (rhs < lhs);
+		}
+	template < class T, class Alloc >
+		bool	operator>= ( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ){
+			return (!(lhs < rhs));
+		}
+	template<typename T>
+		void swap(vector<T> &x, vector<T> &y) {
+			x.swap(y);
+		}
+
 
 }
 #endif
