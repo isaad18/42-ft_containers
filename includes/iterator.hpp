@@ -62,7 +62,7 @@ namespace ft{
 			}
 	};
 
-	template <typename T>
+	template <class T>
 	class reverse_iterator{
 		private:
 			T *ptr;
@@ -70,9 +70,9 @@ namespace ft{
 			typedef ptrdiff_t difference_type;
 		public:
 			reverse_iterator(): ptr(NULL){}
-			reverse_iterator(T *ptr) : ptr(ptr){}
+			reverse_iterator(T ptr) : ptr(ptr.getptr()){}
 			template<class U>
-			reverse_iterator(const iterator<U> &other): ptr(const_cast<T *>(other.getptr())){}
+			reverse_iterator(const iterator<U> &other): ptr(const_cast<U *>(other.getptr())){}
 			T &operator=(T &other){ ptr = other.getptr(); return *this; }
 			T &operator*(){ return *getptr(); }
 			T &operator*() const{ return *getptr(); }

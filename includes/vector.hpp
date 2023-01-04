@@ -281,19 +281,19 @@ namespace ft{
 			}
 
 			reverse_iterator rbegin(void) {
-				return (reverse_iterator(&(data[this->_size - 1])));
+				return (reverse_iterator(--this->end()));
 			}
 
 			const_reverse_iterator rbegin(void) const {
-				return (const_reverse_iterator(&(data[this->_size - 1])));
+				return (const_reverse_iterator(--this->end()));
 			}
 
 			reverse_iterator rend(void) {
-				return (reverse_iterator((data - 1)));
+				return (reverse_iterator(--this->begin()));
 			}
 
 			const_reverse_iterator rend(void) const {
-				return (const_reverse_iterator((data - 1)));
+				return (const_reverse_iterator(--this->begin()));
 			}
 
 			bool empty(){
