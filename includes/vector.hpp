@@ -294,7 +294,7 @@ namespace ft{
 				return (const_reverse_iterator(--this->begin()));
 			}
 
-			bool empty(){
+			bool empty() const{
 				return (this->_size == 0);
 			}
 
