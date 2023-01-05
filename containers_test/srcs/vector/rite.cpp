@@ -16,6 +16,7 @@ int		main(void)
 	std::cout << (it_ == it.base()) << std::endl;
 	std::cout << (it_ == (it + 3).base()) << std::endl;
 
+	std::cout << *(it + 3) << std::endl;
 	std::cout << *(it.base() + 1) << std::endl;
 	std::cout << *(it - 3) << std::endl;
 	std::cout << *(it - 3).base() << std::endl;

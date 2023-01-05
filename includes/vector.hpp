@@ -24,9 +24,9 @@ namespace ft{
 			typedef value_type* pointer;
 			typedef const value_type* const_pointer;
 			typedef ft::iterator<T> iterator;
-			typedef ft::iterator<T const> const_iterator;
+			typedef ft::iterator<const T> const_iterator;
 			typedef ft::reverse_iterator<T> reverse_iterator;
-			typedef ft::reverse_iterator<T const> const_reverse_iterator;
+			typedef ft::reverse_iterator<const T> const_reverse_iterator;
 			typedef ptrdiff_t difference_type;
 			typedef size_t size_type;
 			Alloc _alloc;
@@ -287,19 +287,19 @@ namespace ft{
 			}
 
 			reverse_iterator rbegin(void) {
-				return (reverse_iterator(--iterator(&(data[this->_size]))));
+				return (reverse_iterator(iterator(&(data[this->_size]))));
 			}
 
 			const_reverse_iterator rbegin(void) const {
-				return (const_reverse_iterator(--const_iterator(&(data[this->_size]))));
+				return (const_reverse_iterator(const_iterator(&(data[this->_size]))));
 			}
 
 			reverse_iterator rend(void) {
-				return (reverse_iterator(--iterator(&(*data))));
+				return (reverse_iterator(iterator(&(*data))));
 			}
 
 			const_reverse_iterator rend(void) const {
-				return (const_reverse_iterator(--const_iterator(&(*data))));
+				return (const_reverse_iterator(const_iterator(&(*data))));
 			}
 
 			bool empty() const{
