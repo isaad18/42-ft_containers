@@ -41,8 +41,8 @@ namespace ft{
 			vector(ft::vector<T> &other): _size(0), _capacity(0){
 				reserve(other._capacity);
 				this->_size = other._size;
-				this->_capacity = other._capacity;
-				ft::copy(other.data, other.data + other._size, this->data);
+				// this->_capacity = other._capacity;
+				ft::copy(other.begin(), other.end(), this->data, _alloc);
 			}
 
 			vector (size_t n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(n), _capacity(0){
@@ -75,6 +75,14 @@ namespace ft{
 			// 	_alloc = alloc;
 			// 	assign(first, last);
 			// }
+
+			vector &operator=(const vector &other){
+				reserve(other._capacity);
+				this->_size = other._size;
+				// this->_capacity = other._capacity;
+				ft::copy(other.begin(), other.end(), this->data);
+				return *this;
+			}
 
 			void resize(size_t resize){
 				if (resize > max_size())
@@ -113,7 +121,7 @@ namespace ft{
 				for (size_t i = _size; i > index; i--)
 					data[i] = data[i - 1];
 				data[index] = value;
-				return begin();
+				return begin() + index;
 			}
 
 			void insert( iterator pos, size_t n, const T& value ){
@@ -160,8 +168,8 @@ namespace ft{
 					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 				if (toReserve < _capacity || toReserve == _capacity)
 					return ;
-				if (_capacity == 0)
-					ft::realloc(data, _capacity, toReserve, _capacity, _alloc);
+				if (_capacity == 0 && toReserve > 0)
+					data = _alloc.allocate(toReserve);
 				else
 					ft::realloc(data, _capacity, toReserve, _capacity, _alloc);
 				_capacity = toReserve;

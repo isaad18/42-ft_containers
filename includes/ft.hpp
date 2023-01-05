@@ -34,7 +34,7 @@ namespace ft{
 	}
 
 	template <typename _InputIterator,typename _OutputIterator>
-	 _OutputIterator copy(_InputIterator __first, _InputIterator __last, _OutputIterator __result){
+	 _OutputIterator copy(_InputIterator __first, _InputIterator __last, _OutputIterator __result, const Alloc& alloc = allocator_type()){
 		for (;__first != __last; __first++, (void) __result++)
 			*__result = *__first;
 		return __result;
