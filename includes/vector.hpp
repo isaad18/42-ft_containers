@@ -42,7 +42,7 @@ namespace ft{
 				reserve(other._capacity);
 				this->_size = other._size;
 				// this->_capacity = other._capacity;
-				ft::copy(other.begin(), other.end(), this->data, _alloc);
+				ft::copy(other.begin(), other.end(), this->data);
 			}
 
 			vector (size_t n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(n), _capacity(0){

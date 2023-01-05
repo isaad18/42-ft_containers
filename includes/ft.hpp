@@ -15,7 +15,10 @@
 // #include <type_traits>
 // #include <version>
 #include <iostream>
+#include <exception>
+#include <stdexcept>
 #include <memory>
+#include <cstddef>
 #include <string>
 #include "enable_if.hpp"
 
@@ -34,7 +37,7 @@ namespace ft{
 	}
 
 	template <typename _InputIterator,typename _OutputIterator>
-	 _OutputIterator copy(_InputIterator __first, _InputIterator __last, _OutputIterator __result, const Alloc& alloc = allocator_type()){
+	 _OutputIterator copy(_InputIterator __first, _InputIterator __last, _OutputIterator __result){
 		for (;__first != __last; __first++, (void) __result++)
 			*__result = *__first;
 		return __result;
