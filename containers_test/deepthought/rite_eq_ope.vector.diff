@@ -1,110 +1,30 @@
-1,109d0
-< size: 5
-< capacity: OK
-< max_size: 2305843009213693951
-< 
-< Content is:
-< - 1
-< - 2
-< - 3
-< - 4
-< - 5
-< ###############################################
+21a22
+> false
+24a26
+> true
+26a29
+> true
+29a33
+> false
+31d34
 < true
-< 		ft_eq_ope:
+33a37
+> true
+35d38
 < false
+37d39
 < true
+46a49
+> false
+49a53
+> true
+51d54
 < false
+53a57
+> false
+55d58
 < true
-< false
-< true
-< false
-< true
-< true
-< true
-< false
-< false
-< false
-< false
-< true
-< true
-< true
-< true
-< false
-< false
+58,60d60
 < false
 < false
 < true
-< true
-< false
-< true
-< false
-< true
-< false
-< true
-< false
-< true
-< true
-< true
-< false
-< false
-< false
-< false
-< true
-< true
-< true
-< true
-< false
-< false
-< false
-< false
-< true
-< true
-< false
-< true
-< false
-< true
-< false
-< true
-< false
-< true
-< false
-< true
-< false
-< true
-< false
-< true
-< false
-< true
-< true
-< true
-< false
-< false
-< false
-< false
-< true
-< true
-< false
-< false
-< true
-< true
-< true
-< true
-< false
-< false
-< true
-< true
-< false
-< false
-< false
-< false
-< true
-< true
-< false
-< false
-< true
-< true
-< true
-< true
-< false
-< false
