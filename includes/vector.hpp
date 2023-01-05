@@ -54,27 +54,27 @@ namespace ft{
 				_alloc = alloc;
 			}
 
-			// template <class InputIterator>
-			// vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type()){
+			template <class InputIterator>
+			vector(InputIterator first, typename enable_if<!std::is_integral<InputIterator>::value,InputIterator>::type last, const allocator_type& alloc = allocator_type()){
+				_size = 0;
+				_capacity = 0;
+				_alloc = alloc;
+				assign(first, last);
+			}
+
+			// vector(iterator first, iterator last, const allocator_type& alloc = allocator_type()){
 			// 	_size = 0;
 			// 	_capacity = 0;
 			// 	_alloc = alloc;
 			// 	assign(first, last);
 			// }
 
-			vector(iterator first, iterator last, const allocator_type& alloc = allocator_type()){
-				_size = 0;
-				_capacity = 0;
-				_alloc = alloc;
-				assign(first, last);
-			}
-
-			vector(const_iterator first, const_iterator last, const allocator_type& alloc = allocator_type()){
-				_size = 0;
-				_capacity = 0;
-				_alloc = alloc;
-				assign(first, last);
-			}
+			// vector(const_iterator first, const_iterator last, const allocator_type& alloc = allocator_type()){
+			// 	_size = 0;
+			// 	_capacity = 0;
+			// 	_alloc = alloc;
+			// 	assign(first, last);
+			// }
 
 			void resize(size_t resize){
 				if (resize > max_size())
@@ -101,13 +101,11 @@ namespace ft{
 					_alloc.deallocate(data, _capacity);
 			}
 
-			size_t capacity(){ return _capacity; }
-
-			size_t size(){ return _size; }
+			size_t capacity() const{ return _capacity; }
 
 			size_t size() const{ return _size; }
 
-			size_t max_size(){ return static_cast<std::size_t>(-1) / sizeof(T); }
+			size_t max_size() const{ return static_cast<std::size_t>(-1) / sizeof(T); }
 
 			iterator insert( iterator pos, const T& value ){
 				size_t index = ft::distance(begin(), pos);
@@ -133,7 +131,7 @@ namespace ft{
 			template <typename it>
 			void insert( iterator pos, it first, typename enable_if<!std::is_integral<it>::value,it>::type last ){
 				int i = 0;
-				iterator tmp1 = first;
+				it tmp1 = first;
 				value_type* test = _alloc.allocate(ft::distance(first, last));
 				while (tmp1 != last) {
 					test[i] = *tmp1;
@@ -258,7 +256,7 @@ namespace ft{
 				return data[index];
 			}
 
-			T &at(size_t index){
+			T &at(size_t index) const{
 				if (index < 0 || index >= _size)
 					throw std::out_of_range("vector");
 				return data[index];
