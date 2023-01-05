@@ -55,7 +55,7 @@ namespace ft{
 			}
 
 			template <class InputIterator>
-			vector(InputIterator first, typename enable_if<!std::is_integral<InputIterator>::value,InputIterator>::type last, const allocator_type& alloc = allocator_type()){
+			vector(InputIterator first, typename enable_if<!ft::is_integral<InputIterator>::value,InputIterator>::type last, const allocator_type& alloc = allocator_type()){
 				_size = 0;
 				_capacity = 0;
 				_alloc = alloc;
@@ -137,7 +137,7 @@ namespace ft{
 			}
 
 			template <typename it>
-			void insert( iterator pos, it first, typename enable_if<!std::is_integral<it>::value,it>::type last ){
+			void insert( iterator pos, it first, typename enable_if<!ft::is_integral<it>::value,it>::type last ){
 				int i = 0;
 				it tmp1 = first;
 				value_type* test = _alloc.allocate(ft::distance(first, last));
@@ -176,7 +176,7 @@ namespace ft{
 			}
 
 			template <typename it>
-			void assign(it first, typename enable_if<!std::is_integral<it>::value,it>::type last){
+			void assign(it first, typename enable_if<!ft::is_integral<it>::value,it>::type last){
 				clear();
 				reserve(ft::distance(first, last));
 				while (first != last){
@@ -287,19 +287,19 @@ namespace ft{
 			}
 
 			reverse_iterator rbegin(void) {
-				return (reverse_iterator(--this->end()));
+				return (reverse_iterator(--iterator(&(data[this->_size]))));
 			}
 
 			const_reverse_iterator rbegin(void) const {
-				return (const_reverse_iterator(--this->end()));
+				return (const_reverse_iterator(--const_iterator(&(data[this->_size]))));
 			}
 
 			reverse_iterator rend(void) {
-				return (reverse_iterator(--this->begin()));
+				return (reverse_iterator(--iterator(&(*data))));
 			}
 
 			const_reverse_iterator rend(void) const {
-				return (const_reverse_iterator(--this->begin()));
+				return (const_reverse_iterator(--const_iterator(&(*data))));
 			}
 
 			bool empty() const{
@@ -325,9 +325,7 @@ namespace ft{
 	};
 
 	// template <class T>
-	// bool operator==(const vector<T> &other, const vector<T> &other2){
-	// 	if (other.size() != other2.size())
-	// 		return false;
+	// vector<T> &operator=(const vector<T> &other, const vector<T> &other2){
 	// 	return ft::equal(other.begin(), other.end(), other2.begin());
 	// }
 

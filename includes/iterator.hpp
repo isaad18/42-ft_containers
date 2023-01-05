@@ -13,10 +13,12 @@ namespace ft{
 		public:
 			typedef ptrdiff_t difference_type;
 		public:
-			iterator(): ptr(NULL){}
+			iterator(): ptr(NULL) {}
 			iterator(T *ptr) : ptr(ptr){}
 			template<class U>
-			iterator(const iterator<U> &other): ptr(const_cast<T *>(other.base())){}
+			iterator(const iterator<U> &other): ptr((other.base())){}
+			// template<class U>
+			// iterator(typename enable_if<!ft::is_integral<U>::value,U>::type &other): ptr(other.base()){}
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 
 			T &operator*(){ return *base(); }
