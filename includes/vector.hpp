@@ -41,15 +41,21 @@ namespace ft{
 			vector(ft::vector<T> &other): _size(0), _capacity(0), _alloc(other._alloc){
 				reserve(other._capacity);
 				this->_size = other._size;
-				// this->_capacity = other._capacity;
-				ft::copy(other.begin(), other.end(), this->data);
+				// _alloc.construct(data + i, data[i-1])
+				for (size_t i = 0; i < other._size; i++){
+					_alloc.construct(data + i, other.data[i]);
+				}
+					// _alloc.construct(data + i, other.data[i]);
+				// ft::copy(other.begin(), other.end(), this->data);
 			}
 
 			vector (size_t n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(n), _capacity(0){
 				if (n >= max_size())
 					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
 				reserve(_size);
-				ft::fill(data, data + n, val);
+				for (size_t i = 0; i < n; i++)
+					_alloc.construct(data + i, val);
+				// ft::fill(data, data + n, val);
 				_size = n;
 				_alloc = alloc;
 			}
@@ -66,17 +72,24 @@ namespace ft{
 				reserve(other._capacity);
 				this->_size = other._size;
 				// this->_capacity = other._capacity;
-				ft::copy(other.begin(), other.end(), this->data);
+				for (size_t i = 0; i < other._size; i++){
+					_alloc.construct(data + i, other.data[i]);
+				}
+				// ft::copy(other.begin(), other.end(), this->data);
 				return *this;
 			}
 
 			void resize(size_t resize){
 				if (resize > max_size())
 					throw std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size");
-				while (resize < _size){
-					pop_back();
+				if (resize == _size)
+					return;
+				if (resize < _size){
+					while (resize < _size){
+						pop_back();
+					}
 				}
-				if (resize > _size){
+				else if (resize > _size){
 					size_t newCapacity = resize;
 					if (resize > _capacity * 2) {
 						newCapacity = resize + (_capacity / 2);
@@ -85,12 +98,16 @@ namespace ft{
 						newCapacity = _capacity * 2;
 					}
 					reserve(newCapacity);
-					ft::fill(data + _size, data + resize, 0);
+					// for (size_t i = _size; i < resize; i++)
+					// 	_alloc.construct(data + i, 0);
+					// ft::fill(data + _size, data + resize, 0);
 					_size = resize;
 				}
 			}
 
 			virtual ~vector(){
+				for (size_t i = 0; i < _size; i++)
+					_alloc.destroy(data + i);
 				if (_capacity > 0)
 					_alloc.deallocate(data, _capacity);
 			}
@@ -102,11 +119,18 @@ namespace ft{
 			size_t max_size() const{ return static_cast<std::size_t>(-1) / sizeof(T); }
 
 			iterator insert( iterator pos, const T& value ){
+				if (_size == 0 && pos == begin() && pos == end()){
+					reserve(2);
+					push_back(value);
+					return begin();
+				}
 				size_t index = ft::distance(begin(), pos);
 				resize(_size + 1);
-				for (size_t i = _size; i > index; i--)
-					data[i] = data[i - 1];
-				data[index] = value;
+				for (size_t i = _size; i > index; i--){
+					_alloc.construct(data + i, data[i - 1]);
+					_alloc.destroy(data + i - 1);
+				}
+				_alloc.construct(data + index, value);
 				return begin() + index;
 			}
 
@@ -114,10 +138,12 @@ namespace ft{
 				size_t index = ft::distance(begin(), pos);
 				size_t tmp = index + n;
 				resize(_size + n);
-				for (size_t i = _size; i > tmp - 1; --i)
-					data[i] = data[i - n];
+				for (size_t i = _size; i > tmp - 1; --i){
+					_alloc.construct(data + i, data[i - n]);
+					_alloc.destroy(data + i - n);
+				}
 				while (index < tmp){
-					data[index] = value;
+					_alloc.construct(data + index, value);
 					index++;
 				}
 			}
@@ -128,7 +154,7 @@ namespace ft{
 				it tmp1 = first;
 				value_type* test = _alloc.allocate(ft::distance(first, last));
 				while (tmp1 != last) {
-					test[i] = *tmp1;
+					_alloc.construct(test + i, *tmp1);
 					i++;
 					tmp1++;
 				}
@@ -137,11 +163,12 @@ namespace ft{
 				size_t tmp = index + (dis);
 				resize(_size + (dis));
 				for (size_t i = _size - 1; i >= tmp; i--) {
-					data[i] = data[i - (dis)];
+					_alloc.construct(data + i, data[i - dis]);
+					_alloc.destroy(data + i - dis);
 				}
 				i = 0;
 				while (index < tmp) {
-					data[index] = test[i];
+					_alloc.construct(data + index, test[i]);
 					index++;
 					i++;
 				}
@@ -167,7 +194,7 @@ namespace ft{
 				reserve(ft::distance(first, last));
 				while (first != last){
 					_size++;
-					data[_size - 1] = *first;
+					_alloc.construct(data + _size - 1, *first);
 					first++;
 				}
 			}
@@ -178,10 +205,13 @@ namespace ft{
 				clear();
 				reserve(count);
 				resize(count);
-				ft::fill(data, data + count, val);
+				for (size_t i = 0; i < count; i++)
+					_alloc.construct(data + i, val);
 			}
 
 			void clear(){
+				for (size_t i = 0; i < _size; i++)
+					_alloc.destroy(data + i);
 				_size = 0;
 			}
 
@@ -196,7 +226,8 @@ namespace ft{
 							this->reserve(_size * 2);
 					}
 				if (newSize > _size) {
-					std::fill(data + _size, data + newSize, val);
+					for (size_t i = _size; i < newSize; i++)
+						_alloc.construct(data + i, val);
 					_size = newSize;
 				} else if (newSize < _size) {
 					while (_size > newSize) {
@@ -212,7 +243,7 @@ namespace ft{
 					reserve(_capacity * 2);
 				_size++;
 				reserve(_size);
-				data[_size - 1] = j;
+				_alloc.construct(data + _size - 1, j);
 			}
 
 			void swap(ft::vector<value_type> &other){
@@ -230,15 +261,20 @@ namespace ft{
 			iterator erase(iterator begin, iterator end) {
 				if (begin == end)
 					return begin;
-
-				// size_t index = ft::distance(this->begin(), begin);
 				size_t num_elements = ft::distance(begin, end);
-				ft::copy(begin + num_elements, this->end(), begin);
+				size_t index = ft::distance(this->begin(), begin);
+				for (size_t i = index; i < _size - num_elements; i++) {
+					_alloc.destroy(data + i);
+					_alloc.construct(data + i, data[i + num_elements]);
+				}
 				_size -= num_elements;
 				return begin;
 			}
 
 			void	pop_back(){
+				if (_size == 0)
+					return ;
+				_alloc.destroy(data + _size - 1);
 				_size--;
 			}
 

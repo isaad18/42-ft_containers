@@ -43,6 +43,7 @@ int		main(void)
 
 	printSize(vct);
 
+	std::cout << "lllllll" << std::endl;
 	for (int i = 0; i < 5; ++i)
 		vct3.insert(vct3.end(), i);
 	vct3.insert(vct3.begin() + 1, 2, 111);
