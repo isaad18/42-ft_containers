@@ -4,16 +4,8 @@
 
 #include <algorithm>
 #include <climits>
-// #include <compare>
 #include <cstdlib>
 #include <cstring>
-// #include <initializer_list>
-// #include <iosfwd> // for forward declaration of vector
-// #include <limits>
-// #include <memory>
-// #include <stdexcept>
-// #include <type_traits>
-// #include <version>
 #include <iostream>
 #include <exception>
 #include <stdexcept>
@@ -26,7 +18,7 @@ namespace ft{
 	template<class InputIterator1, class InputIterator2>
 	bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, InputIterator2 last2) {
 		while (first1 != last1) {
-			if (first2 == last2 || *first2 < *first1)
+			if (first2 == last2 || *first1 > *first2)
 				return (false);
 			else if (*first1 < *first2)
 				return (true);
@@ -69,24 +61,21 @@ namespace ft{
 		return true;
 	}
 
-	// template <typename _Type>
-	// inline _Type *alloc(size_t size){
-	// 	std::allocator<_Type> alloc1;
-	// 	return (alloc1.allocate(size));
-	// }
-
 	template <typename T>
-inline void realloc(T*& array, size_t oldSize, size_t newSize, size_t capacity, std::allocator<T> alloc) {
-	T* newArray = alloc.allocate(newSize);
-	if (oldSize > 0) {
-		std::copy(array, array + oldSize, newArray);
-		std::fill(newArray + oldSize, newArray + newSize, 0);
+	inline void realloc(T*& array, size_t oldSize, size_t newSize, size_t capacity, std::allocator<T> alloc) {
+		T* newArray = alloc.allocate(newSize);
+		if (oldSize > 0) {
+			for (size_t i = 0; i < oldSize; i++)
+				alloc.construct(newArray + i, array[i]);
+		}
+		if (capacity > 0) {
+			for (size_t i = 0; i < capacity; i++) {
+				alloc.destroy(array + i);
+			}
+			alloc.deallocate(array, capacity);
+		}
+		array = newArray;
 	}
-	if (capacity > 0) {
-		alloc.deallocate(array, capacity);
-	}
-	array = newArray;
-}
 
 	template <typename T>
 	inline void swaps(T &v1, T &v2){

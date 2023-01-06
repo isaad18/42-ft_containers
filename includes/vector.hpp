@@ -3,6 +3,7 @@
 
 #include "ft.hpp"
 #include "iterator.hpp"
+#include "reverse_iterator.hpp"
 #include <exception>
 #include <stdexcept>
 #include <memory>
@@ -41,12 +42,9 @@ namespace ft{
 			vector(ft::vector<T> &other): _size(0), _capacity(0), _alloc(other._alloc){
 				reserve(other._capacity);
 				this->_size = other._size;
-				// _alloc.construct(data + i, data[i-1])
 				for (size_t i = 0; i < other._size; i++){
 					_alloc.construct(data + i, other.data[i]);
 				}
-					// _alloc.construct(data + i, other.data[i]);
-				// ft::copy(other.begin(), other.end(), this->data);
 			}
 
 			vector (size_t n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type()): _size(n), _capacity(0){
@@ -55,7 +53,6 @@ namespace ft{
 				reserve(_size);
 				for (size_t i = 0; i < n; i++)
 					_alloc.construct(data + i, val);
-				// ft::fill(data, data + n, val);
 				_size = n;
 				_alloc = alloc;
 			}
@@ -71,11 +68,9 @@ namespace ft{
 			vector &operator=(const vector &other){
 				reserve(other._capacity);
 				this->_size = other._size;
-				// this->_capacity = other._capacity;
 				for (size_t i = 0; i < other._size; i++){
 					_alloc.construct(data + i, other.data[i]);
 				}
-				// ft::copy(other.begin(), other.end(), this->data);
 				return *this;
 			}
 
@@ -98,9 +93,6 @@ namespace ft{
 						newCapacity = _capacity * 2;
 					}
 					reserve(newCapacity);
-					// for (size_t i = _size; i < resize; i++)
-					// 	_alloc.construct(data + i, 0);
-					// ft::fill(data + _size, data + resize, 0);
 					_size = resize;
 				}
 			}
@@ -379,7 +371,6 @@ namespace ft{
 		void swap(vector<T> &x, vector<T> &y) {
 			x.swap(y);
 		}
-
-
 }
+
 #endif
