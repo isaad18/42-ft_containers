@@ -38,7 +38,7 @@ namespace ft{
 				_alloc = alloc;
 			}
 
-			vector(ft::vector<T> &other): _size(0), _capacity(0){
+			vector(ft::vector<T> &other): _size(0), _capacity(0), _alloc(other._alloc){
 				reserve(other._capacity);
 				this->_size = other._size;
 				// this->_capacity = other._capacity;
@@ -61,20 +61,6 @@ namespace ft{
 				_alloc = alloc;
 				assign(first, last);
 			}
-
-			// vector(iterator first, iterator last, const allocator_type& alloc = allocator_type()){
-			// 	_size = 0;
-			// 	_capacity = 0;
-			// 	_alloc = alloc;
-			// 	assign(first, last);
-			// }
-
-			// vector(const_iterator first, const_iterator last, const allocator_type& alloc = allocator_type()){
-			// 	_size = 0;
-			// 	_capacity = 0;
-			// 	_alloc = alloc;
-			// 	assign(first, last);
-			// }
 
 			vector &operator=(const vector &other){
 				reserve(other._capacity);
@@ -323,11 +309,6 @@ namespace ft{
 			}
 
 	};
-
-	// template <class T>
-	// vector<T> &operator=(const vector<T> &other, const vector<T> &other2){
-	// 	return ft::equal(other.begin(), other.end(), other2.begin());
-	// }
 
 	template < class T, class Alloc >
 		bool	operator== ( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ){
