@@ -21,12 +21,13 @@ namespace ft{
 			typedef Alloc allocator_type;
 		private:
 			struct Node {
-				key_type key;
-				T value;
+				value_type all;
 				Node* left;
 				Node* right;
 				int height;
 			};
+
+			allocator_type _alloc;
 
 			Node *node;
 
@@ -72,31 +73,30 @@ namespace ft{
 			Node *insertAVL(Node *toAdd, key_type key, T value){
 				if (toAdd == nullptr){
 					Node *l = new Node;
-					l->key = key;
-					l->value = value;
+					l->all = ft::make_pair(key, value);
 					l->left = nullptr;
 					l->right = nullptr;
 					l->height = 1;
 					return l;
 				}
-				if (_comp(key, toAdd->key))
+				if (_comp(key, toAdd->all.first()))
 					toAdd->left = insertAVL(toAdd->left, key, value); // insert smaller
-				else if (_comp(toAdd->key, key))
+				else if (_comp(toAdd->all.first(), key))
 					toAdd->right = insertAVL(toAdd->right, key, value); // insert larger
 				else
-					toAdd->value = value; // if he is adding value on the same key
+					toAdd->all.setSecond(value); // if he is adding value on the same key
 				toAdd->height = std::max(Height(toAdd->right), Height(toAdd->left)) + 1;
 				// rotation part to add
 				int balance = Balance(toAdd);
-				if (balance > 1 && _comp(key, toAdd->left->key)) // if the left side is bigger than the right side and the key that has been added is smaller than the left key so the left key can be root just rotate right
+				if (balance > 1 && _comp(key, toAdd->left->all.first())) // if the left side is bigger than the right side and the key that has been added is smaller than the left key so the left key can be root just rotate right
 					return rotateRight(toAdd);
-				if (balance < -1 && _comp(toAdd->right->key, key)) // if the right side is bigger than the left side and the key that has been added is smaller than the right key so the right key can be root just rotate left
+				if (balance < -1 && _comp(toAdd->right->all.first(), key)) // if the right side is bigger than the left side and the key that has been added is smaller than the right key so the right key can be root just rotate left
 					return rotateLeft(toAdd);
-				if (balance > 1 && _comp(toAdd->left->key, key)){ // if the left side is bigger than the right side and the key that has been added is bigger than the left key so the left key can't be directly a root just rotate left for the left branch then right to the root
+				if (balance > 1 && _comp(toAdd->left->all.first(), key)){ // if the left side is bigger than the right side and the key that has been added is bigger than the left key so the left key can't be directly a root just rotate left for the left branch then right to the root
 					toAdd->left = rotateLeft(toAdd->left);
 					return rotateRight(toAdd);
 				}
-				if (balance < -1 && _comp(key, toAdd->right->key)){ // if the left side is bigger than the right side and the key that has been added is bigger than the right key so the right key can't be directly a root just rotate right for the right branch then left to the root
+				if (balance < -1 && _comp(key, toAdd->right->all.first())){ // if the left side is bigger than the right side and the key that has been added is bigger than the right key so the right key can't be directly a root just rotate right for the right branch then left to the root
 					toAdd->right = rotateRight(toAdd->right);
 					return rotateLeft(toAdd);
 				}
@@ -104,20 +104,20 @@ namespace ft{
 			}
 
 			void search_N(Node *root, key_type key){
-				if (root->key == key){
+				if (root->all.first() == key){
 					searched = root;
 					return ;
 				}
-				if (_comp(key, root->key)){
+				if (_comp(key, root->all.first())){
 					if (root->left){
-						if (root->left->key == key)
+						if (root->left->all.first() == key)
 							parent = root;
 						search_N(root->left, key);
 					}
 				}
 				else{
 					if (root->right){
-						if (root->right->key == key)
+						if (root->right->all.first() == key)
 							parent = root;
 						search_N(root->right, key);
 					}
@@ -138,10 +138,10 @@ namespace ft{
 				if (crnt == nullptr) {
 					return nullptr;
 				}
-				if (key < crnt->key) {
+				if (key < crnt->all.first()) {
 					crnt->left = Remove(crnt->left, key);
 				}
-				else if (key > crnt->key) {
+				else if (key > crnt->all.first()) {
 					crnt->right = Remove(crnt->right, key);
 				}
 				else {
@@ -160,9 +160,8 @@ namespace ft{
 						return temp;
 					}
 					Node* successor = Min(crnt->right);
-					crnt->key = successor->key;
-					crnt->value = successor->value;
-					crnt->right = Remove(crnt->right, successor->key);
+					crnt->all = successor->all;
+					crnt->right = Remove(crnt->right, successor->all.first());
 				}
 				crnt->height = std::max(Height(crnt->right), Height(crnt->left)) + 1;
 				int balance = Balance(crnt);
@@ -197,7 +196,7 @@ namespace ft{
 			  print2DUtil(root->right, space);
 			  std::cout << std::endl;
 			  for (int i = 10; i < space; i++) std::cout << " ";
-			  std::cout << root->value << "(" << Balance(root) << ")" << std::endl;
+			  std::cout << root->all.second() << "(" << Balance(root) << ")" << std::endl;
 				for (int i = 10; i < space; i++) std::cout << " ";
 			  print2DUtil(root->left, space);
 			}
@@ -211,9 +210,9 @@ namespace ft{
 				parent = nullptr;
 				search_N(node, key);
 				if (searched != nullptr){
-					std::cout << "key: " << searched->key << std::endl << "value: " << searched->value << std::endl;
+					std::cout << "key: " << searched->all.first() << std::endl << "value: " << searched->all.second() << std::endl;
 					if (parent != nullptr)
-						std::cout << "key: " << parent->key << std::endl << "value: " << parent->value << std::endl;
+						std::cout << "key: " << parent->all.first() << std::endl << "value: " << parent->all.second() << std::endl;
 				}
 				else
 					std::cout << "NOT FOUND" << std::endl;

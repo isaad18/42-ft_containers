@@ -7,24 +7,25 @@ namespace ft{
 		private:
 			T _first;
 			T1 _second;
-			pair(){}
 		public:
+			pair(){}
 			pair(T first, T1 second): _first(first), _second(second) {}
-			pair(const pair &other): _first(other.first), _second(other.second) {}
+			pair(const pair &other): _first(other.first()), _second(other.second()) {}
 			pair &operator=(const pair &other){
-				setFirst(other.first);
-				setSecond(other.second);
+				setFirst(other.first());
+				setSecond(other.second());
+				return *this;
 			}
-			T &first() const{ return _first; }
-			T1 &second() const{ return _second; }
-			T &first(){ return _first; }
-			T1 &second(){ return _second; }
+			T first(){ return _first; }
+			T first() const{ return _first; }
+			T1 second(){ return _second; }
+			T1 second() const{ return _second; }
 			void setFirst(T first){ _first = first; }
 			void setSecond(T second){ _second = second; }
 	};
 
 	template<typename T, typename T1>
-	pair<T, T1> &make_pair(T first, T second){
+	pair<T, T1> make_pair(T first, T1 second){
 		pair<T, T1> p(first, second);
 		return p;
 	}
