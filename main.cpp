@@ -2,14 +2,27 @@
 #include <iostream>
 #include <vector>
 #include "includes/vector.hpp"
+#include "includes/map.hpp"
 
 int main(){
-	// ft::vector<int> v;
-	// ft::vector<int> v6;
+	ft::map<int, int> v;
+	// ft::map<int, int> v6;
 
-	// v.push_back(1);
-	// v.push_back(2);
-	// v.push_back(3);
+	v.insert(66, 66);
+	v.insert(77, 77);
+	v.insert(88, 88);
+	v.insert(99, 99);
+	v.insert(100, 100);
+	v.insert(10000, 10000);
+	v.insert(101, 101);
+	v.insert(55, 55);
+	v.insert(54, 54);
+	v.print2D();
+	v.deleteit(99);
+	v.deleteit(101);
+	v.print2D();
+	v.search(10000);
+	// v.deleteAll();
 
 	// v6.push_back(4);
 	// v6.push_back(5);
@@ -51,6 +64,6 @@ int main(){
 	// std::cout << "size: " << v.size() << std::endl;
 	// std::cout << "capacity: " << v.capacity() << std::endl;
 
-	std::vector<int> const vct(6, 12);
-	std::vector<int>::iterator it = vct.begin();
+	// std::vector<int> const vct(6, 12);
+	// std::vector<int>::iterator it = vct.begin();
 }

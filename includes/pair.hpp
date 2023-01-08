@@ -9,7 +9,7 @@ namespace ft{
 			T1 _second;
 			pair(){}
 		public:
-			pair(T first, T1 second): _first(_first), _second(_second) {}
+			pair(T first, T1 second): _first(first), _second(second) {}
 			pair(const pair &other): _first(other.first), _second(other.second) {}
 			pair &operator=(const pair &other){
 				setFirst(other.first);
