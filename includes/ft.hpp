@@ -13,6 +13,7 @@
 #include <cstddef>
 #include <string>
 #include "enable_if.hpp"
+#include "pair.hpp"
 
 namespace ft{
 	template<class InputIterator1, class InputIterator2>
@@ -64,6 +65,22 @@ namespace ft{
 	template <typename T>
 	inline void realloc(T*& array, size_t oldSize, size_t newSize, size_t capacity, std::allocator<T> alloc) {
 		T* newArray = alloc.allocate(newSize);
+		if (oldSize > 0) {
+			for (size_t i = 0; i < oldSize; i++)
+				alloc.construct(newArray + i, array[i]);
+		}
+		if (capacity > 0) {
+			for (size_t i = 0; i < capacity; i++) {
+				alloc.destroy(array + i);
+			}
+			alloc.deallocate(array, capacity);
+		}
+		array = newArray;
+	}
+
+	template <class Key, typename T>
+	inline void reallocme(ft::pair<const Key,T>* &array, size_t oldSize, size_t newSize, size_t capacity, std::allocator<ft::pair<const Key,T> > alloc) {
+		ft::pair<const Key,T>* newArray = alloc.allocate(newSize);
 		if (oldSize > 0) {
 			for (size_t i = 0; i < oldSize; i++)
 				alloc.construct(newArray + i, array[i]);

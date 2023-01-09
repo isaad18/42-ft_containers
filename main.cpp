@@ -8,19 +8,32 @@ int main(){
 	ft::map<int, int> v;
 	// ft::map<int, int> v6;
 
-	v.insert(66, 66);
-	v.insert(77, 77);
-	v.insert(88, 88);
-	v.insert(99, 99);
-	v.insert(100, 100);
-	v.insert(10000, 10000);
-	v.insert(101, 101);
-	v.insert(55, 55);
-	v.insert(54, 54);
-	v.print2D();
+	// v.insert(7,7);
+	// v.insert(66, 66);
+	// v.insert(77, 77);
+	// v.insert(88, 88);
+	// v.insert(99, 99);
+	// v.insert(100, 100);
+	// v.insert(10000, 10000);
+	// v.insert(101, 101);
+	v[66] = 66;
+	v[77] = 77;
+	v[88] = 88;
+	v[99] = 99;
+	v[100] = 100;
+	v[1000] = 1000;
+	v[101] = 101;
+	v[55] = 55;
+	v[54] = 54;
+	ft::map<int, int>::iterator it = v.begin();
+	ft::map<int, int>::iterator it2 = v.end();
+	for (; it != it2; it++){
+		std::cout << it->first << std::endl;
+	}
+	// v.print2D();
 	v.deleteit(99);
 	v.deleteit(101);
-	v.print2D();
+	// v.print2D();
 	v.search(10000);
 	// v.deleteAll();
 

@@ -5,23 +5,23 @@ namespace ft{
 	template<typename T, typename T1>
 	class pair{
 		private:
-			T _first;
-			T1 _second;
 		public:
+			T first;
+			T1 second;
 			pair(){}
-			pair(T first, T1 second): _first(first), _second(second) {}
-			pair(const pair &other): _first(other.first()), _second(other.second()) {}
-			pair &operator=(const pair &other){
-				setFirst(other.first());
-				setSecond(other.second());
+			pair(T first, T1 second): first(first), second(second) {}
+			pair(const pair &other): first(other.first), second(other.second) {}
+			pair<T, T1> &operator=(const pair<T, T1> &other){
+				setFirst(other.first);
+				setSecond(other.second);
 				return *this;
 			}
-			T first(){ return _first; }
-			T first() const{ return _first; }
-			T1 second(){ return _second; }
-			T1 second() const{ return _second; }
-			void setFirst(T first){ _first = first; }
-			void setSecond(T second){ _second = second; }
+			// T &first(){ return first; }
+			// T first() const{ return first; }
+			// T1 &second(){ return second; }
+			// T1 second() const{ return second; }
+			void setFirst(T first){ this->first = first; }
+			void setSecond(T second){ this->second = second; }
 	};
 
 	template<typename T, typename T1>
