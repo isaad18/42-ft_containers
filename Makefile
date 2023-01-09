@@ -6,7 +6,7 @@ CXX			= c++
 
 $(RM)		= rm -f
 
-CXXFLAGS		= -Wall -Werror -Wextra -std=c++98 -g
+CXXFLAGS		= -Wall -Werror -Wextra -std=c++11 -g
 
 NAME		= out
 

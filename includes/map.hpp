@@ -13,12 +13,14 @@
 namespace ft{
 	template< class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<const Key,T> > >
 	class map{
+		struct Node;
 		public:
 			typedef Key key_type;
 			typedef T mapped_type;
 			typedef ft::pair<key_type, mapped_type> value_type;
 			typedef std::less<key_type> key_compare;
 			typedef Alloc allocator_type;
+			typedef typename allocator_type::template rebind<Node>::other    allocator_type2;
 		private:
 			struct Node {
 				value_type all;
@@ -28,6 +30,7 @@ namespace ft{
 			};
 
 			allocator_type _alloc;
+			allocator_type2 _alloca;
 
 			Node *node;
 
@@ -72,7 +75,7 @@ namespace ft{
 
 			Node *insertAVL(Node *toAdd, key_type key, T value){
 				if (toAdd == nullptr){
-					Node *l = new Node;
+					Node *l = _alloca.allocate(1);
 					l->all = ft::make_pair(key, value);
 					l->left = nullptr;
 					l->right = nullptr;
@@ -146,17 +149,17 @@ namespace ft{
 				}
 				else {
 					if (crnt->left == nullptr && crnt->right == nullptr) {
-						delete crnt;
+						_alloca.deallocate(crnt, 1);
 						return nullptr;
 					}
 					if (crnt->left != nullptr && crnt->right == nullptr) {
 						Node* temp = crnt->left;
-						delete crnt;
+						_alloca.deallocate(node, 1);
 						return temp;
 					}
 					if (node->left == nullptr && node->right != nullptr) {
 						Node* temp = node->right;
-						delete crnt;
+						_alloca.deallocate(node, 1);
 						return temp;
 					}
 					Node* successor = Min(crnt->right);
@@ -224,17 +227,17 @@ namespace ft{
 
 			void deleteAll(){
 				delete_node(node);
-				delete node;
+				_alloca.deallocate(node, 1);
 			}
 
 			void delete_node(Node *nodes){
 				if (nodes->right){
 					delete_node(nodes->right);
-					delete nodes->right;
+					_alloca.deallocate(nodes->right, 1);
 				}
 				if (nodes->left){
 					delete_node(nodes->left);
-					delete nodes->left;
+					_alloca.deallocate(nodes->left, 1);
 				}
 			}
 	};
