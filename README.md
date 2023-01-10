@@ -4,7 +4,7 @@
 </h1>
 
 <p align="center">
-	<b><i>Creating my own C++ containers</i></b><br>
+	<b><i>Creating my own STL container</i></b><br>
 </p>
 
 <p align="center">
