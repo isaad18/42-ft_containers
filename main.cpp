@@ -32,12 +32,12 @@ int main(){
 	// for (int i = 0; i < 50; i++){
 	// 	v.deleteit(i);
 	// }
-	ft::map<int, int>::iterator it = v.begin();
-	ft::map<int, int>::iterator it2 = v.end();
+	ft::map<int, int>::reverse_iterator it = v.rbegin();
+	ft::map<int, int>::reverse_iterator it2 = v.rend();
 	// --it2;
 	// 	std::cout << it2->first << std::endl;
-	for (; it != it2; --it2){
-		std::cout << it2->first << std::endl;
+	for (; it != it2; ++it){
+		std::cout << it->first << std::endl;
 	}
 		// ++it;
 		// std::cout << it->first << std::endl;

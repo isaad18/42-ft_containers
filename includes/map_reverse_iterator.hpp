@@ -27,17 +27,21 @@ namespace ft{
 			map_reverse_iterator(T ptr) : ptr(ptr){}
 			template<class U, class B1>
 			map_reverse_iterator(const m_iterator<U, B1> &other): ptr(const_cast<T>(other.base())){}
+			template<class U>
+			map_reverse_iterator(U ptr) : ptr(ptr){}
+			template<class U, class B1>
+			map_reverse_iterator(const map_reverse_iterator<U, B1> &other): ptr(const_cast<T>(other.base())){}
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 
-			B operator*(){ return (base()->all); }
-			B operator*() const{ return base()->all; }
+			B operator*(){ return (base() - 1)->all; }
+			B operator*() const{ return (base() - 1)->all; }
 			bool operator==(const map_reverse_iterator &other) const{ return &(*(this->ptr)) == &(*(other.base())); }
 			bool operator!=(const map_reverse_iterator &other) const{ return &(*(this->ptr)) != &(*(other.base())); }
 			bool operator>(const map_reverse_iterator &other) const{ return &(*(this->ptr)) < &(*(other.base())); }
 			bool operator<(const map_reverse_iterator &other) const{ return &(*(this->ptr)) > &(*(other.base())); }
 			T base() const{ return ptr; }
 			T operator[](ptrdiff_t num) {
-				return (*(ptr + num));
+				return (*(*this + num));
 			}
 			B *operator->() const { return &(ptr->all); }
 			// B *operator->() { return &(ptr->all); }
@@ -153,8 +157,9 @@ namespace ft{
 
 			map_reverse_iterator operator-(int n) const{
 				map_reverse_iterator tmp(ptr);
-				for (int i = 0; i < n; i++)
+				for (int i = 0; i < n; i++){
 					++tmp.ptr;
+				}
 				return tmp;
 			}
 			map_reverse_iterator operator+(int n) const{

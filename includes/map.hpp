@@ -4,7 +4,7 @@
 #include"ft.hpp"
 #include"pair.hpp"
 #include "map_iterator.hpp"
-// #include "reverse_iterator.hpp"
+#include "map_reverse_iterator.hpp"
 #include <exception>
 #include <stdexcept>
 #include <memory>
@@ -23,8 +23,8 @@ namespace ft{
 			typedef typename allocator_type::template rebind<Node>::other    allocator_type2;
 			typedef ft::m_iterator<Node*, value_type> iterator;
 			typedef ft::m_iterator<const Node*, const value_type> const_iterator;
-			// typedef ft::reverse_iterator<value_type> reverse_iterator;
-			// typedef ft::reverse_iterator<const value_type> const_reverse_iterator;
+			typedef ft::map_reverse_iterator<Node*, value_type>reverse_iterator;
+			typedef ft::map_reverse_iterator<const Node*, const value_type> const_reverse_iterator;
 		private:
 			struct Node {
 				int index;
@@ -547,21 +547,21 @@ namespace ft{
 				return (const_iterator(&(*maximum()->last)));
 			}
 
-			// reverse_iterator rbegin(void) {
-			// 	return (reverse_iterator(iterator(&(*maximum()))));
-			// }
+			reverse_iterator rbegin(void) {
+				return (reverse_iterator(iterator(&(*maximum()->last))));
+			}
 
-			// const_reverse_iterator rbegin(void) const {
-			// 	return (const_reverse_iterator(const_iterator(&(*maximum()))));
-			// }
+			const_reverse_iterator rbegin(void) const {
+				return (const_reverse_iterator(const_iterator(&(*maximum()->last))));
+			}
 
-			// reverse_iterator rend(void) {
-			// 	return (reverse_iterator(iterator(&(*minimum()))));
-			// }
+			reverse_iterator rend(void) {
+				return (reverse_iterator(iterator(&(*minimum()))));
+			}
 
-			// const_reverse_iterator rend(void) const {
-			// 	return (const_reverse_iterator(const_iterator(&(*minimum()))));
-			// }
+			const_reverse_iterator rend(void) const {
+				return (const_reverse_iterator(const_iterator(&(*minimum()))));
+			}
 	};
 }
 
