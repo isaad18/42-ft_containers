@@ -12,8 +12,8 @@ namespace ft{
 			pair(T first, T1 second): first(first), second(second) {}
 			pair(const pair &other): first(other.first), second(other.second) {}
 			pair<T, T1> &operator=(const pair<T, T1> &other){
-				setFirst(other.first);
-				setSecond(other.second);
+				first = (other.first);
+				second = (other.second);
 				return *this;
 			}
 			// T &first(){ return first; }
@@ -21,7 +21,7 @@ namespace ft{
 			// T1 &second(){ return second; }
 			// T1 second() const{ return second; }
 			void setFirst(T first){ this->first = first; }
-			void setSecond(T second){ this->second = second; }
+			void setSecond(T1 second){ this->second = second; }
 	};
 
 	template<typename T, typename T1>
