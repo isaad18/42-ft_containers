@@ -2,31 +2,15 @@
 < max_size: 461168601842738790
 ---
 > max_size: 2305843009213693951
-29,30c29,30
-< lower_bound: key: 5 | value: 15
-< upper_bound: key: 6 | value: 18
----
-> lower_bound: key: 8 | value: 24
-> upper_bound: key: 8 | value: 24
-34c34
+35c35
 < lower_bound: key: 10 | value: 30
 ---
 > lower_bound: end()
-43c43
+44c44
 < max_size: 461168601842738790
 ---
 > max_size: 2305843009213693951
-59,60c59,60
-< lower_bound: key: 5 | value: 15
-< upper_bound: key: 6 | value: 18
----
-> lower_bound: key: 8 | value: 842
-> upper_bound: key: 8 | value: 842
-68c68
+70c70
 < max_size: 461168601842738790
 ---
 > max_size: 2305843009213693951
-73c73
-< - key: 3 | value: 404
----
-> - key: 3 | value: 9
