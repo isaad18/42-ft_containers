@@ -27,7 +27,7 @@ namespace ft{
 			m_iterator(U ptr) : ptr(ptr){}
 			m_iterator(T *ptr) : ptr(ptr){}
 			template<class U, class B1>
-			m_iterator(const m_iterator<U, B1> &other): ptr((other.base())){}
+			m_iterator(const m_iterator<U, B1> &other): ptr(const_cast<T*>(other.base())){}
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 
 			B &operator*(){ return base()->all; }

@@ -64,6 +64,8 @@ namespace ft{
 			}
 
 			Node* minimum(Node *tmp2){
+				if (tmp2 == nullptr)
+					return nullptr;
 				Node *tmp = tmp2;
 				while (tmp->left != nullptr){
 					tmp = tmp->left;
@@ -72,6 +74,8 @@ namespace ft{
 			}
 
 			Node* minimum(Node *tmp2) const{
+				if (tmp2 == nullptr)
+					return nullptr;
 				Node *tmp = tmp2;
 				while (tmp->left != nullptr){
 					tmp = tmp->left;
@@ -80,6 +84,8 @@ namespace ft{
 			}
 
 			Node* maximum(Node *tmp2){
+				if (tmp2 == nullptr)
+					return nullptr;
 				Node *tmp = tmp2;
 				while (tmp->right != nullptr){
 					tmp = tmp->right;
@@ -88,6 +94,8 @@ namespace ft{
 			}
 
 			Node* maximum(Node *tmp2) const{
+				if (tmp2 == nullptr)
+					return nullptr;
 				Node *tmp = tmp2;
 				while (tmp->right != nullptr){
 					tmp = tmp->right;
@@ -554,6 +562,8 @@ void updateParentPointer(Node* crnt) {
 
 			void deleteAll(){
 				Node *l = node;
+				if (l == nullptr)
+					return ;
 				while (l->right != nullptr){
 					l = l->right;
 				}
@@ -698,18 +708,26 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			iterator begin(){
+				if (minimum(node) == nullptr)
+					return (iterator());
 				return (iterator(&(*minimum(node))));
 			}
 
 			const_iterator begin() const{
+				if (minimum(node) == nullptr)
+					return (const_iterator());
 				return (const_iterator(&(*minimum(node))));
 			}
 
 			iterator end(){
+				if (maximum(node) == nullptr)
+					return (iterator());
 				return (iterator(&(*maximum(node)->last)));
 			}
 
 			const_iterator end() const{
+				if (maximum(node) == nullptr)
+					return (const_iterator());
 				return (const_iterator(&(*maximum(node)->last)));
 			}
 
