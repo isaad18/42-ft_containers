@@ -10,50 +10,23 @@
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-34a35
-> - key: 1 | value: BBBBB
-41c42
+41c41
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-45a47
-> - key: 1 | value: BBBBB
-52c54
+52c52
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-57,64d58
-< - key: 4 | value: EE
-< ###############################################
-< size: 4
+60c60
 < max_size: 288230376151711743
-< ________________SBDKCUYREBFGAHJWBSFC________________
-< 
-< Content is:
-< - key: -1 | value: Hello
-67,91d60
-< - key: 10 | value: Hi there
-< ###############################################
-< 	-- [4] --
-< ret: 0
-< size: 4
+---
+> max_size: 768614336404564650
+72c72
 < max_size: 288230376151711743
-< ________________SBDKCUYREBFGAHJWBSFC________________
-< 
-< Content is:
-< - key: -1 | value: Hello
-< - key: 1 | value: BBBBB
-< - key: 4 | value: EE
-< - key: 10 | value: Hi there
-< ###############################################
-< 	-- [5] --
-< ret: 1
-< size: 3
+---
+> max_size: 768614336404564650
+84c84
 < max_size: 288230376151711743
-< ________________SBDKCUYREBFGAHJWBSFC________________
-< 
-< Content is:
-< - key: -1 | value: Hello
-< - key: 4 | value: EE
-< - key: 10 | value: Hi there
-< ###############################################
+---
+> max_size: 768614336404564650
