@@ -38,7 +38,7 @@ namespace ft{
 			// bool operator<(const m_iterator &other) const{ return &(*(this->ptr)) < &(*(other.base())); }
 			T *base() const{ return ptr; }
 			T &operator[](difference_type num) {
-				return (*(ptr + num));
+				return (*(*this + num));
 			}
 			B *operator->() const { return &(ptr->all); }
 

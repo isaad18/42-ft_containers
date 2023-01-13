@@ -1,6 +1,5 @@
 size: 10
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 0 | value: AAAAAAAAAA
@@ -17,7 +16,6 @@ Content is:
 	-- [0] --
 size: 9
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 0 | value: AAAAAAAAAA
@@ -33,7 +31,6 @@ Content is:
 	-- [1] --
 size: 8
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 2 | value: CCCCCCCC
@@ -48,7 +45,6 @@ Content is:
 	-- [2] --
 size: 7
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 2 | value: CCCCCCCC
@@ -62,7 +58,6 @@ Content is:
 	-- [3] --
 size: 4
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 5 | value: FFFFF
@@ -73,7 +68,6 @@ Content is:
 	-- [4] --
 size: 2
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 5 | value: FFFFF
@@ -81,7 +75,6 @@ Content is:
 ###############################################
 size: 4
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 5 | value: FFFFF
@@ -92,14 +85,12 @@ Content is:
 	-- [5] --
 size: 1
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 5 | value: FFFFF
 ###############################################
 size: 5
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 5 | value: FFFFF
@@ -109,3 +100,8 @@ Content is:
 - key: 15 | value: FOUR
 ###############################################
 	-- [6] --
+size: 0
+max_size: 768614336404564650
+
+Content is:
+###############################################

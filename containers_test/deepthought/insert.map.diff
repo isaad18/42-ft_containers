@@ -6,97 +6,67 @@
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-12,13c12,13
-< insert return: key: 42 | value: lol
+12c12
 < Created new node: 0
 ---
-> insert return: key: 42 | value: mdr
 > Created new node: 1
-15c15
+14c14
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-19c19
-< - key: 42 | value: lol
+21c21
+< Created new node: 1
 ---
-> - key: 42 | value: mdr
+> Created new node: 0
 23c23
-< Created new node: 1
----
-> Created new node: 0
-25c25
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-29c29
-< - key: 42 | value: lol
----
-> - key: 42 | value: mdr
-34c34
+31c31
 < Created new node: 1
 ---
 > Created new node: 0
-36c36
+33c33
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-41c41
-< - key: 42 | value: lol
----
-> - key: 42 | value: mdr
-46c46
+42c42
 < Created new node: 1
 ---
 > Created new node: 0
-48c48
+44c44
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-53c53
-< - key: 42 | value: lol
----
-> - key: 42 | value: mdr
-59c59
+54c54
 < Created new node: 1
 ---
 > Created new node: 0
-61c61
+56c56
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
 67c67
-< - key: 42 | value: lol
----
-> - key: 42 | value: mdr
-73c73
 < Created new node: 1
 ---
 > Created new node: 0
-75c75
+69c69
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
 82c82
-< - key: 42 | value: lol
----
-> - key: 42 | value: mdr
-89c89
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
 96c96
-< - key: 42 | value: lol
+< max_size: 288230376151711743
 ---
-> - key: 42 | value: mdr
+> max_size: 768614336404564650
 104c104
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
 113c113
-< max_size: 288230376151711743
----
-> max_size: 768614336404564650
-123c123
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650

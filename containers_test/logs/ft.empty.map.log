@@ -1,7 +1,6 @@
 is_empty: 0
 size: 7
 max_size: 4611686018427387903
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: a | value: 7
@@ -16,7 +15,6 @@ is_empty: 1
 is_empty: 0
 size: 7
 max_size: 4611686018427387903
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: a | value: 21
@@ -29,7 +27,6 @@ Content is:
 ###############################################
 size: 7
 max_size: 4611686018427387903
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: a | value: 7
@@ -43,7 +40,6 @@ Content is:
 is_empty: 1
 size: 0
 max_size: 4611686018427387903
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 ###############################################

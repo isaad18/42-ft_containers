@@ -3,30 +3,27 @@ insert return: key: 42 | value: lol
 Created new node: 0
 size: 1
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 42 | value: lol
 ###############################################
 	-- [1] --
-insert return: key: 42 | value: mdr
+insert return: key: 42 | value: lol
 Created new node: 1
 size: 1
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
-- key: 42 | value: mdr
+- key: 42 | value: lol
 ###############################################
 	-- [2] --
 insert return: key: 50 | value: mdr
 Created new node: 0
 size: 2
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
-- key: 42 | value: mdr
+- key: 42 | value: lol
 - key: 50 | value: mdr
 ###############################################
 	-- [3] --
@@ -34,11 +31,10 @@ insert return: key: 35 | value: funny
 Created new node: 0
 size: 3
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 35 | value: funny
-- key: 42 | value: mdr
+- key: 42 | value: lol
 - key: 50 | value: mdr
 ###############################################
 	-- [4] --
@@ -46,11 +42,10 @@ insert return: key: 45 | value: bunny
 Created new node: 0
 size: 4
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 35 | value: funny
-- key: 42 | value: mdr
+- key: 42 | value: lol
 - key: 45 | value: bunny
 - key: 50 | value: mdr
 ###############################################
@@ -59,12 +54,11 @@ insert return: key: 21 | value: fizz
 Created new node: 0
 size: 5
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 21 | value: fizz
 - key: 35 | value: funny
-- key: 42 | value: mdr
+- key: 42 | value: lol
 - key: 45 | value: bunny
 - key: 50 | value: mdr
 ###############################################
@@ -73,13 +67,12 @@ insert return: key: 38 | value: buzz
 Created new node: 0
 size: 6
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 21 | value: fizz
 - key: 35 | value: funny
 - key: 38 | value: buzz
-- key: 42 | value: mdr
+- key: 42 | value: lol
 - key: 45 | value: bunny
 - key: 50 | value: mdr
 ###############################################
@@ -87,13 +80,12 @@ Content is:
 insert return: key: 55 | value: fuzzy
 size: 7
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 21 | value: fizz
 - key: 35 | value: funny
 - key: 38 | value: buzz
-- key: 42 | value: mdr
+- key: 42 | value: lol
 - key: 45 | value: bunny
 - key: 50 | value: mdr
 - key: 55 | value: fuzzy
@@ -102,7 +94,6 @@ Content is:
 insert return: key: 1337 | value: beauty
 size: 1
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 1337 | value: beauty
@@ -111,7 +102,6 @@ Content is:
 insert return: key: 1000 | value: Hello
 size: 2
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 1000 | value: Hello
@@ -121,7 +111,6 @@ Content is:
 insert return: key: 1500 | value: World
 size: 3
 max_size: 768614336404564650
-________________SBDKCUYREBFGAHJWBSFC________________
 
 Content is:
 - key: 1000 | value: Hello

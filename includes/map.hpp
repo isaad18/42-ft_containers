@@ -17,14 +17,14 @@ namespace ft{
 		public:
 			typedef Key key_type;
 			typedef T mapped_type;
-			typedef ft::pair<key_type, mapped_type> value_type;
-			typedef std::less<key_type> key_compare;
-			typedef Alloc allocator_type;
-			typedef typename allocator_type::template rebind<Node>::other    allocator_type2;
-			typedef ft::m_iterator<Node, value_type> iterator;
-			typedef ft::m_iterator<const Node, const value_type> const_iterator;
-			// typedef ft::map_reverse_iterator<Node*, value_type>reverse_iterator;
-			// typedef ft::map_reverse_iterator<const Node*, const value_type> const_reverse_iterator;
+			typedef ft::pair<key_type, mapped_type> 								value_type;
+			typedef std::less<key_type> 											key_compare;
+			typedef Alloc 															allocator_type;
+			typedef typename allocator_type::template rebind<Node>::other    		allocator_type2;
+			typedef ft::m_iterator<Node, value_type> 								iterator;
+			typedef ft::m_iterator<const Node, const value_type> 					const_iterator;
+			typedef ft::map_reverse_iterator<Node, value_type> 						reverse_iterator;
+			typedef ft::map_reverse_iterator<const Node, const value_type> 			const_reverse_iterator;
 		private:
 			struct Node {
 				int index;
@@ -150,8 +150,10 @@ namespace ft{
 					toAdd->right = insertAVL(toAdd->right, key, value); // insert larger
 					toAdd->right->parent = toAdd;
 				}
-				else
-					toAdd->all.second = (value); // if he is adding value on the same key
+				else{
+					if (toAdd->all.second >= value)
+						toAdd->all.second = (value);
+				} // if he is adding value on the same key
 				toAdd->height = std::max(Height(toAdd->right), Height(toAdd->left)) + 1;
 				// rotation part to add
 				int balance = Balance(toAdd);
@@ -429,7 +431,7 @@ void updateParentPointer(Node* crnt) {
 				// }
 				if (search(key) == nullptr)
 					_size++;
-				std::cout << "__" << _size << std::endl;
+				// std::cout << "__" << _size << std::endl;
 				node = insertAVL(node, key, value);
 				// if (ok){
 				if (node != nullptr){
@@ -624,7 +626,8 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			void erase (iterator first1, iterator last1){
-				key_type *k = new key_type(_size);
+				std::allocator<key_type> tst;
+				key_type *k = tst.allocate(ft::distance(first1, last1));
 				size_t j = 0;
 				for (;first1 != last1; first1++){
 					k[j] = first1->first;
@@ -633,7 +636,7 @@ void updateParentPointer(Node* crnt) {
 				for (size_t i = 0; i < j; i++){
 					this->erase(k[i]);
 				}
-				delete k;
+				tst.deallocate(k, ft::distance(first1, last1));
 					
 			}
 
@@ -729,21 +732,21 @@ void updateParentPointer(Node* crnt) {
 				return (const_iterator(&(*maximum(node)->last)));
 			}
 
-			// reverse_iterator rbegin(void) {
-			// 	return (reverse_iterator(iterator(&(*maximum()->last))));
-			// }
+			reverse_iterator rbegin(void) {
+				return (reverse_iterator(this->end()));
+			}
 
-			// const_reverse_iterator rbegin(void) const {
-			// 	return (const_reverse_iterator(const_iterator(&(*maximum()->last))));
-			// }
+			const_reverse_iterator rbegin(void) const {
+				return (const_reverse_iterator(this->end()));
+			}
 
-			// reverse_iterator rend(void) {
-			// 	return (reverse_iterator(iterator(&(*minimum()))));
-			// }
+			reverse_iterator rend(void) {
+				return (reverse_iterator(iterator(this->begin())));
+			}
 
-			// const_reverse_iterator rend(void) const {
-			// 	return (const_reverse_iterator(const_iterator(&(*minimum()))));
-			// }
+			const_reverse_iterator rend(void) const {
+				return (const_reverse_iterator(const_iterator(this->begin())));
+			}
 	};
 
 	template <class Key, class T, class Compare, class Alloc>

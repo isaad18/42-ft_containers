@@ -39,13 +39,13 @@ int main(){
 	}
 	ft::pair<int, int> k = ft::make_pair<int, int>(42, 44);
 	v.insert(k);
-	ft::map<int, int>::iterator it3 = v.begin();
+	// ft::map<int, int>::iterator it3 = v.begin();
 	// ft::map<int, int>::iterator it4 = v.end();
 	// for (int i = 0; i < 50; i++){
 	// 	v.deleteit(i);
 	// }
 	// --(--it2);
-	std::cout << it3->first << std::endl;
+	// std::cout << it3->first << std::endl;
 	// --it2;
 	// std::cout << (--v.end())->first << std::endl;
 	// for (; it != it2; it2--){
@@ -75,11 +75,11 @@ int main(){
 	// for (int i = 69; i < 100000; i++){
 	// 	v.erase(i);
 	// }
-	ft::map<int, int>::iterator it = v.begin();
-	// ft::map<int, int>::iterator it2 = v.end();
-	// (void)it;
-	// (void)it2;
-	// for (; it != it2; it++){
+	ft::map<int, int>::reverse_iterator it = v.rbegin();
+	ft::map<int, int>::reverse_iterator it2 = v.rend();
+	(void)it;
+	(void)it2;
+	for (; it != it2; it++){
 		std::cout << it->first << std::endl;
 	}
 		// ++it;

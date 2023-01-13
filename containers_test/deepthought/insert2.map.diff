@@ -2,19 +2,11 @@
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-33c33
+32c32
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-47c47
+45c45
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-54c54
-< - key: 35 | value: funny
----
-> - key: 35 | value: this key is already inside
-60c60
-< - key: 55 | value: fuzzy
----
-> - key: 55 | value: inside map too
