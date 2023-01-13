@@ -2,10 +2,6 @@
 < max_size: 461168601842738790
 ---
 > max_size: 2305843009213693951
-35c35
-< lower_bound: key: 10 | value: 30
----
-> lower_bound: end()
 44c44
 < max_size: 461168601842738790
 ---

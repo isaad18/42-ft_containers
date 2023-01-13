@@ -11,7 +11,7 @@ int		main(void)
 	unsigned int lst_size = 7;
 	for (unsigned int i = 0; i < lst_size; ++i)
 		lst.push_back(T3(lst_size - i, i));
-
+	std::cout << "lst size: " << lst.size() << std::endl;
 	TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
 	TESTED_NAMESPACE::map<T1, T2>::iterator it = mp.begin(), ite = mp.end();
 

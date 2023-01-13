@@ -139,7 +139,7 @@ namespace ft{
 					l->index = 0;
 					l->parent = toAdd;
 					l->height = 1;
-					_size++;
+					// _size++;
 					return l;
 				}
 				if (_comp(key, toAdd->all.first)){
@@ -201,97 +201,97 @@ namespace ft{
 
 
 			Node* rotateLeftdelete(Node* crnt) {
-			    Node* right = crnt->right;
-			    crnt->right = right->left;
-			    right->left = crnt;
-			    right->parent = crnt->parent;
-			    crnt->parent = right;
-			    if (crnt->right != nullptr) {
-			        crnt->right->parent = crnt;
-			    }
-			    return right;
+				Node* right = crnt->right;
+				crnt->right = right->left;
+				right->left = crnt;
+				right->parent = crnt->parent;
+				crnt->parent = right;
+				if (crnt->right != nullptr) {
+					crnt->right->parent = crnt;
+				}
+				return right;
 			}
 
 			Node* rotateRightdelete(Node* crnt) {
-			    Node* left = crnt->left;
-			    crnt->left = left->right;
-			    left->right = crnt;
-			    left->parent = crnt->parent;
-			    crnt->parent = left;
-			    if (crnt->left != nullptr) {
-			        crnt->left->parent = crnt;
-			    }
-			    return left;
+				Node* left = crnt->left;
+				crnt->left = left->right;
+				left->right = crnt;
+				left->parent = crnt->parent;
+				crnt->parent = left;
+				if (crnt->left != nullptr) {
+					crnt->left->parent = crnt;
+				}
+				return left;
 			}
 
 			Node* Max(Node* crnt) {
-    if (crnt == nullptr) {
-        return nullptr;
-    }
-    while (crnt->right != nullptr) {
-        crnt = crnt->right;
-    }
-    return crnt;
+	if (crnt == nullptr) {
+		return nullptr;
+	}
+	while (crnt->right != nullptr) {
+		crnt = crnt->right;
+	}
+	return crnt;
 }
 
 			Node* Remove(Node* crnt, key_type key) {
-    if (crnt == nullptr) {
-        return nullptr;
-    }
+	if (crnt == nullptr) {
+		return nullptr;
+	}
 	else if(_size == 1){
 		_alloca.deallocate(node, 1);
 		// node = nullptr;
 		return nullptr;
 	}
-    if (key < crnt->all.first) {
-        crnt->left = Remove(crnt->left, key);
-        if (crnt->left != nullptr)
-            crnt->left->parent = crnt;
-    }
-    else if (key > crnt->all.first) {
-        crnt->right = Remove(crnt->right, key);
-        if (crnt->right != nullptr)
-            crnt->right->parent = crnt;
-    }
-    else {
-        if (crnt->left == nullptr && crnt->right == nullptr) {
-            _alloca.deallocate(crnt, 1);
+	if (key < crnt->all.first) {
+		crnt->left = Remove(crnt->left, key);
+		if (crnt->left != nullptr)
+			crnt->left->parent = crnt;
+	}
+	else if (key > crnt->all.first) {
+		crnt->right = Remove(crnt->right, key);
+		if (crnt->right != nullptr)
+			crnt->right->parent = crnt;
+	}
+	else {
+		if (crnt->left == nullptr && crnt->right == nullptr) {
+			_alloca.deallocate(crnt, 1);
 			if (_size == 1)
 				node = nullptr;
-            return nullptr;
-        }
-        else if (crnt->left == nullptr) {
-            Node* temp = crnt->right;
-            _alloca.deallocate(crnt, 1);
-            return temp;
-        }
-        else if (crnt->right == nullptr) {
-            Node* temp = crnt->left;
-            _alloca.deallocate(crnt, 1);
-            return temp;
-        }
-        else {
-            Node* predecessor = Max(crnt->left);
-            crnt->all = predecessor->all;
-            crnt->left = Remove(crnt->left, predecessor->all.first);
+			return nullptr;
+		}
+		else if (crnt->left == nullptr) {
+			Node* temp = crnt->right;
+			_alloca.deallocate(crnt, 1);
+			return temp;
+		}
+		else if (crnt->right == nullptr) {
+			Node* temp = crnt->left;
+			_alloca.deallocate(crnt, 1);
+			return temp;
+		}
+		else {
+			Node* predecessor = Max(crnt->left);
+			crnt->all = predecessor->all;
+			crnt->left = Remove(crnt->left, predecessor->all.first);
 			updateParentPointer(crnt);
-        }
-    }
-    crnt->height = std::max(Height(crnt->right), Height(crnt->left)) + 1;
-    int balance = Balance(crnt);
-    if (balance > 1 && Balance(crnt->left) == -1){
-        crnt->left = rotateLeft(crnt->left);
-        return rotateRight(crnt);
-    }
-    if (balance < -1 && Balance(crnt->right) == 1){
-        crnt->right = rotateRight(crnt->right);
-        return rotateLeft(crnt);
-    }
-    if (balance > 1 && Balance(crnt->left) == 1)
-        return rotateRight(crnt);
-    if (balance < -1 && Balance(crnt->right) == -1)
-        return rotateLeft(crnt);
-    return crnt;
+		}
+	}
+	crnt->height = std::max(Height(crnt->right), Height(crnt->left)) + 1;
+	int balance = Balance(crnt);
+	if (balance > 1 && Balance(crnt->left) == -1){
+		crnt->left = rotateLeft(crnt->left);
+		return rotateRight(crnt);
+	}
+	if (balance < -1 && Balance(crnt->right) == 1){
+		crnt->right = rotateRight(crnt->right);
+		return rotateLeft(crnt);
+	}
+	if (balance > 1 && Balance(crnt->left) == 1)
+		return rotateRight(crnt);
+	if (balance < -1 && Balance(crnt->right) == -1)
+		return rotateLeft(crnt);
+	return crnt;
 }
 
 
@@ -299,17 +299,17 @@ namespace ft{
 
 
 void updateParentPointer(Node* crnt) {
-    if (crnt == nullptr) {
-        return;
-    }
-    if (crnt->left != nullptr) {
-        crnt->left->parent = crnt;
-        updateParentPointer(crnt->left);
-    }
-    if (crnt->right != nullptr) {
-        crnt->right->parent = crnt;
-        updateParentPointer(crnt->right);
-    }
+	if (crnt == nullptr) {
+		return;
+	}
+	if (crnt->left != nullptr) {
+		crnt->left->parent = crnt;
+		updateParentPointer(crnt->left);
+	}
+	if (crnt->right != nullptr) {
+		crnt->right->parent = crnt;
+		updateParentPointer(crnt->right);
+	}
 }
 
 
@@ -335,11 +335,11 @@ void updateParentPointer(Node* crnt) {
 
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(nullptr), searched(nullptr), parent(nullptr), _comp(comp), _size(0){
-				insert(first, last);
-				// while (first != last){
-				// 	this->insert(first->first, first->second);
-				// 	first++;
-				// }
+				// insert(first, last);
+				while (first != last){
+					this->insert(first->first, first->second);
+					first++;
+				}
 			}
 
 			map (const map& x){
@@ -427,6 +427,9 @@ void updateParentPointer(Node* crnt) {
 				// if (search(key) == nullptr){
 				// 	ok = true;
 				// }
+				if (search(key) == nullptr)
+					_size++;
+				std::cout << "__" << _size << std::endl;
 				node = insertAVL(node, key, value);
 				// if (ok){
 				if (node != nullptr){
@@ -611,7 +614,8 @@ void updateParentPointer(Node* crnt) {
 			size_t erase (const key_type& k){
 				if (search(k) != nullptr){
 					deleteit(k);
-					_size--;
+					if (_size > 0)
+						--_size;
 					return 1;
 				}
 				// std::cout << maximum(node)->all.first << std::endl;
@@ -670,29 +674,23 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			iterator lower_bound (const key_type& k){
-				iterator it = begin();
-				iterator it2 = end();
-				for (;it != it2; it++){
-					if (_comp(k, it->first)){
-						if (k == (it - 1)->first)
-							return --it;
+				iterator  it = begin();
+				while (it != end()) {
+					if (!_comp(it->first, k))
 						return it;
-					}
+					it++;
 				}
-				return it2;
+				  return it;
 			}
 
 			const_iterator lower_bound (const key_type& k) const{
-				const_iterator it = begin();
-				const_iterator it2 = end();
-				for (;it != it2; it++){
-					if (_comp(k, it->first)){
-						if (k == (it - 1)->first)
-							return --it;
+				iterator  it = begin();
+				while (it != end()) {
+					if (!_comp(it->first, k))
 						return it;
-					}
+					it++;
 				}
-				return it2;
+				  return it;
 			}
 
 			pair<const_iterator,const_iterator> equal_range (const key_type& k) const{
