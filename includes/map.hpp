@@ -345,6 +345,12 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			map (const map& x){
+				this->_size = 0;
+				this->_comp = x._comp;
+				this->_alloc = x._alloc;
+				node = nullptr;
+				searched = nullptr;
+				parent = nullptr;
 				iterator it = x.begin();
 				iterator it2 = x.end();
 				this->insert(it, it2);
