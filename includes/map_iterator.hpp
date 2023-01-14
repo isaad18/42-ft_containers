@@ -13,7 +13,6 @@ namespace ft{
 	template <typename T, typename B>
 	class m_iterator: public vc_iterator<ft::random_access_iterator_tag, T>{
 		private:
-			T *ptr;
 		public:
 			typedef ft::vc_iterator<ft::random_access_iterator_tag, T> iterator_traits;
 			typedef typename iterator_traits::difference_type difference_type;
@@ -22,6 +21,7 @@ namespace ft{
 			typedef typename iterator_traits::value_type value_type;
 			typedef typename iterator_traits::iterator_category iterator_category;
 		public:
+			T *ptr;
 			m_iterator(): ptr(NULL) {}
 			template<class U>
 			m_iterator(U ptr) : ptr(ptr){}

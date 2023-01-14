@@ -7,7 +7,6 @@ namespace ft{
 	template <class T, class B>
 	class map_reverse_iterator: public vc_iterator<ft::random_access_iterator_tag, T>{
 		private:
-			T *ptr;
 		public:
 			typedef ft::vc_iterator<ft::random_access_iterator_tag, T> iterator_traits;
 			typedef typename iterator_traits::difference_type difference_type;
@@ -16,14 +15,15 @@ namespace ft{
 			typedef typename iterator_traits::value_type value_type;
 			typedef typename iterator_traits::iterator_category iterator_category;
 		public:
+			T *ptr;
 			map_reverse_iterator(): ptr(NULL){}
-			map_reverse_iterator(T ptr) : ptr(ptr.base()){}
+			map_reverse_iterator(T ptr) : ptr(ptr.ptr){}
 			template<class U>
 			map_reverse_iterator(U ptr) : ptr(ptr){}
 			template<class U, class B1>
-			map_reverse_iterator(const m_iterator<U, B1> &other): ptr(const_cast<T *>(other.base())){}
+			map_reverse_iterator(const m_iterator<U, B1> &other): ptr(const_cast<T *>(other.ptr)){}
 			template<class U, class B1>
-			map_reverse_iterator(const map_reverse_iterator<U, B1> &other): ptr(const_cast<T *>(other.base())){}
+			map_reverse_iterator(const map_reverse_iterator<U, B1> &other): ptr(const_cast<T *>(other.ptr)){}
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 			B &operator*(){
 				T* tmp = ptr;
@@ -73,11 +73,12 @@ namespace ft{
 				}
 				return (tmp->all);
 			}
-			bool operator==(map_reverse_iterator other) const{ return &(*(this->ptr)) == &(*(other.base())); }
-			bool operator!=(map_reverse_iterator other) const{ return &(*(this->ptr)) != &(*(other.base())); }
-			bool operator>(map_reverse_iterator other) const{ return &(*(this->ptr)) < &(*(other.base())); }
-			bool operator<(map_reverse_iterator other) const{ return &(*(this->ptr)) > &(*(other.base())); }
-			T *base() const{ return ptr; }
+			bool operator==(map_reverse_iterator other) const{ return &(*(this->base())) == &(*(other.base())); }
+			bool operator!=(map_reverse_iterator other) const{ return &(*(this->base())) != &(*(other.base())); }
+			bool operator>(map_reverse_iterator other) const{ return &(*(this->base())) < &(*(other.base())); }
+			bool operator<(map_reverse_iterator other) const{ return &(*(this->base())) > &(*(other.base())); }
+			// template<class U, class B1>
+			m_iterator<T, B> base() const{ m_iterator<T, B> other(ptr); return other;}
 			T &operator[](difference_type num) {
 				return (*(*this + num));
 			}

@@ -150,10 +150,10 @@ namespace ft{
 					toAdd->right = insertAVL(toAdd->right, key, value); // insert larger
 					toAdd->right->parent = toAdd;
 				}
-				else{
-					if (toAdd->all.second == T())
-						toAdd->all.second = (value);
-				} // if he is adding value on the same key
+				// else{
+				// 	if (toAdd->all.second == T())
+				// 		toAdd->all.second = (value);
+				// } // if he is adding value on the same key
 				toAdd->height = std::max(Height(toAdd->right), Height(toAdd->left)) + 1;
 				// rotation part to add
 				int balance = Balance(toAdd);
@@ -332,6 +332,12 @@ void updateParentPointer(Node* crnt) {
 				bool operator()(const value_type& x, const value_type& y) const
 				{ return comp(x.first, y.first); }
 			};
+
+			void swap(ft::map<key_type, mapped_type> &other){
+				ft::swaps(_size, other._size);
+				// ft::swaps(_capacity, other._capacity);
+				ft::swaps(node, other.node);
+			}
 
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(nullptr), searched(nullptr), parent(nullptr), _comp(comp), _size(0){}
 
@@ -754,39 +760,39 @@ void updateParentPointer(Node* crnt) {
 			}
 	};
 
-	template <class Key, class T, class Compare, class Alloc>
+template <class Key, class T, class Compare, class Alloc>
   bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ) {
-	return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+    return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
   }
 
   template <class Key, class T, class Compare, class Alloc>
   bool operator!=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
-	return !(lhs == rhs);
+    return !(lhs == rhs);
   }
 
   template <class Key, class T, class Compare, class Alloc>
   bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
-	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
+    return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
   }
 
   template <class Key, class T, class Compare, class Alloc>
   bool operator<=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
-	return !(rhs < lhs);
+    return !(rhs < lhs);
   }
 
   template <class Key, class T, class Compare, class Alloc>
   bool operator>( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
-	return (rhs < lhs);
+    return (rhs < lhs);
   }
 
   template <class Key, class T, class Compare, class Alloc>
   bool operator>=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
-	return !(lhs < rhs);
+    return !(lhs < rhs);
   }
 
   template <class Key, class T, class Compare, class Alloc>
   void swap (ft::map<Key,T,Compare,Alloc>& x, ft::map<Key,T,Compare,Alloc>& y) {
-	x.swap(y);
+    x.swap(y);
   }
 }
 
