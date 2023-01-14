@@ -27,15 +27,15 @@ namespace ft{
 			m_iterator(U ptr) : ptr(ptr){}
 			m_iterator(T *ptr) : ptr(ptr){}
 			template<class U, class B1>
-			m_iterator(const m_iterator<U, B1> &other): ptr(const_cast<T*>(other.base())){}
+			m_iterator(const m_iterator<U, B1> &other): ptr((other.base())){}
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 
-			B &operator*(){ return base()->all; }
+			// B &operator*(){ return base()->all; }
 			B &operator*() const{ return base()->all; }
-			bool operator==(const m_iterator &other) const{ return &(*(this->ptr)) == &(*(other.base())); }
-			bool operator!=(const m_iterator &other) const{ return &(*(this->ptr)) != &(*(other.base())); }
-			bool operator>(const m_iterator &other) const{ return &(*(this->ptr)) > &(*(other.base())); }
-			bool operator<(const m_iterator &other) const{ return &(*(this->ptr)) < &(*(other.base())); }
+			bool operator==(const m_iterator other) const{ return &(*(this->ptr)) == &(*(other.base())); }
+			bool operator!=(const m_iterator other) const{ return &(*(this->ptr)) != &(*(other.base())); }
+			bool operator>(const m_iterator other) const{ return &(*(this->ptr)) > &(*(other.base())); }
+			bool operator<(const m_iterator other) const{ return &(*(this->ptr)) < &(*(other.base())); }
 			T *base() const{ return ptr; }
 			T &operator[](difference_type num) {
 				return (*(*this + num));

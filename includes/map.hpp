@@ -351,8 +351,8 @@ void updateParentPointer(Node* crnt) {
 				node = nullptr;
 				searched = nullptr;
 				parent = nullptr;
-				iterator it = x.begin();
-				iterator it2 = x.end();
+				const_iterator it = x.begin();
+				const_iterator it2 = x.end();
 				this->insert(it, it2);
 			}
 
@@ -503,15 +503,14 @@ void updateParentPointer(Node* crnt) {
 			T& operator[]( const Key& key ) {
 				Node *it = NULL;
 				if (node != nullptr){
-					if ((it = search(key)) == nullptr){
+					if (search(key) == nullptr){
 						insert(key, T());
-						it = search(key);
 					}
 				}
 				else{
 					insert(key, T());
-					it = search(key);
 				}
+				it = search(key);
 				return it->all.second;
 			}
 
@@ -693,7 +692,7 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			const_iterator lower_bound (const key_type& k) const{
-				iterator  it = begin();
+				const_iterator  it = begin();
 				while (it != end()) {
 					if (!_comp(it->first, k))
 						return it;
@@ -735,7 +734,7 @@ void updateParentPointer(Node* crnt) {
 			const_iterator end() const{
 				if (maximum(node) == nullptr)
 					return (const_iterator());
-				return (const_iterator(&(*maximum(node)->last)));
+				return (const_iterator(&(*(maximum(node)->last))));
 			}
 
 			reverse_iterator rbegin(void) {
