@@ -151,7 +151,7 @@ namespace ft{
 					toAdd->right->parent = toAdd;
 				}
 				else{
-					if (toAdd->all.second >= value)
+					if (toAdd->all.second == T())
 						toAdd->all.second = (value);
 				} // if he is adding value on the same key
 				toAdd->height = std::max(Height(toAdd->right), Height(toAdd->left)) + 1;
@@ -409,7 +409,7 @@ void updateParentPointer(Node* crnt) {
 			pair<iterator,bool> insert (const value_type& val){
 				bool ok = false;
 				(void)ok;
-				if (search(val.first) != nullptr)
+				if (search(val.first) == nullptr)
 					ok = true;
 				insert(val.first, val.second);
 				return ft::make_pair(iterator(search(val.first)), ok);

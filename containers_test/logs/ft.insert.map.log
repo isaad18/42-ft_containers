@@ -1,6 +1,6 @@
 	-- [0] --
 insert return: key: 42 | value: lol
-Created new node: 0
+Created new node: 1
 size: 1
 max_size: 768614336404564650
 
@@ -9,7 +9,7 @@ Content is:
 ###############################################
 	-- [1] --
 insert return: key: 42 | value: lol
-Created new node: 1
+Created new node: 0
 size: 1
 max_size: 768614336404564650
 
@@ -18,7 +18,7 @@ Content is:
 ###############################################
 	-- [2] --
 insert return: key: 50 | value: mdr
-Created new node: 0
+Created new node: 1
 size: 2
 max_size: 768614336404564650
 
@@ -28,7 +28,7 @@ Content is:
 ###############################################
 	-- [3] --
 insert return: key: 35 | value: funny
-Created new node: 0
+Created new node: 1
 size: 3
 max_size: 768614336404564650
 
@@ -39,7 +39,7 @@ Content is:
 ###############################################
 	-- [4] --
 insert return: key: 45 | value: bunny
-Created new node: 0
+Created new node: 1
 size: 4
 max_size: 768614336404564650
 
@@ -51,7 +51,7 @@ Content is:
 ###############################################
 	-- [5] --
 insert return: key: 21 | value: fizz
-Created new node: 0
+Created new node: 1
 size: 5
 max_size: 768614336404564650
 
@@ -64,7 +64,7 @@ Content is:
 ###############################################
 	-- [6] --
 insert return: key: 38 | value: buzz
-Created new node: 0
+Created new node: 1
 size: 6
 max_size: 768614336404564650
 

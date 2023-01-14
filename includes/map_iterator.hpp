@@ -34,8 +34,8 @@ namespace ft{
 			B &operator*() const{ return base()->all; }
 			bool operator==(const m_iterator &other) const{ return &(*(this->ptr)) == &(*(other.base())); }
 			bool operator!=(const m_iterator &other) const{ return &(*(this->ptr)) != &(*(other.base())); }
-			// bool operator>(const m_iterator &other) const{ return &(*(this->ptr)) > &(*(other.base())); }
-			// bool operator<(const m_iterator &other) const{ return &(*(this->ptr)) < &(*(other.base())); }
+			bool operator>(const m_iterator &other) const{ return &(*(this->ptr)) > &(*(other.base())); }
+			bool operator<(const m_iterator &other) const{ return &(*(this->ptr)) < &(*(other.base())); }
 			T *base() const{ return ptr; }
 			T &operator[](difference_type num) {
 				return (*(*this + num));

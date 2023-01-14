@@ -1,55 +1,27 @@
-3c3
-< Created new node: 1
----
-> Created new node: 0
 5c5
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-12c12
-< Created new node: 0
----
-> Created new node: 1
 14c14
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-21c21
-< Created new node: 1
----
-> Created new node: 0
 23c23
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-31c31
-< Created new node: 1
----
-> Created new node: 0
 33c33
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-42c42
-< Created new node: 1
----
-> Created new node: 0
 44c44
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-54c54
-< Created new node: 1
----
-> Created new node: 0
 56c56
 < max_size: 288230376151711743
 ---
 > max_size: 768614336404564650
-67c67
-< Created new node: 1
----
-> Created new node: 0
 69c69
 < max_size: 288230376151711743
 ---
