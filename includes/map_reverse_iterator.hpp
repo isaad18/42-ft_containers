@@ -77,7 +77,6 @@ namespace ft{
 			bool operator!=(map_reverse_iterator other) const{ return &(*(this->base())) != &(*(other.base())); }
 			bool operator>(map_reverse_iterator other) const{ return &(*(this->base())) < &(*(other.base())); }
 			bool operator<(map_reverse_iterator other) const{ return &(*(this->base())) > &(*(other.base())); }
-			// template<class U, class B1>
 			m_iterator<T, B> base() const{ m_iterator<T, B> other(ptr); return other;}
 			T &operator[](difference_type num) {
 				return (*(*this + num));
@@ -108,55 +107,46 @@ namespace ft{
 			}
 
 			map_reverse_iterator &operator--() {
-				if (ptr->index == 2){
-					ptr = ptr->last;
-				}
-				else if (ptr->right != nullptr) {
-					ptr = ptr->right;
-					while (ptr->left != nullptr){
-						ptr = ptr->left;
-					}
-				}
-				else {
-					if (ptr->parent != nullptr) {
-						if (ptr->parent->left == ptr){
-							ptr = ptr->parent;
-						}
-						else if (ptr->parent->right == ptr){
-							while (ptr->parent->right == ptr)
-								ptr = ptr->parent;
-							ptr = ptr->parent;
-						}
-					}
-				}
+				decrement_rev();
 				return *this;
 			}
 			map_reverse_iterator &operator++() {
-				if (ptr->index == 1)
-					ptr = ptr->parent;
-				else if (ptr->left != nullptr) {
-					ptr = ptr->left;
-					while (ptr->right != nullptr){
-						ptr = ptr->right;
-					}
-				}
-				else {
-					if (ptr->parent != nullptr) {
-						if (ptr->parent->right == ptr){
-							ptr = ptr->parent;
-						}
-						else if (ptr->parent->left == ptr){
-							while (ptr->parent->left == ptr)
-								ptr = ptr->parent;
-							ptr = ptr->parent;
-						}
-					}
-				}
+				increment_rev();
 				return *this;
 			}
 
 			map_reverse_iterator operator++(int){
 				map_reverse_iterator tmp(ptr);
+				increment_rev();
+				return tmp;
+			}
+			map_reverse_iterator operator--(int){
+				map_reverse_iterator tmp1(ptr);
+				decrement_rev();
+				return (tmp1);
+			}
+			map_reverse_iterator operator-(int n) const{
+				map_reverse_iterator tmp(ptr);
+				for (int i = 0; i < n; i++)
+					++tmp.ptr;
+				return tmp;
+			}
+			map_reverse_iterator operator+(int n) const{
+				map_reverse_iterator tmp(ptr);
+				for (int i = 0; i < n; i++)
+					--tmp.ptr;
+				return tmp;
+			}
+			map_reverse_iterator &operator-=(int n){
+				ptr = ptr + n;
+				return *this;
+			}
+			map_reverse_iterator &operator+=(int n){
+				ptr = ptr - n;
+				return *this;
+			}
+
+			void increment_rev(){
 				if (ptr->index == 1)
 					ptr = ptr->parent;
 				else if (ptr->left != nullptr) {
@@ -177,10 +167,9 @@ namespace ft{
 						}
 					}
 				}
-				return tmp;
 			}
-			map_reverse_iterator operator--(int){
-				map_reverse_iterator tmp1(ptr);
+
+			void decrement_rev(){
 				if (ptr->index == 2){
 					ptr = ptr->last;
 				}
@@ -204,27 +193,29 @@ namespace ft{
 						}
 					}
 				}
-				return (tmp1);
 			}
-			map_reverse_iterator operator-(int n) const{
-				map_reverse_iterator tmp(ptr);
-				for (int i = 0; i < n; i++)
-					++tmp.ptr;
-				return tmp;
-			}
-			map_reverse_iterator operator+(int n) const{
-				map_reverse_iterator tmp(ptr);
-				for (int i = 0; i < n; i++)
-					--tmp.ptr;
-				return tmp;
-			}
-			map_reverse_iterator &operator-=(int n){
-				ptr = ptr + n;
-				return *this;
-			}
-			map_reverse_iterator &operator+=(int n){
-				ptr = ptr - n;
-				return *this;
+
+			void decrement_rev_se(){
+				if (ptr->index == 1)
+					ptr = ptr->parent;
+				else if (ptr->right != nullptr) {
+					ptr = ptr->right;
+					while (ptr->left != nullptr){
+						ptr = ptr->left;
+					}
+				}
+				else {
+					if (ptr->parent != nullptr) {
+						if (ptr->parent->left == ptr){
+							ptr = ptr->parent;
+						}
+						else if (ptr->parent->right == ptr){
+							while (ptr->parent->right == ptr)
+								ptr = ptr->parent;
+							ptr = ptr->parent;
+						}
+					}
+				}
 			}
 	};
 }

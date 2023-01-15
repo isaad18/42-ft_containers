@@ -139,33 +139,27 @@ namespace ft{
 					l->index = 0;
 					l->parent = toAdd;
 					l->height = 1;
-					// _size++;
 					return l;
 				}
 				if (_comp(key, toAdd->all.first)){
-					toAdd->left = insertAVL(toAdd->left, key, value); // insert smaller
+					toAdd->left = insertAVL(toAdd->left, key, value);
 					toAdd->left->parent = toAdd;
 				}
 				else if (_comp(toAdd->all.first, key)){
-					toAdd->right = insertAVL(toAdd->right, key, value); // insert larger
+					toAdd->right = insertAVL(toAdd->right, key, value);
 					toAdd->right->parent = toAdd;
 				}
-				// else{
-				// 	if (toAdd->all.second == T())
-				// 		toAdd->all.second = (value);
-				// } // if he is adding value on the same key
 				toAdd->height = std::max(Height(toAdd->right), Height(toAdd->left)) + 1;
-				// rotation part to add
 				int balance = Balance(toAdd);
-				if (balance > 1 && _comp(key, toAdd->left->all.first)) // if the left side is bigger than the right side and the key that has been added is smaller than the left key so the left key can be root just rotate right
+				if (balance > 1 && _comp(key, toAdd->left->all.first))
 					return rotateRight(toAdd);
-				if (balance < -1 && _comp(toAdd->right->all.first, key)) // if the right side is bigger than the left side and the key that has been added is smaller than the right key so the right key can be root just rotate left
+				if (balance < -1 && _comp(toAdd->right->all.first, key))
 					return rotateLeft(toAdd);
-				if (balance > 1 && _comp(toAdd->left->all.first, key)){ // if the left side is bigger than the right side and the key that has been added is bigger than the left key so the left key can't be directly a root just rotate left for the left branch then right to the root
+				if (balance > 1 && _comp(toAdd->left->all.first, key)){
 					toAdd->left = rotateLeft(toAdd->left);
 					return rotateRight(toAdd);
 				}
-				if (balance < -1 && _comp(key, toAdd->right->all.first)){ // if the left side is bigger than the right side and the key that has been added is bigger than the right key so the right key can't be directly a root just rotate right for the right branch then left to the root
+				if (balance < -1 && _comp(key, toAdd->right->all.first)){
 					toAdd->right = rotateRight(toAdd->right);
 					return rotateLeft(toAdd);
 				}
@@ -335,7 +329,6 @@ void updateParentPointer(Node* crnt) {
 
 			void swap(ft::map<key_type, mapped_type> &other){
 				ft::swaps(_size, other._size);
-				// ft::swaps(_capacity, other._capacity);
 				ft::swaps(node, other.node);
 			}
 
@@ -343,7 +336,6 @@ void updateParentPointer(Node* crnt) {
 
 			template <class InputIterator>
 			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(nullptr), searched(nullptr), parent(nullptr), _comp(comp), _size(0){
-				// insert(first, last);
 				while (first != last){
 					this->insert(first->first, first->second);
 					first++;
@@ -390,8 +382,6 @@ void updateParentPointer(Node* crnt) {
 					if (root->parent)
 						std::cout << "Parent: " << root->parent->all.first << std::endl;
 				std::cout << "NODE: " << root->all.first << "            ";
-				// if (node->last->index == 2) std::cout << "wohooooo" << std::endl; 
-				// if (node->last->index == 1) std::cout << "wohooooo" << std::endl; 
 			  print2DUtil(root->left, space);
 			}
 
@@ -422,12 +412,6 @@ void updateParentPointer(Node* crnt) {
 			}
 			private:
 			value_type &insert(key_type key, T value){
-				// size_t tmp = _size;
-				// bool ok = false;
-				// (void)ok;
-				// if (search(key) == nullptr){
-				// 	ok = true;
-				// }
 				if (node != nullptr){
 					Node *tmp1 = node;
 					while (tmp1->right != nullptr)
@@ -437,15 +421,9 @@ void updateParentPointer(Node* crnt) {
 					_alloca.deallocate(tmp1->last, 1);
 					tmp1->last = nullptr;
 				}
-				// bool ok = false;
-				// if (search(key) == nullptr){
-				// 	ok = true;
-				// }
 				if (search(key) == nullptr)
 					_size++;
-				// std::cout << "__" << _size << std::endl;
 				node = insertAVL(node, key, value);
-				// if (ok){
 				if (node != nullptr){
 					Node *tmp = node;
 					while (tmp->right != NULL)
@@ -455,41 +433,6 @@ void updateParentPointer(Node* crnt) {
 					tmp->last->index = 1;
 					tmp->index = 2;
 				}
-				// }
-				// if (tmp == 0 && _size == 1){
-				// 	sorted = _alloc.allocate(1);
-				// 	sorted[0] = node->all;
-				// }
-				// else if (tmp < _size){
-				// 	value_type* newArray = _alloc.allocate(_size);
-				// 	if (tmp > 0) {
-				// 		for (size_t i = 0; i < tmp; i++)
-				// 			newArray[i] = sorted[i];
-				// 	}
-				// 	newArray[tmp].first = key;
-				// 	newArray[tmp].second = value;
-				// 	if (tmp > 0) {
-				// 		_alloc.deallocate(sorted, tmp);
-				// 	}
-				// 	sorted = newArray;
-				// 	for (size_t i = 0; i < _size - 1; i++){
-				// 		if (_comp(key, sorted[i].first)){
-				// 			for (size_t j = _size; j > i; j--){
-				// 				sorted[j] = sorted[j - 1];
-				// 			}
-				// 			sorted[i] = search(key)->all;
-				// 			break ;
-				// 		}
-				// 	}
-				// }
-				// else{
-				// 	for (size_t i = 0; i < _size; i++){
-				// 		if (sorted[i].first == key){
-				// 			sorted[i].second = value;
-				// 			break ;
-				// 		}
-				// 	}
-				// }
 				return search(key)->all;
 			}
 			public:
@@ -507,7 +450,7 @@ void updateParentPointer(Node* crnt) {
 			size_t max_size() const{ return static_cast<std::size_t>(-1) / sizeof(T); }
 
 			T& operator[]( const Key& key ) {
-				Node *it = NULL;
+				iterator it;
 				if (node != nullptr){
 					if (search(key) == nullptr){
 						insert(key, T());
@@ -516,8 +459,8 @@ void updateParentPointer(Node* crnt) {
 				else{
 					insert(key, T());
 				}
-				it = search(key);
-				return it->all.second;
+				it = iterator(search(key));
+				return it->second;
 			}
 
 			T& at( const Key& key )
@@ -539,20 +482,6 @@ void updateParentPointer(Node* crnt) {
 					return nullptr;
 				return searched;
 			}
-
-			// Node *search1(key_type key)const{
-			// 	// searched = NULL;
-			// 	// parent = NULL;
-			// 	search_N(node, key);
-			// 	return searched;
-			// }
-
-			// Node *search(key_type key) const{
-			// 	searched = nullptr;
-			// 	parent = nullptr;
-			// 	search_N(node, key);
-			// 	return searched;
-			// }
 
 			void deleteit(key_type key){
 				if (node != nullptr){
@@ -621,7 +550,6 @@ void updateParentPointer(Node* crnt) {
 
 			void erase (iterator position){
 				this->erase(position->first);
-				// _size--;
 			}
 
 			size_t erase (const key_type& k){
@@ -631,8 +559,6 @@ void updateParentPointer(Node* crnt) {
 						--_size;
 					return 1;
 				}
-				// std::cout << maximum(node)->all.first << std::endl;
-				// std::cout << minimum(node)->all.first << std::endl;
 				return 0;
 			}
 

@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <memory>
 #include <cstddef>
+#include <vector>
 
 namespace ft{
 	template <typename T, class Alloc = std::allocator<T> >

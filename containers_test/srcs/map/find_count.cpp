@@ -23,8 +23,6 @@ void	ft_count(T1 const &k)
 
 int		main(void)
 {
-	std::cout << "____________________SFGDHDFGDSAFDGFHFFDGHHRE_____________________" << std::endl;
-
 	mp[42] = "fgzgxfn";
 	mp[25] = "funny";
 	mp[80] = "hey";

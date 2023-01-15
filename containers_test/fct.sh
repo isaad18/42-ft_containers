@@ -14,10 +14,9 @@ include_path="../includes"
 srcs="srcs"
 
 CC="clang++"
-CFLAGS="-Wall -Wextra -Werror -g3 -std=c++98"
+CFLAGS="-Wall -Wextra -Werror -std=c++98"
 # CFLAGS+=" -fsanitize=address -g3"
 
-# ft_compile_output=""
 ft_compile_output="/dev/null"
 std_compile_output="/dev/null"
 
@@ -173,7 +172,6 @@ function main () {
 
 	for container in ${containers[@]}; do
 		printf "%40s\n" $container
-		# do_test $container
 		do_test $container 2>/dev/null
 	done
 }

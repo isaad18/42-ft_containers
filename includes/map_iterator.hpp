@@ -30,7 +30,6 @@ namespace ft{
 			m_iterator(const m_iterator<U, B1> &other): ptr((other.base())){}
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 
-			// B &operator*(){ return base()->all; }
 			B &operator*() const{ return base()->all; }
 			bool operator==(const m_iterator other) const{ return &(*(this->ptr)) == &(*(other.base())); }
 			bool operator!=(const m_iterator other) const{ return &(*(this->ptr)) != &(*(other.base())); }
@@ -43,55 +42,46 @@ namespace ft{
 			B *operator->() const { return &(ptr->all); }
 
 			m_iterator &operator++() {
-				if (ptr->index == 2){
-					ptr = ptr->last;
-				}
-				else if (ptr->right != nullptr) {
-					ptr = ptr->right;
-					while (ptr->left != nullptr){
-						ptr = ptr->left;
-					}
-				}
-				else {
-					if (ptr->parent != nullptr) {
-						if (ptr->parent->left == ptr){
-							ptr = ptr->parent;
-						}
-						else if (ptr->parent->right == ptr){
-							while (ptr->parent->right == ptr)
-								ptr = ptr->parent;
-							ptr = ptr->parent;
-						}
-					}
-				}
+				increment();
 				return *this;
 			}
 			m_iterator &operator--() {
-				if (ptr->index == 1)
-					ptr = ptr->parent;
-				else if (ptr->left != nullptr) {
-					ptr = ptr->left;
-					while (ptr->right != nullptr){
-						ptr = ptr->right;
-					}
-				}
-				else {
-					if (ptr->parent != nullptr) {
-						if (ptr->parent->right == ptr){
-							ptr = ptr->parent;
-						}
-						else if (ptr->parent->left == ptr){
-							while (ptr->parent->left == ptr)
-								ptr = ptr->parent;
-							ptr = ptr->parent;
-						}
-					}
-				}
+				decrement();
 				return *this;
 			}
 
 			m_iterator operator--(int){
 				m_iterator tmp(ptr);
+				decrement();
+				return tmp;
+			}
+			m_iterator operator++(int){
+				m_iterator tmp1(ptr);
+				increment();
+				return (tmp1);
+			}
+			m_iterator operator+(int n) const{
+				m_iterator tmp(ptr);
+				for (int i = 0; i < n; i++)
+					++tmp.ptr;
+				return tmp;
+			}
+			m_iterator operator-(int n) const{
+				m_iterator tmp(ptr);
+				for (int i = 0; i < n; i++)
+					--tmp.ptr;
+				return tmp;
+			}
+			m_iterator &operator+=(int n){
+				ptr = ptr + n;
+				return *this;
+			}
+			m_iterator &operator-=(int n){
+				ptr = ptr - n;
+				return *this;
+			}
+
+			void decrement(){
 				if (ptr->index == 1)
 					ptr = ptr->parent;
 				else if (ptr->left != nullptr) {
@@ -112,10 +102,9 @@ namespace ft{
 						}
 					}
 				}
-				return tmp;
 			}
-			m_iterator operator++(int){
-				m_iterator tmp1(ptr);
+
+			void increment(){
 				if (ptr->index == 2){
 					ptr = ptr->last;
 				}
@@ -139,83 +128,10 @@ namespace ft{
 						}
 					}
 				}
-				return (tmp1);
 			}
-			m_iterator operator+(int n) const{
-				m_iterator tmp(ptr);
-				for (int i = 0; i < n; i++)
-					++tmp.ptr;
-				return tmp;
-			}
-			m_iterator operator-(int n) const{
-				m_iterator tmp(ptr);
-				for (int i = 0; i < n; i++)
-					--tmp.ptr;
-				return tmp;
-			}
-			m_iterator &operator+=(int n){
-				ptr = ptr + n;
-				return *this;
-			}
-			m_iterator &operator-=(int n){
-				ptr = ptr - n;
-				return *this;
-			}
+
 	};
 
 }
-
-// template <typename T, typename B>
-// bool operator==(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T, B> &rhs){ return lhs.base() == rhs.base(); }
-
-// template <typename T, typename T1, typename B, typename B1>
-// bool operator==(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T1, B1> &rhs){ return lhs.base() == rhs.base(); }
-
-// template <typename T, typename B>
-// bool operator!=(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T, B> &rhs){ return lhs.base() != rhs.base(); }
-
-// template <typename T, typename T1, typename B, typename B1>
-// bool operator!=(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T1, B1> &rhs){ return lhs.base() != rhs.base(); }
-
-// template <typename T, typename B>
-// bool operator>(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T, B> &rhs){ return lhs.base() > rhs.base(); }
-
-// template <typename T, typename T1, typename B, typename B1>
-// bool operator>( const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T1, B1> &rhs){ return lhs.base() > rhs.base(); }
-
-// template <typename T, typename B>
-// bool operator>=( const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T, B> &rhs){ return lhs.base() >= rhs.base(); }
-
-// template <typename T, typename T1, typename B, typename B1>
-// bool operator>=( const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T1, B1> &rhs){ return lhs.base() >= rhs.base(); }
-
-// template <typename T, typename B>
-// bool operator<(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T, B> &rhs){ return lhs.base() < rhs.base(); }
-
-// template <typename T, typename T1, typename B, typename B1>
-// bool operator<(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T1, B1> &rhs){ return lhs.base() < rhs.base(); }
-
-// template <typename T, typename B>
-// bool operator<=(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T, B> &rhs){ return lhs.base() <= rhs.base(); }
-
-// template <typename T, typename T1, typename B, typename B1>
-// bool operator<=(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T1, B1> &rhs){ return lhs.base() <= rhs.base(); }
-
-// template <typename T, typename B>
-// ptrdiff_t operator-(const ft::m_iterator<T, B> &lhs,const ft::m_iterator<T, B> &rhs){ return lhs.base() - rhs.base(); }
-
-// template <typename T, typename T1, typename B, typename B1>
-// ptrdiff_t operator-(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T1, B1> &rhs){ return lhs.base() - rhs.base(); }
-
-// template <typename T, typename B>
-// ptrdiff_t operator+(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T, B> &rhs){ return lhs.base() + rhs.base(); }
-
-// template <typename T, typename T1, typename B, typename B1>
-// ptrdiff_t operator+(const ft::m_iterator<T, B> &lhs, const ft::m_iterator<T1, B1> &rhs){ return lhs.base() + rhs.base(); }
-
-// template<typename T, typename B> ft::m_iterator<T, B> operator+(
-// 		 typename ft::m_iterator<T, B>::difference_type x,
-// 		const typename ft::m_iterator<T, B>& rhs)
-// 	{ return (rhs + x); }
 
 #endif
