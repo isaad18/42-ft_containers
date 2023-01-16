@@ -51,53 +51,53 @@ namespace ft{
 			size_t _size;
 
 			int Height(Node* node) const{
-				if (node == nullptr)
+				if (node == NULL)
 					return 0;
 				return node->height;
 			}
 
 			int Balance(Node* node) const{
-				if (node == nullptr) {
+				if (node == NULL) {
 				return 0;
 				}
 				return Height(node->left) - Height(node->right);
 			}
 
 			Node* minimum(Node *tmp2){
-				if (tmp2 == nullptr)
-					return nullptr;
+				if (tmp2 == NULL)
+					return NULL;
 				Node *tmp = tmp2;
-				while (tmp->left != nullptr){
+				while (tmp->left != NULL){
 					tmp = tmp->left;
 				}
 				return tmp;
 			}
 
 			Node* minimum(Node *tmp2) const{
-				if (tmp2 == nullptr)
-					return nullptr;
+				if (tmp2 == NULL)
+					return NULL;
 				Node *tmp = tmp2;
-				while (tmp->left != nullptr){
+				while (tmp->left != NULL){
 					tmp = tmp->left;
 				}
 				return tmp;
 			}
 
 			Node* maximum(Node *tmp2){
-				if (tmp2 == nullptr)
-					return nullptr;
+				if (tmp2 == NULL)
+					return NULL;
 				Node *tmp = tmp2;
-				while (tmp->right != nullptr){
+				while (tmp->right != NULL){
 					tmp = tmp->right;
 				}
 				return tmp;
 			}
 
 			Node* maximum(Node *tmp2) const{
-				if (tmp2 == nullptr)
-					return nullptr;
+				if (tmp2 == NULL)
+					return NULL;
 				Node *tmp = tmp2;
-				while (tmp->right != nullptr){
+				while (tmp->right != NULL){
 					tmp = tmp->right;
 				}
 				return tmp;
@@ -130,12 +130,12 @@ namespace ft{
 			}
 
 			Node *insertAVL(Node *toAdd, key_type key, T value){
-				if (toAdd == nullptr){
+				if (toAdd == NULL){
 					Node *l = _alloca.allocate(1);
 					l->all = ft::make_pair(key, value);
 					l->left = NULL;
 					l->right = NULL;
-					l->last = nullptr;
+					l->last = NULL;
 					l->index = 0;
 					l->parent = toAdd;
 					l->height = 1;
@@ -167,7 +167,7 @@ namespace ft{
 			}
 
 			void search_N(Node *root, key_type key) const{
-				if (root == nullptr)
+				if (root == NULL)
 					return ;
 				if (root->all.first == key){
 					searched = root;
@@ -186,10 +186,10 @@ namespace ft{
 			}
 
 			Node* Min(Node* node) {
-				if (node == nullptr) {
-					return nullptr;
+				if (node == NULL) {
+					return NULL;
 				}
-				if (node->right == nullptr) {
+				if (node->right == NULL) {
 					return node;
 				}
 				return Min(node->right);
@@ -202,7 +202,7 @@ namespace ft{
 				right->left = crnt;
 				right->parent = crnt->parent;
 				crnt->parent = right;
-				if (crnt->right != nullptr) {
+				if (crnt->right != NULL) {
 					crnt->right->parent = crnt;
 				}
 				return right;
@@ -214,54 +214,54 @@ namespace ft{
 				left->right = crnt;
 				left->parent = crnt->parent;
 				crnt->parent = left;
-				if (crnt->left != nullptr) {
+				if (crnt->left != NULL) {
 					crnt->left->parent = crnt;
 				}
 				return left;
 			}
 
 			Node* Max(Node* crnt) {
-	if (crnt == nullptr) {
-		return nullptr;
+	if (crnt == NULL) {
+		return NULL;
 	}
-	while (crnt->right != nullptr) {
+	while (crnt->right != NULL) {
 		crnt = crnt->right;
 	}
 	return crnt;
 }
 
 			Node* Remove(Node* crnt, key_type key) {
-	if (crnt == nullptr) {
-		return nullptr;
+	if (crnt == NULL) {
+		return NULL;
 	}
 	else if(_size == 1){
 		_alloca.deallocate(node, 1);
-		// node = nullptr;
-		return nullptr;
+		// node = NULL;
+		return NULL;
 	}
 	if (key < crnt->all.first) {
 		crnt->left = Remove(crnt->left, key);
-		if (crnt->left != nullptr)
+		if (crnt->left != NULL)
 			crnt->left->parent = crnt;
 	}
 	else if (key > crnt->all.first) {
 		crnt->right = Remove(crnt->right, key);
-		if (crnt->right != nullptr)
+		if (crnt->right != NULL)
 			crnt->right->parent = crnt;
 	}
 	else {
-		if (crnt->left == nullptr && crnt->right == nullptr) {
+		if (crnt->left == NULL && crnt->right == NULL) {
 			_alloca.deallocate(crnt, 1);
 			if (_size == 1)
-				node = nullptr;
-			return nullptr;
+				node = NULL;
+			return NULL;
 		}
-		else if (crnt->left == nullptr) {
+		else if (crnt->left == NULL) {
 			Node* temp = crnt->right;
 			_alloca.deallocate(crnt, 1);
 			return temp;
 		}
-		else if (crnt->right == nullptr) {
+		else if (crnt->right == NULL) {
 			Node* temp = crnt->left;
 			_alloca.deallocate(crnt, 1);
 			return temp;
@@ -295,14 +295,14 @@ namespace ft{
 
 
 void updateParentPointer(Node* crnt) {
-	if (crnt == nullptr) {
+	if (crnt == NULL) {
 		return;
 	}
-	if (crnt->left != nullptr) {
+	if (crnt->left != NULL) {
 		crnt->left->parent = crnt;
 		updateParentPointer(crnt->left);
 	}
-	if (crnt->right != nullptr) {
+	if (crnt->right != NULL) {
 		crnt->right->parent = crnt;
 		updateParentPointer(crnt->right);
 	}
@@ -332,10 +332,10 @@ void updateParentPointer(Node* crnt) {
 				ft::swaps(node, other.node);
 			}
 
-			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(nullptr), searched(nullptr), parent(nullptr), _comp(comp), _size(0){}
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(NULL), searched(NULL), parent(NULL), _comp(comp), _size(0){}
 
 			template <class InputIterator>
-			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(nullptr), searched(nullptr), parent(nullptr), _comp(comp), _size(0){
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(NULL), searched(NULL), parent(NULL), _comp(comp), _size(0){
 				while (first != last){
 					this->insert(first->first, first->second);
 					first++;
@@ -346,9 +346,9 @@ void updateParentPointer(Node* crnt) {
 				this->_size = 0;
 				this->_comp = x._comp;
 				this->_alloc = x._alloc;
-				node = nullptr;
-				searched = nullptr;
-				parent = nullptr;
+				node = NULL;
+				searched = NULL;
+				parent = NULL;
 				const_iterator it = x.begin();
 				const_iterator it2 = x.end();
 				this->insert(it, it2);
@@ -405,26 +405,26 @@ void updateParentPointer(Node* crnt) {
 			pair<iterator,bool> insert (const value_type& val){
 				bool ok = false;
 				(void)ok;
-				if (search(val.first) == nullptr)
+				if (search(val.first) == NULL)
 					ok = true;
 				insert(val.first, val.second);
 				return ft::make_pair(iterator(search(val.first)), ok);
 			}
 			private:
 			value_type &insert(key_type key, T value){
-				if (node != nullptr){
+				if (node != NULL){
 					Node *tmp1 = node;
-					while (tmp1->right != nullptr)
+					while (tmp1->right != NULL)
 						tmp1 = tmp1->right;
 					tmp1->last->index = 0;
 					tmp1->index = 0;
 					_alloca.deallocate(tmp1->last, 1);
-					tmp1->last = nullptr;
+					tmp1->last = NULL;
 				}
-				if (search(key) == nullptr)
+				if (search(key) == NULL)
 					_size++;
 				node = insertAVL(node, key, value);
-				if (node != nullptr){
+				if (node != NULL){
 					Node *tmp = node;
 					while (tmp->right != NULL)
 						tmp = tmp->right;
@@ -451,8 +451,8 @@ void updateParentPointer(Node* crnt) {
 
 			T& operator[]( const Key& key ) {
 				iterator it;
-				if (node != nullptr){
-					if (search(key) == nullptr){
+				if (node != NULL){
+					if (search(key) == NULL){
 						insert(key, T());
 					}
 				}
@@ -476,25 +476,25 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			Node *search(key_type key) const{
-				searched = nullptr;
+				searched = NULL;
 				search_N(node, key);
-				if (searched == nullptr)
-					return nullptr;
+				if (searched == NULL)
+					return NULL;
 				return searched;
 			}
 
 			void deleteit(key_type key){
-				if (node != nullptr){
+				if (node != NULL){
 					Node *tmp1 = node;
-					while (tmp1->right != nullptr)
+					while (tmp1->right != NULL)
 						tmp1 = tmp1->right;
 					tmp1->last->index = 0;
 					tmp1->index = 0;
 					_alloca.deallocate(tmp1->last, 1);
-					tmp1->last = nullptr;
+					tmp1->last = NULL;
 				}
 				node = Remove(node, key);
-				if (node != nullptr){
+				if (node != NULL){
 				Node *tmp = node;
 					while (tmp->right != NULL)
 						tmp = tmp->right;
@@ -507,15 +507,15 @@ void updateParentPointer(Node* crnt) {
 
 			void deleteAll(){
 				Node *l = node;
-				if (l == nullptr)
+				if (l == NULL)
 					return ;
-				while (l->right != nullptr){
+				while (l->right != NULL){
 					l = l->right;
 				}
 				_alloca.deallocate(l->last, 1);
 				delete_node(node);
 				_alloca.deallocate(node, 1);
-				node = nullptr;
+				node = NULL;
 			}
 
 			void delete_node(Node *nodes){
@@ -553,7 +553,7 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			size_t erase (const key_type& k){
-				if (search(k) != nullptr){
+				if (search(k) != NULL){
 					deleteit(k);
 					if (_size > 0)
 						--_size;
@@ -578,7 +578,7 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			size_t count(const key_type& k) const {
-				if (search(k) != nullptr)
+				if (search(k) != NULL)
 					return 1;
 				return 0;
 			}
@@ -646,25 +646,25 @@ void updateParentPointer(Node* crnt) {
 			}
 
 			iterator begin(){
-				if (minimum(node) == nullptr)
+				if (minimum(node) == NULL)
 					return (iterator());
 				return (iterator(&(*minimum(node))));
 			}
 
 			const_iterator begin() const{
-				if (minimum(node) == nullptr)
+				if (minimum(node) == NULL)
 					return (const_iterator());
 				return (const_iterator(&(*minimum(node))));
 			}
 
 			iterator end(){
-				if (maximum(node) == nullptr)
+				if (maximum(node) == NULL)
 					return (iterator());
 				return (iterator(&(*maximum(node)->last)));
 			}
 
 			const_iterator end() const{
-				if (maximum(node) == nullptr)
+				if (maximum(node) == NULL)
 					return (const_iterator());
 				return (const_iterator(&(*(maximum(node)->last))));
 			}

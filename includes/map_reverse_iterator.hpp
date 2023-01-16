@@ -29,14 +29,14 @@ namespace ft{
 				T* tmp = ptr;
 				if (tmp->index == 1)
 					tmp = tmp->parent;
-				else if (tmp->left != nullptr) {
+				else if (tmp->left != NULL) {
 					tmp = tmp->left;
-					while (tmp->right != nullptr){
+					while (tmp->right != NULL){
 						tmp = tmp->right;
 					}
 				}
 				else {
-					if (tmp->parent != nullptr) {
+					if (tmp->parent != NULL) {
 						if (tmp->parent->right == tmp){
 							tmp = tmp->parent;
 						}
@@ -53,14 +53,14 @@ namespace ft{
 				T* tmp = ptr;
 				if (tmp->index == 1)
 					tmp = tmp->parent;
-				else if (tmp->left != nullptr) {
+				else if (tmp->left != NULL) {
 					tmp = tmp->left;
-					while (tmp->right != nullptr){
+					while (tmp->right != NULL){
 						tmp = tmp->right;
 					}
 				}
 				else {
-					if (tmp->parent != nullptr) {
+					if (tmp->parent != NULL) {
 						if (tmp->parent->right == tmp){
 							tmp = tmp->parent;
 						}
@@ -85,14 +85,14 @@ namespace ft{
 				T* tmp = ptr;
 				if (tmp->index == 1)
 					tmp = tmp->parent;
-				else if (tmp->left != nullptr) {
+				else if (tmp->left != NULL) {
 					tmp = tmp->left;
-					while (tmp->right != nullptr){
+					while (tmp->right != NULL){
 						tmp = tmp->right;
 					}
 				}
 				else {
-					if (tmp->parent != nullptr) {
+					if (tmp->parent != NULL) {
 						if (tmp->parent->right == tmp){
 							tmp = tmp->parent;
 						}
@@ -149,14 +149,14 @@ namespace ft{
 			void increment_rev(){
 				if (ptr->index == 1)
 					ptr = ptr->parent;
-				else if (ptr->left != nullptr) {
+				else if (ptr->left != NULL) {
 					ptr = ptr->left;
-					while (ptr->right != nullptr){
+					while (ptr->right != NULL){
 						ptr = ptr->right;
 					}
 				}
 				else {
-					if (ptr->parent != nullptr) {
+					if (ptr->parent != NULL) {
 						if (ptr->parent->right == ptr){
 							ptr = ptr->parent;
 						}
@@ -175,14 +175,14 @@ namespace ft{
 				}
 				else if (ptr->index == 1)
 					ptr = ptr->parent;
-				else if (ptr->right != nullptr) {
+				else if (ptr->right != NULL) {
 					ptr = ptr->right;
-					while (ptr->left != nullptr){
+					while (ptr->left != NULL){
 						ptr = ptr->left;
 					}
 				}
 				else {
-					if (ptr->parent != nullptr) {
+					if (ptr->parent != NULL) {
 						if (ptr->parent->left == ptr){
 							ptr = ptr->parent;
 						}
@@ -198,14 +198,14 @@ namespace ft{
 			void decrement_rev_se(){
 				if (ptr->index == 1)
 					ptr = ptr->parent;
-				else if (ptr->right != nullptr) {
+				else if (ptr->right != NULL) {
 					ptr = ptr->right;
-					while (ptr->left != nullptr){
+					while (ptr->left != NULL){
 						ptr = ptr->left;
 					}
 				}
 				else {
-					if (ptr->parent != nullptr) {
+					if (ptr->parent != NULL) {
 						if (ptr->parent->left == ptr){
 							ptr = ptr->parent;
 						}

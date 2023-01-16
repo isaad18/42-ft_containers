@@ -84,14 +84,14 @@ namespace ft{
 			void decrement(){
 				if (ptr->index == 1)
 					ptr = ptr->parent;
-				else if (ptr->left != nullptr) {
+				else if (ptr->left != NULL) {
 					ptr = ptr->left;
-					while (ptr->right != nullptr){
+					while (ptr->right != NULL){
 						ptr = ptr->right;
 					}
 				}
 				else {
-					if (ptr->parent != nullptr) {
+					if (ptr->parent != NULL) {
 						if (ptr->parent->right == ptr){
 							ptr = ptr->parent;
 						}
@@ -110,14 +110,14 @@ namespace ft{
 				}
 				else if (ptr->index == 1)
 					ptr = ptr->parent;
-				else if (ptr->right != nullptr) {
+				else if (ptr->right != NULL) {
 					ptr = ptr->right;
-					while (ptr->left != nullptr){
+					while (ptr->left != NULL){
 						ptr = ptr->left;
 					}
 				}
 				else {
-					if (ptr->parent != nullptr) {
+					if (ptr->parent != NULL) {
 						if (ptr->parent->left == ptr){
 							ptr = ptr->parent;
 						}
