@@ -52,6 +52,8 @@ namespace ft{
 				return (*(*this + num));
 			}
 			B *operator->() const {
+				if (ptr == NULL)
+					return NULL;
 				return &(ptr->all);
 			}
 

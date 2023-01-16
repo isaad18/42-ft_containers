@@ -6,12 +6,13 @@
 /*   By: isaad <isaad@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 13:30:30 by bnaji             #+#    #+#             */
-/*   Updated: 2023/01/16 18:02:01 by isaad            ###   ########.fr       */
+/*   Updated: 2023/01/16 19:18:14 by isaad            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENABLE_IF_HPP
 # define ENABLE_IF_HPP
+#include <string>
 
 namespace ft
 {
@@ -34,6 +35,7 @@ namespace ft
 	template <> struct is_integral<unsigned long>: public ft::true_type {};
 	template <> struct is_integral<long long>: public ft::true_type {};
 	template <> struct is_integral<unsigned long long>: public ft::true_type {};
+	template <> struct is_integral<std::string>: public ft::true_type {};
 }
 
 #endif

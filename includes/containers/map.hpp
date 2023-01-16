@@ -168,6 +168,7 @@ namespace ft{
 			Node *insertAVL(Node *toAdd, key_type key, mapped_type value){
 				if (toAdd == NULL){
 					Node *l = _alloca.allocate(1);
+					_alloca.construct(l, Node());
 					l->all = ft::make_pair(key, value);
 					l->left = NULL;
 					l->right = NULL;
@@ -521,16 +522,16 @@ namespace ft{
 				return it->second;
 			}
 
-			T& at( const Key& key )
+			T at( const Key& key )
 			{
 				ft::pair<key_type, T> it = search(key)->all;
-				return(it->second);
+				return(it.second);
 			}
 
-			const T& at( const Key& key ) const
+			const T at( const Key& key ) const
 			{
 				ft::pair<key_type, T> it = search(key)->all;
-				return(it->second);
+				return(it.second);
 			}
 
 			key_compare key_comp() const{
@@ -623,7 +624,7 @@ namespace ft{
 						return it;
 					it++;
 				}
-				  return it;
+				return it;  
 			}
 
 			const_iterator lower_bound (const key_type& k) const{
@@ -633,7 +634,7 @@ namespace ft{
 						return it;
 					it++;
 				}
-				  return it;
+				return it;
 			}
 
 			pair<const_iterator,const_iterator> equal_range (const key_type& k) const{

@@ -27,6 +27,10 @@ namespace ft{
 				return _cont.size();
 			}
 
+			void swap(container_type &other){
+				return _cont.swap(other);
+			}
+
 			value_type& top(){
 				return _cont.back();
 			}

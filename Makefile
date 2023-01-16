@@ -1,4 +1,4 @@
-SRCS		= main.cpp
+SRCS		= test.cpp
 
 OBJS		= $(SRCS:.cpp=.o)
 
@@ -6,7 +6,7 @@ CXX			= c++
 
 $(RM)		= rm -f
 
-CXXFLAGS		= -Wall -Werror -Wextra -std=c++11 -g
+CXXFLAGS		= -Wall -Werror -Wextra -std=c++98 -g
 
 NAME		= out
 
