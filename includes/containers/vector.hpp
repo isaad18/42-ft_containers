@@ -1,14 +1,13 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include "ft.hpp"
-#include "iterator.hpp"
-#include "reverse_iterator.hpp"
+#include "../utilities/ft.hpp"
+#include "../utilities/iterator.hpp"
+#include "../utilities/reverse_iterator.hpp"
 #include <exception>
 #include <stdexcept>
 #include <memory>
 #include <cstddef>
-#include <vector>
 
 namespace ft{
 	template <typename T, class Alloc = std::allocator<T> >
@@ -40,7 +39,7 @@ namespace ft{
 				_alloc = alloc;
 			}
 
-			vector(ft::vector<T> &other): _size(0), _capacity(0), _alloc(other._alloc){
+			vector(const ft::vector<T> &other): _size(0), _capacity(0), _alloc(other._alloc){
 				reserve(other._capacity);
 				this->_size = other._size;
 				for (size_t i = 0; i < other._size; i++){

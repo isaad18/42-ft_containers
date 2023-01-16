@@ -1,10 +1,10 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#include"ft.hpp"
-#include"pair.hpp"
-#include "map_iterator.hpp"
-#include "map_reverse_iterator.hpp"
+#include"../utilities/ft.hpp"
+#include"../utilities/pair.hpp"
+#include "../utilities/map_iterator.hpp"
+#include "../utilities/map_reverse_iterator.hpp"
 #include <exception>
 #include <stdexcept>
 #include <memory>
@@ -30,18 +30,18 @@ namespace ft{
 			typedef ft::map_reverse_iterator<Node, value_type, Compare>					reverse_iterator;
 			typedef ft::map_reverse_iterator<const Node, const value_type, Compare>		const_reverse_iterator;
 		private:
-			class value_compare
-			: public std::binary_function<value_type, value_type, bool>
+			class value_compare: public std::binary_function<value_type, value_type, bool>
 			{
 				friend class map<Key, T, Compare, Alloc>;
 				protected:
 				key_compare comp;
 
-				value_compare(key_compare c): comp(c) {}
+				value_compare(key_compare c): comp(c){}
 
 				public:
-				bool operator()(const value_type& x, const value_type& y) const
-				{ return comp(x.first, y.first); }
+				bool operator()(const value_type& x, const value_type& y) const{
+					return comp(x.first, y.first);
+				}
 			};
 
 		private:
@@ -315,8 +315,8 @@ namespace ft{
 			}
 
 			void updateParentPointer(Node* crnt) {
-				if (crnt == NULL) {
-					return;
+				if (crnt == NULL){
+					return ;
 				}
 				if (crnt->left != NULL) {
 					crnt->left->parent = crnt;
@@ -352,13 +352,92 @@ namespace ft{
 				}
 				return search(key)->all;
 			}
+
+			void deleteAll(){
+				Node *l = node;
+				if (l == NULL)
+					return ;
+				while (l->right != NULL){
+					l = l->right;
+				}
+				_alloca.deallocate(l->last, 1);
+				delete_node(node);
+				_alloca.deallocate(node, 1);
+				node = NULL;
+			}
+
+			void delete_node(Node *nodes){
+				if (nodes->right == NULL){
+					_alloca.deallocate(nodes->right, 1);
+				}
+				else if (nodes->right){
+					delete_node(nodes->right);
+					_alloca.deallocate(nodes->right, 1);
+				}
+				if (nodes->left == NULL){
+					_alloca.deallocate(nodes->left, 1);
+				}
+				else if (nodes->left){
+					delete_node(nodes->left);
+					_alloca.deallocate(nodes->left, 1);
+				}
+			}
+
+			Node *search(key_type key) const{
+				searched = NULL;
+				search_N(node, key);
+				if (searched == NULL)
+					return NULL;
+				return searched;
+			}
+
+			void deleteit(key_type key){
+				if (node != NULL){
+					Node *tmp1 = node;
+					while (tmp1->right != NULL)
+						tmp1 = tmp1->right;
+					tmp1->last->index = 0;
+					tmp1->index = 0;
+					_alloca.deallocate(tmp1->last, 1);
+					tmp1->last = NULL;
+				}
+				node = Remove(node, key);
+				if (node != NULL){
+				Node *tmp = node;
+					while (tmp->right != NULL)
+						tmp = tmp->right;
+					tmp->last = _alloca.allocate(1);
+					tmp->last->parent = tmp;
+					tmp->last->index = 1;
+					tmp->index = 2;
+				}
+			}
+
 			/*__________________AVL TREE__________________AVL TREE__________________AVL TREE_________________*/
 
 		public:
-			void swap(ft::map<key_type, mapped_type> &other){
-				ft::swaps(_size, other._size);
-				ft::swaps(node, other.node);
-			}
+			/*_____________________2D map printer_____________________*/
+			// void print2D() const{
+			// 	std::cout << "Tree:" << std::endl;
+			// 	print2DUtil(node, 0);
+			// }
+
+			//  void print2DUtil(Node *root, int space) const{
+			// 	if (root == NULL) return;
+			// 		space += 10;
+			// 	print2DUtil(root->right, space);
+			// 	std::cout << std::endl;
+			// 	for (int i = 10; i < space; i++) std::cout << " ";
+			// 	std::cout << root->all.first << "(" << Balance(root) << ")" << std::endl;
+			// 	for (int i = 10; i < space; i++) std::cout << " ";
+			// 		if (root->parent)
+			// 			std::cout << "Parent: " << root->parent->all.first << std::endl;
+			// 	std::cout << "NODE: " << root->all.first << "            ";
+			// 	print2DUtil(root->left, space);
+			// }
+			/*_____________________2D map printer_____________________*/
+
+		public:
 
 			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(NULL), searched(NULL), parent(NULL), _comp(comp), _size(0){}
 
@@ -382,42 +461,15 @@ namespace ft{
 				this->insert(it, it2);
 			}
 
-			map& operator= (const map& x)
+			map& operator=(const map& x)
 			{
-				if(this != &x)
-				{
-					clear();
-					insert(x.begin(), x.end());
-				}
+				clear();
+				insert(x.begin(), x.end());
 				return (*this);
 			}
 
-			~map(){ if (_size >0) deleteAll(); }
+			~map(){ if (_size > 0) deleteAll(); }
 
-			/*_____________________2D map printer_____________________*/
-			// void print2D() const{
-			// 	std::cout << "Tree:" << std::endl;
-			// 	print2DUtil(node, 0);
-			// }
-
-			//  void print2DUtil(Node *root, int space) const{
-			// 	if (root == NULL) return;
-			// 		space += 10;
-			// 	print2DUtil(root->right, space);
-			// 	std::cout << std::endl;
-			// 	for (int i = 10; i < space; i++) std::cout << " ";
-			// 	std::cout << root->all.first << "(" << Balance(root) << ")" << std::endl;
-			// 	for (int i = 10; i < space; i++) std::cout << " ";
-			// 		if (root->parent)
-			// 			std::cout << "Parent: " << root->parent->all.first << std::endl;
-			// 	std::cout << "NODE: " << root->all.first << "            ";
-			// 	print2DUtil(root->left, space);
-			// }
-			/*_____________________2D map printer_____________________*/
-
-			void check_add(key_type key){
-				mapped_type it = search(key)->all;
-			}
 
 			template <class InputIterator>
 			void insert (InputIterator first, typename enable_if<!ft::is_integral<InputIterator>::value,InputIterator>::type last){
@@ -451,7 +503,9 @@ namespace ft{
 				return false;
 			}
 
-			size_t max_size() const{ return static_cast<std::size_t>(-1) / sizeof(T); }
+			size_t max_size() const{
+				return static_cast<std::size_t>(-1) / sizeof(T);
+			}
 
 			T& operator[]( const Key& key ) {
 				iterator it;
@@ -477,66 +531,6 @@ namespace ft{
 			{
 				ft::pair<key_type, T> it = search(key)->all;
 				return(it->second);
-			}
-
-			Node *search(key_type key) const{
-				searched = NULL;
-				search_N(node, key);
-				if (searched == NULL)
-					return NULL;
-				return searched;
-			}
-
-			void deleteit(key_type key){
-				if (node != NULL){
-					Node *tmp1 = node;
-					while (tmp1->right != NULL)
-						tmp1 = tmp1->right;
-					tmp1->last->index = 0;
-					tmp1->index = 0;
-					_alloca.deallocate(tmp1->last, 1);
-					tmp1->last = NULL;
-				}
-				node = Remove(node, key);
-				if (node != NULL){
-				Node *tmp = node;
-					while (tmp->right != NULL)
-						tmp = tmp->right;
-					tmp->last = _alloca.allocate(1);
-					tmp->last->parent = tmp;
-					tmp->last->index = 1;
-					tmp->index = 2;
-				}
-			}
-
-			void deleteAll(){
-				Node *l = node;
-				if (l == NULL)
-					return ;
-				while (l->right != NULL){
-					l = l->right;
-				}
-				_alloca.deallocate(l->last, 1);
-				delete_node(node);
-				_alloca.deallocate(node, 1);
-				node = NULL;
-			}
-
-			void delete_node(Node *nodes){
-				if (nodes->right == NULL){
-					_alloca.deallocate(nodes->right, 1);
-				}
-				else if (nodes->right){
-					delete_node(nodes->right);
-					_alloca.deallocate(nodes->right, 1);
-				}
-				if (nodes->left == NULL){
-					_alloca.deallocate(nodes->left, 1);
-				}
-				else if (nodes->left){
-					delete_node(nodes->left);
-					_alloca.deallocate(nodes->left, 1);
-				}
 			}
 
 			key_compare key_comp() const{
@@ -579,6 +573,11 @@ namespace ft{
 				}
 				tst.deallocate(k, ft::distance(first1, last1));
 
+			}
+
+			void swap(ft::map<key_type, mapped_type> &other){
+				ft::swaps(_size, other._size);
+				ft::swaps(node, other.node);
 			}
 
 			size_t count(const key_type& k) const {
@@ -691,37 +690,37 @@ namespace ft{
 	};
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ) {
+	bool operator==( const map<Key,T,Compare,Alloc>& lhs, const map<Key,T,Compare,Alloc>& rhs ){
 		return (lhs.size() == rhs.size() && ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator!=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+	bool operator!=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ){
 		return !(lhs == rhs);
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+	bool operator<( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ){
 		return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator<=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+	bool operator<=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ){
 		return !(rhs < lhs);
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator>( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+	bool operator>( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ){
 		return (rhs < lhs);
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	bool operator>=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ) {
+	bool operator>=( const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs ){
 		return !(lhs < rhs);
 	}
 
 	template <class Key, class T, class Compare, class Alloc>
-	void swap (ft::map<Key,T,Compare,Alloc>& x, ft::map<Key,T,Compare,Alloc>& y) {
+	void swap (ft::map<Key,T,Compare,Alloc>& x, ft::map<Key,T,Compare,Alloc>& y){
 		x.swap(y);
 	}
 }

@@ -4,7 +4,7 @@
 
 #include <cstring>
 #include "ft.hpp"
-#include "map.hpp"
+#include "../containers/map.hpp"
 #include "pair.hpp"
 #include "iterator_traits.hpp"
 
@@ -20,6 +20,7 @@ namespace ft{
 			typedef typename iterator_traits::reference reference;
 			typedef typename iterator_traits::value_type value_type;
 			typedef typename iterator_traits::iterator_category iterator_category;
+
 		public:
 			T *ptr;
 			Compare compare;
@@ -32,15 +33,27 @@ namespace ft{
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 
 			B &operator*() const{ return base()->all; }
-			bool operator==(const m_iterator other) const{ return &(*(this->ptr)) == &(*(other.base())); }
-			bool operator!=(const m_iterator other) const{ return &(*(this->ptr)) != &(*(other.base())); }
-			bool operator>(const m_iterator other) const{ return &(*(this->ptr)) > &(*(other.base())); }
-			bool operator<(const m_iterator other) const{ return &(*(this->ptr)) < &(*(other.base())); }
-			T *base() const{ return ptr; }
+			bool operator==(const m_iterator other) const{
+				return &(*(this->ptr)) == &(*(other.base()));
+			}
+			bool operator!=(const m_iterator other) const{
+				return &(*(this->ptr)) != &(*(other.base()));
+			}
+			bool operator>(const m_iterator other) const{
+				return &(*(this->ptr)) > &(*(other.base()));
+			}
+			bool operator<(const m_iterator other) const{
+				return &(*(this->ptr)) < &(*(other.base()));
+			}
+			T *base() const{
+				return ptr;
+			}
 			T &operator[](difference_type num) {
 				return (*(*this + num));
 			}
-			B *operator->() const { return &(ptr->all); }
+			B *operator->() const {
+				return &(ptr->all);
+			}
 
 			m_iterator &operator++() {
 				increment();
