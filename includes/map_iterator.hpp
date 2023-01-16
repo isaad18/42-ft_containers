@@ -10,7 +10,7 @@
 
 namespace ft{
 
-	template <typename T, typename B>
+	template <typename T, typename B, class Compare>
 	class m_iterator: public vc_iterator<ft::random_access_iterator_tag, T>{
 		private:
 		public:
@@ -22,12 +22,13 @@ namespace ft{
 			typedef typename iterator_traits::iterator_category iterator_category;
 		public:
 			T *ptr;
+			Compare compare;
 			m_iterator(): ptr(NULL) {}
 			template<class U>
 			m_iterator(U ptr) : ptr(ptr){}
 			m_iterator(T *ptr) : ptr(ptr){}
-			template<class U, class B1>
-			m_iterator(const m_iterator<U, B1> &other): ptr((other.base())){}
+			template<class U, class B1, class gerard>
+			m_iterator(const m_iterator<U, B1, gerard> &other): ptr((other.base())){}
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 
 			B &operator*() const{ return base()->all; }

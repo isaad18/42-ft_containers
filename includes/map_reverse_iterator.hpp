@@ -4,7 +4,7 @@
 #include "map_iterator.hpp"
 
 namespace ft{
-	template <class T, class B>
+	template <class T, class B, class Compare>
 	class map_reverse_iterator: public vc_iterator<ft::random_access_iterator_tag, T>{
 		private:
 		public:
@@ -20,10 +20,10 @@ namespace ft{
 			map_reverse_iterator(T ptr) : ptr(ptr.ptr){}
 			template<class U>
 			map_reverse_iterator(U ptr) : ptr(ptr){}
-			template<class U, class B1>
-			map_reverse_iterator(const m_iterator<U, B1> &other): ptr(const_cast<T *>(other.ptr)){}
-			template<class U, class B1>
-			map_reverse_iterator(const map_reverse_iterator<U, B1> &other): ptr(const_cast<T *>(other.ptr)){}
+			template<class U, class B1, class gerard>
+			map_reverse_iterator(const m_iterator<U, B1, gerard> &other): ptr(const_cast<T *>(other.ptr)){}
+			template<class U, class B1, class gerard>
+			map_reverse_iterator(const map_reverse_iterator<U, B1, gerard> &other): ptr(const_cast<T *>(other.ptr)){}
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 			B &operator*(){
 				T* tmp = ptr;
@@ -77,7 +77,7 @@ namespace ft{
 			bool operator!=(map_reverse_iterator other) const{ return &(*(this->base())) != &(*(other.base())); }
 			bool operator>(map_reverse_iterator other) const{ return &(*(this->base())) < &(*(other.base())); }
 			bool operator<(map_reverse_iterator other) const{ return &(*(this->base())) > &(*(other.base())); }
-			m_iterator<T, B> base() const{ m_iterator<T, B> other(ptr); return other;}
+			m_iterator<T, B, Compare> base() const{ m_iterator<T, B, Compare> other(ptr); return other;}
 			T &operator[](difference_type num) {
 				return (*(*this + num));
 			}
@@ -222,36 +222,36 @@ namespace ft{
 
 
 
-template <typename T, typename B>
-bool operator>(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T, B> &rhs){ return lhs.base() < rhs.base(); }
+// template <typename T, typename B>
+// bool operator>(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T, B> &rhs){ return lhs.base() < rhs.base(); }
 
-template <typename T, typename T1, typename B, typename B1>
-bool operator>(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() < rhs.base(); }
+// template <typename T, typename T1, typename B, typename B1>
+// bool operator>(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() < rhs.base(); }
 
-template <typename T, typename B>
-bool operator>=(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T, B> &rhs){ return lhs.base() <= rhs.base(); }
+// template <typename T, typename B>
+// bool operator>=(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T, B> &rhs){ return lhs.base() <= rhs.base(); }
 
-template <typename T, typename T1, typename B, typename B1>
-bool operator>=(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() <= rhs.base(); }
+// template <typename T, typename T1, typename B, typename B1>
+// bool operator>=(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() <= rhs.base(); }
 
-template <typename T, typename B>
-bool operator<(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T, B> &rhs){ return lhs.base() > rhs.base(); }
+// template <typename T, typename B>
+// bool operator<(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T, B> &rhs){ return lhs.base() > rhs.base(); }
 
-template <typename T, typename T1, typename B, typename B1>
-bool operator<(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() > rhs.base(); }
+// template <typename T, typename T1, typename B, typename B1>
+// bool operator<(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() > rhs.base(); }
 
-template <typename T, typename B>
-bool operator<=(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T, B> &rhs){ return lhs.base() >= rhs.base(); }
+// template <typename T, typename B>
+// bool operator<=(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T, B> &rhs){ return lhs.base() >= rhs.base(); }
 
-template <typename T, typename T1, typename B, typename B1>
-bool operator<=(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() >= rhs.base(); }
+// template <typename T, typename T1, typename B, typename B1>
+// bool operator<=(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() >= rhs.base(); }
 
-template <typename T, typename T1, typename B, typename B1>
-ptrdiff_t operator-(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return (rhs.base() - lhs.base()); }
+// template <typename T, typename T1, typename B, typename B1>
+// ptrdiff_t operator-(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return (rhs.base() - lhs.base()); }
 
-template <typename T, typename T1, typename B, typename B1>
-ptrdiff_t operator+(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() + rhs.base(); }
+// template <typename T, typename T1, typename B, typename B1>
+// ptrdiff_t operator+(const ft::map_reverse_iterator<T, B> &lhs, const ft::map_reverse_iterator<T1, B1> &rhs){ return lhs.base() + rhs.base(); }
 
-template<typename T, typename B> ft::map_reverse_iterator<T, B> operator+(typename ft::map_reverse_iterator<T, B>::difference_type x, const typename ft::map_reverse_iterator<T, B>& rhs){ return ft::map_reverse_iterator<T, B>(rhs.base() - x); }
+// template<typename T, typename B> ft::map_reverse_iterator<T, B> operator+(typename ft::map_reverse_iterator<T, B>::difference_type x, const typename ft::map_reverse_iterator<T, B>& rhs){ return ft::map_reverse_iterator<T, B>(rhs.base() - x); }
 
 #endif

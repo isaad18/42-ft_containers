@@ -2,7 +2,7 @@
 #define PAIR_HPP
 
 namespace ft{
-	template<typename T, typename T1>
+	template<typename T, typename T1, class Compare = std::less<T> >
 	class pair{
 		private:
 		public:
@@ -21,8 +21,8 @@ namespace ft{
 	};
 
 	template<typename T, typename T1>
-	pair<T, T1> make_pair(T first, T1 second){
-		pair<T, T1> p(first, second);
+	ft::pair<T, T1, std::less<T> > make_pair(T first, T1 second){
+		ft::pair<T, T1, std::less<T> > p(first, second);
 		return p;
 	}
 	template <class T1, class T2>
