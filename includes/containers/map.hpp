@@ -330,13 +330,18 @@ namespace ft{
 			}
 
 			value_type &insert(key_type key, mapped_type value){
+				Node *end;
+				(void)end;
+				if (_size == 0){
+					end = _alloca.allocate(1);
+				}
 				if (node != NULL){
 					Node *tmp1 = node;
 					while (tmp1->right != NULL)
 						tmp1 = tmp1->right;
 					tmp1->last->index = 0;
 					tmp1->index = 0;
-					_alloca.deallocate(tmp1->last, 1);
+					end = tmp1->last;
 					tmp1->last = NULL;
 				}
 				if (search(key) == NULL)
@@ -346,7 +351,7 @@ namespace ft{
 					Node *tmp = node;
 					while (tmp->right != NULL)
 						tmp = tmp->right;
-					tmp->last = _alloca.allocate(1);
+					tmp->last = end;
 					tmp->last->parent = tmp;
 					tmp->last->index = 1;
 					tmp->index = 2;
@@ -393,13 +398,15 @@ namespace ft{
 			}
 
 			void deleteit(key_type key){
+				Node *end;
+				(void)end;
 				if (node != NULL){
 					Node *tmp1 = node;
 					while (tmp1->right != NULL)
 						tmp1 = tmp1->right;
 					tmp1->last->index = 0;
 					tmp1->index = 0;
-					_alloca.deallocate(tmp1->last, 1);
+					end = tmp1->last;
 					tmp1->last = NULL;
 				}
 				node = Remove(node, key);
@@ -407,7 +414,7 @@ namespace ft{
 				Node *tmp = node;
 					while (tmp->right != NULL)
 						tmp = tmp->right;
-					tmp->last = _alloca.allocate(1);
+					tmp->last = end;
 					tmp->last->parent = tmp;
 					tmp->last->index = 1;
 					tmp->index = 2;
@@ -418,24 +425,24 @@ namespace ft{
 
 		public:
 			/*_____________________2D map printer_____________________*/
-			// void print2D() const{
-			// 	std::cout << "Tree:" << std::endl;
-			// 	print2DUtil(node, 0);
-			// }
+			void print2D() const{
+				std::cout << "Tree:" << std::endl;
+				print2DUtil(node, 0);
+			}
 
-			//  void print2DUtil(Node *root, int space) const{
-			// 	if (root == NULL) return;
-			// 		space += 10;
-			// 	print2DUtil(root->right, space);
-			// 	std::cout << std::endl;
-			// 	for (int i = 10; i < space; i++) std::cout << " ";
-			// 	std::cout << root->all.first << "(" << Balance(root) << ")" << std::endl;
-			// 	for (int i = 10; i < space; i++) std::cout << " ";
-			// 		if (root->parent)
-			// 			std::cout << "Parent: " << root->parent->all.first << std::endl;
-			// 	std::cout << "NODE: " << root->all.first << "            ";
-			// 	print2DUtil(root->left, space);
-			// }
+			 void print2DUtil(Node *root, int space) const{
+				if (root == NULL) return;
+					space += 10;
+				print2DUtil(root->right, space);
+				std::cout << std::endl;
+				for (int i = 10; i < space; i++) std::cout << " ";
+				std::cout << root->all.first << "(" << Balance(root) << ")" << std::endl;
+				for (int i = 10; i < space; i++) std::cout << " ";
+					if (root->parent)
+						std::cout << "Parent: " << root->parent->all.first << std::endl;
+				// std::cout << "NODE: " << root->all.first << "            ";
+				print2DUtil(root->left, space);
+			}
 			/*_____________________2D map printer_____________________*/
 
 		public:
@@ -624,7 +631,7 @@ namespace ft{
 						return it;
 					it++;
 				}
-				return it;  
+				return it;
 			}
 
 			const_iterator lower_bound (const key_type& k) const{

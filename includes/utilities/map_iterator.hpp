@@ -23,8 +23,9 @@ namespace ft{
 
 		public:
 			T *ptr;
+			T* end;
 			Compare compare;
-			m_iterator(): ptr(NULL) {}
+			m_iterator(): ptr(NULL), end() {}
 			template<class U>
 			m_iterator(U ptr) : ptr(ptr){}
 			m_iterator(T *ptr) : ptr(ptr){}

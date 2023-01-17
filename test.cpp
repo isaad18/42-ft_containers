@@ -305,18 +305,40 @@ void testStack(ft::stack<int> &ft_stack, std::stack<int> &std_stack) {
 
 int main() {
 
-	std::cout << "____________________VECTOR TEST____________________" << std::endl;
-	testVector();
+	// std::cout << "____________________VECTOR TEST____________________" << std::endl;
+	// testVector();
 
-	std::cout << "____________________MAP TEST____________________" << std::endl;
-	ft::map<std::string, std::string> ft_map;
-	std::map<std::string, std::string> std_map;
-	testMap(ft_map, std_map);
-	bounds();
-	std::cout << "____________________STACK TEST____________________" << std::endl;
-	ft::stack<int> ft_stack;
-	std::stack<int> std_stack;
-	testStack(ft_stack, std_stack);
-	
+	// std::cout << "____________________MAP TEST____________________" << std::endl;
+	// ft::map<std::string, std::string> ft_map;
+	// std::map<std::string, std::string> std_map;
+	// testMap(ft_map, std_map);
+	// bounds();
+	// std::cout << "____________________STACK TEST____________________" << std::endl;
+	// ft::stack<int> ft_stack;
+	// std::stack<int> std_stack;
+	// testStack(ft_stack, std_stack);
+
+	ft::map<int, int> test;
+	// std::map<int, int> test;
+
+	std::cout << "test" << std::endl;
+	for (size_t i = 0; i < 25; i++){
+		test[i] = i;
+	}
+	ft::map<int, int>::iterator it = test.begin();
+	ft::map<int, int>::iterator it2 = test.end();
+	// test.insert(ft::make_pair(1, 1));
+	// test.insert(ft::make_pair(1, 2));
+	// test.print2D();
+	// std::cout << "testVector" << std::endl;
+	// for (size_t i = 0; i < 100000000; i++){
+	// 	testVector.push_back(i);
+	// }
+	test.erase(3);
+	// test.erase(5);
+	for (; it != it2; it++){
+		std::cout << it->first << std::endl;
+	}
+
 	return 0;
 }
