@@ -34,16 +34,16 @@ namespace ft{
 			T &operator=(T &other){ ptr = other.base(); return *this; }
 
 			B &operator*() const{ return base()->all; }
-			bool operator==(const m_iterator other) const{
+			bool operator==(const m_iterator &other) const{
 				return &(*(this->ptr)) == &(*(other.base()));
 			}
-			bool operator!=(const m_iterator other) const{
+			bool operator!=(const m_iterator &other) const{
 				return &(*(this->ptr)) != &(*(other.base()));
 			}
-			bool operator>(const m_iterator other) const{
+			bool operator>(const m_iterator &other) const{
 				return &(*(this->ptr)) > &(*(other.base()));
 			}
-			bool operator<(const m_iterator other) const{
+			bool operator<(const m_iterator &other) const{
 				return &(*(this->ptr)) < &(*(other.base()));
 			}
 			T *base() const{
@@ -125,8 +125,6 @@ namespace ft{
 				if (ptr->index == 2){
 					ptr = ptr->last;
 				}
-				else if (ptr->index == 1)
-					ptr = ptr->parent;
 				else if (ptr->right != NULL) {
 					ptr = ptr->right;
 					while (ptr->left != NULL){
@@ -149,6 +147,11 @@ namespace ft{
 
 	};
 
+}
+
+template <typename T, typename B, typename T1, typename B1, typename cmp, typename cmp1>
+bool operator==(const ft::m_iterator<T, B, cmp> &lhs, const ft::m_iterator<T1, B1, cmp1> &rhs){
+	return lhs.base() == rhs.base();
 }
 
 #endif

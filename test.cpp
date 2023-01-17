@@ -303,42 +303,202 @@ void testStack(ft::stack<int> &ft_stack, std::stack<int> &std_stack) {
 
 
 
-int main() {
+// int main() {
 
-	// std::cout << "____________________VECTOR TEST____________________" << std::endl;
-	// testVector();
+// 	std::cout << "____________________VECTOR TEST____________________" << std::endl;
+// 	testVector();
 
-	// std::cout << "____________________MAP TEST____________________" << std::endl;
-	// ft::map<std::string, std::string> ft_map;
-	// std::map<std::string, std::string> std_map;
-	// testMap(ft_map, std_map);
-	// bounds();
-	// std::cout << "____________________STACK TEST____________________" << std::endl;
-	// ft::stack<int> ft_stack;
-	// std::stack<int> std_stack;
-	// testStack(ft_stack, std_stack);
+// 	std::cout << "____________________MAP TEST____________________" << std::endl;
+// 	ft::map<std::string, std::string> ft_map;
+// 	std::map<std::string, std::string> std_map;
+// 	testMap(ft_map, std_map);
+// 	bounds();
+// 	std::cout << "____________________STACK TEST____________________" << std::endl;
+// 	ft::stack<int> ft_stack;
+// 	std::stack<int> std_stack;
+// 	testStack(ft_stack, std_stack);
 
-	ft::map<int, int> test;
-	// std::map<int, int> test;
+	// ft::map<int, int> test;
+	// // std::map<int, int> test;
 
-	std::cout << "test" << std::endl;
-	for (size_t i = 0; i < 25; i++){
-		test[i] = i;
-	}
-	ft::map<int, int>::iterator it = test.begin();
-	ft::map<int, int>::iterator it2 = test.end();
-	// test.insert(ft::make_pair(1, 1));
-	// test.insert(ft::make_pair(1, 2));
-	// test.print2D();
-	// std::cout << "testVector" << std::endl;
-	// for (size_t i = 0; i < 100000000; i++){
-	// 	testVector.push_back(i);
+	// std::cout << "test" << std::endl;
+	// for (size_t i = 0; i < 25; i++){
+	// 	test[i] = i;
 	// }
-	test.erase(3);
-	// test.erase(5);
-	for (; it != it2; it++){
-		std::cout << it->first << std::endl;
+	// ft::map<int, int>::iterator it = test.begin();
+	// ft::map<int, int>::iterator it2 = test.end();
+	// // test.insert(ft::make_pair(1, 1));
+	// // test.insert(ft::make_pair(1, 2));
+	// // test.print2D();
+	// // std::cout << "testVector" << std::endl;
+	// // for (size_t i = 0; i < 100000000; i++){
+	// // 	testVector.push_back(i);
+	// // }
+	// test.erase(3);
+	// // test.erase(5);
+	// for (; it != it2; it++){
+	// 	std::cout << it->first << std::endl;
+	// }
+
+// 	return 0;
+// }
+
+#define INSERT_BY_PAIR         1
+#define INSERT_BY_MAKE_PAIR    2
+#define INSERT_BY_OPERATOR     3
+
+template <typename key, typename value>
+void insertValue(ft::map<key, value> &map, int insert_style,
+                 typename ft::map<key, value>::key_type first,
+                 typename ft::map<key, value>::mapped_type second) {
+	if (insert_style == INSERT_BY_PAIR) {
+		map.insert(ft::pair<key, value>(first, second));
+	} else if (insert_style == INSERT_BY_MAKE_PAIR) {
+		map.insert(ft::make_pair(first, second));
+	} else if (insert_style == INSERT_BY_OPERATOR) {
+		map[first] = second;
+	} else {
+		throw std::out_of_range("Incorrect insert style");
+	}
+}
+
+template <typename key, typename value>
+void printMapInfo(ft::map<key, value> &map) {
+	std::cout << "--------------------------------------------------" << std::endl
+	          << "map::empty() = " << std::boolalpha << map.empty() << std::endl
+	          << "map::size() = " << map.size() << std::endl
+	          << "Contents:" << std::endl;
+}
+
+template <typename key, typename value>
+void printContent(ft::map<key, value> &map) {
+	printMapInfo(map);
+	for (typename ft::map<key, value>::iterator it = map.begin(); it != map.end(); it++) {
+		std::cout << "Key = " << it->first << "   |   Value = " << it->second << std::endl;
+	}
+	std::cout << std::endl;
+}
+
+// template <typename key, typename value>
+// void insertValue(ft::map<key, value> &map,
+//                  typename ft::map<key, value>::iterator position,
+//                  typename ft::map<key, value>::key_type first,
+//                  typename ft::map<key, value>::mapped_type second) {
+// 	map.insert(position, ft::make_pair(first, second));
+// }
+
+template <typename key, typename value>
+void insertValue(ft::map<key, value> &map,
+                 typename ft::map<key, value>::iterator position,
+                 typename ft::map<key, value>::key_type first,
+                 typename ft::map<key, value>::mapped_type second) {
+	map.insert(position, ft::make_pair(first, second));
+}
+
+template <typename key, typename value>
+void insertRandomValues(ft::map<key, value> &map, size_t size) {
+	for (size_t i = 0; i < size; i++) {
+		insertValue(map, 1 + (std::rand() % 3), 10000 + (std::rand() % 20000), 10000 + (std::rand() % 30000));
+	}
+}
+
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <sys/time.h>
+#include <map>
+
+// int main() {
+// 	timeval exec_time;
+// 	gettimeofday(&exec_time, NULL);
+// 	double start = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
+
+// 	ft::map<int, int> test;
+// 	insertRandomValues(test, 30);
+// 	printContent(test);
+	
+// 	ft::map<int, int> clone(test);
+// 	printContent(clone);
+
+// 	clone.erase(1234);
+// 	clone.erase(2339);
+// 	clone.erase(9876);
+// 	clone.erase(3919);
+// 	printContent(clone);
+
+// 	clone.erase(clone.begin(), clone.begin());
+// 	clone.erase(clone.end(), clone.end());
+// 	printContent(clone);
+
+// 	clone.swap(test);
+// 	printContent(test);
+// 	printContent(clone);
+
+// 	clone.erase(++(++(clone.begin())));
+// 	clone.erase(++(clone.begin()));
+// 	clone.erase(--clone.end());
+// 	printContent(clone);
+
+// 	clone.erase(++(++clone.begin()), clone.end());
+// 	printContent(clone);
+
+// 	test.erase(test.begin(), test.end());
+// 	printContent(test);
+
+// 	gettimeofday(&exec_time, NULL);
+// 	double end = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
+// 	std::cout << std::fixed << std::setprecision(3) << (end - start) / 1000 << " ms" << std::endl;
+// 	return 0;
+// }
+
+int main() {
+	timeval exec_time;
+	gettimeofday(&exec_time, NULL);
+	double start = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
+
+	ft::map<int, std::string> test;
+	printContent(test);
+
+	insertValue(test, INSERT_BY_MAKE_PAIR, -7395, "Hello world!");
+	insertValue(test, INSERT_BY_MAKE_PAIR, -8637, "Lorem ipsum dolor sit amet, consectetur adipiscing elit");
+	insertValue(test, INSERT_BY_MAKE_PAIR, -6296, "");
+	insertValue(test, INSERT_BY_MAKE_PAIR, 9756, "His ultimate dream fantasy consisted of being content and sleeping eight hours in a row");
+	insertValue(test, INSERT_BY_MAKE_PAIR, 733, "ft_containers");
+	insertValue(test, INSERT_BY_MAKE_PAIR, -527, "The quick brown fox jumps over the lazy dog");
+	printContent(test);
+
+	{
+		ft::map<int, std::string> clone(test.begin(), test.end());
+		ft::map<int, std::string> copy1(clone);
+		ft::map<int, std::string> copy2 = clone;
+		printContent(copy1);
+		printContent(copy2);
+		clone.clear();
+		printContent(clone);
+		printContent(copy1);
+		printContent(copy2);
 	}
 
+	{
+		ft::map<int, std::string> clone(test.begin(), test.end());
+		ft::map<int, std::string> assignment;
+		assignment = clone;
+		printContent(assignment);
+		clone.clear();
+		printContent(clone);
+		printContent(assignment);
+	}
+
+	{
+		ft::map<int, std::string> range(test.begin(), test.end());
+		printContent(range);
+		test.clear();
+		printContent(test);
+		printContent(range);
+	}
+
+	gettimeofday(&exec_time, NULL);
+	double end = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
+	std::cout << std::fixed << std::setprecision(3) << (end - start) / 1000 << " ms" << std::endl;
 	return 0;
 }

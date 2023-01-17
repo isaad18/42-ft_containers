@@ -11,7 +11,7 @@
 #include <cstddef>
 
 namespace ft{
-	template< class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair<Key,T> > >
+	template< class Key, class T, class Compare = std::less<Key>, class Alloc = std::allocator<ft::pair< const Key,T> > >
 	class map{
 		struct Node;
 		public:
@@ -29,6 +29,7 @@ namespace ft{
 			typedef ft::m_iterator<const Node, const value_type, Compare>				const_iterator;
 			typedef ft::map_reverse_iterator<Node, value_type, Compare>					reverse_iterator;
 			typedef ft::map_reverse_iterator<const Node, const value_type, Compare>		const_reverse_iterator;
+			typedef size_t 																size_type;
 		private:
 			class value_compare: public std::binary_function<value_type, value_type, bool>
 			{
@@ -50,8 +51,10 @@ namespace ft{
 			Node*				node;
 			mutable Node*		searched;
 			mutable Node*		parent;
+			mutable Node*		endi;
 			key_compare			_comp;
 			size_t				_size;
+			bool				flag;
 
 			/*__________________AVL TREE__________________AVL TREE__________________AVL TREE_________________*/
 			struct Node {
@@ -330,18 +333,17 @@ namespace ft{
 			}
 
 			value_type &insert(key_type key, mapped_type value){
-				Node *end;
-				(void)end;
-				if (_size == 0){
-					end = _alloca.allocate(1);
-				}
+				// if (_size == 0){
+				// 	flag = true;
+				// 	end = _alloca.allocate(1);
+				// 	_alloca.construct(end, Node());
+				// }
 				if (node != NULL){
 					Node *tmp1 = node;
 					while (tmp1->right != NULL)
 						tmp1 = tmp1->right;
 					tmp1->last->index = 0;
 					tmp1->index = 0;
-					end = tmp1->last;
 					tmp1->last = NULL;
 				}
 				if (search(key) == NULL)
@@ -351,7 +353,7 @@ namespace ft{
 					Node *tmp = node;
 					while (tmp->right != NULL)
 						tmp = tmp->right;
-					tmp->last = end;
+					tmp->last = endi;
 					tmp->last->parent = tmp;
 					tmp->last->index = 1;
 					tmp->index = 2;
@@ -360,24 +362,31 @@ namespace ft{
 			}
 
 			void deleteAll(){
-				Node *l = node;
-				if (l == NULL)
-					return ;
-				while (l->right != NULL){
-					l = l->right;
-				}
-				_alloca.deallocate(l->last, 1);
+				// Node *l = node;
+				// if (l == NULL)
+				// 	return ;
+				// while (l->right != NULL){
+				// 	l = l->right;
+				// }
+				// _alloca.destroy(l->last);
+				// _alloca.deallocate(l->last, 1);
 				delete_node(node);
-				_alloca.deallocate(node, 1);
-				node = NULL;
+				if (node != NULL){
+					_alloca.destroy(node);
+					_alloca.deallocate(node, 1);
+					node = NULL;
+				}
 			}
 
 			void delete_node(Node *nodes){
+				if (nodes == NULL)
+					return ;
 				if (nodes->right == NULL){
 					_alloca.deallocate(nodes->right, 1);
 				}
 				else if (nodes->right){
 					delete_node(nodes->right);
+					_alloca.destroy(nodes->right);
 					_alloca.deallocate(nodes->right, 1);
 				}
 				if (nodes->left == NULL){
@@ -385,6 +394,7 @@ namespace ft{
 				}
 				else if (nodes->left){
 					delete_node(nodes->left);
+					_alloca.destroy(nodes->left);
 					_alloca.deallocate(nodes->left, 1);
 				}
 			}
@@ -398,15 +408,13 @@ namespace ft{
 			}
 
 			void deleteit(key_type key){
-				Node *end;
-				(void)end;
 				if (node != NULL){
 					Node *tmp1 = node;
 					while (tmp1->right != NULL)
 						tmp1 = tmp1->right;
 					tmp1->last->index = 0;
 					tmp1->index = 0;
-					end = tmp1->last;
+					// end = tmp1->last;
 					tmp1->last = NULL;
 				}
 				node = Remove(node, key);
@@ -414,7 +422,7 @@ namespace ft{
 				Node *tmp = node;
 					while (tmp->right != NULL)
 						tmp = tmp->right;
-					tmp->last = end;
+					tmp->last = endi;
 					tmp->last->parent = tmp;
 					tmp->last->index = 1;
 					tmp->index = 2;
@@ -447,17 +455,29 @@ namespace ft{
 
 		public:
 
-			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(NULL), searched(NULL), parent(NULL), _comp(comp), _size(0){}
+			explicit map (const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(NULL), searched(NULL), parent(NULL), _comp(comp), _size(0), flag(false){
+				endi = _alloca.allocate(1);
+				_alloca.construct(endi, Node());
+			}
 
 			template <class InputIterator>
-			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(NULL), searched(NULL), parent(NULL), _comp(comp), _size(0){
+			map (InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type()): _alloc(alloc), node(NULL), searched(NULL), parent(NULL), _comp(comp), _size(0), flag(false){
+				endi = _alloca.allocate(1);
+				_alloca.construct(endi, Node());
 				while (first != last){
 					this->insert(first->first, first->second);
 					first++;
 				}
 			}
 
+			allocator_type get_allocator(){
+				return _alloc;
+			}
+
 			map (const map& x){
+				endi = _alloca.allocate(1);
+				_alloca.construct(endi, Node());
+				this->flag = false;
 				this->_size = 0;
 				this->_comp = x._comp;
 				this->_alloc = x._alloc;
@@ -472,11 +492,18 @@ namespace ft{
 			map& operator=(const map& x)
 			{
 				clear();
+				// endi = _alloca.allocate(1);
+				// _alloca.construct(endi, Node());
 				insert(x.begin(), x.end());
 				return (*this);
 			}
 
-			~map(){ if (_size > 0) deleteAll(); }
+			~map(){
+				if (_size > 0)
+					deleteAll();
+				_alloca.destroy(endi);
+				_alloca.deallocate(endi, 1);
+			}
 
 
 			template <class InputIterator>
@@ -493,6 +520,15 @@ namespace ft{
 			}
 
 			pair<iterator,bool> insert (const value_type& val){
+				bool ok = false;
+				(void)ok;
+				if (search(val.first) == NULL)
+					ok = true;
+				insert(val.first, val.second);
+				return ft::make_pair(iterator(search(val.first)), ok);
+			}
+
+			pair<iterator,bool> insert (value_type& val){
 				bool ok = false;
 				(void)ok;
 				if (search(val.first) == NULL)
@@ -595,10 +631,14 @@ namespace ft{
 			}
 
 			iterator find (const key_type& k){
+				if (search(k) == NULL)
+					return end();
 				return iterator(search(k));
 			}
 
 			const_iterator find (const key_type& k) const{
+				if (search(k) == NULL)
+					return end();
 				return const_iterator(search(k));
 			}
 
@@ -657,26 +697,26 @@ namespace ft{
 			}
 
 			iterator begin(){
-				if (minimum(node) == NULL)
-					return (iterator());
+				if (node == NULL)
+					return (iterator(endi));
 				return (iterator(&(*minimum(node))));
 			}
 
 			const_iterator begin() const{
-				if (minimum(node) == NULL)
-					return (const_iterator());
+				if (node == NULL)
+					return (const_iterator(endi));
 				return (const_iterator(&(*minimum(node))));
 			}
 
 			iterator end(){
-				if (maximum(node) == NULL)
-					return (iterator());
+				if (node == NULL)
+					return (iterator(endi));
 				return (iterator(&(*maximum(node)->last)));
 			}
 
 			const_iterator end() const{
-				if (maximum(node) == NULL)
-					return (const_iterator());
+				if (node == NULL)
+					return (const_iterator(endi));
 				return (const_iterator(&(*(maximum(node)->last))));
 			}
 

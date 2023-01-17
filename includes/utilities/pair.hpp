@@ -1,6 +1,11 @@
 #ifndef PAIR_HPP
 #define PAIR_HPP
 
+#include <exception>
+#include <stdexcept>
+#include <memory>
+#include <cstddef>
+
 namespace ft{
 	template<typename T, typename T1, class Compare = std::less<T> >
 	class pair{
