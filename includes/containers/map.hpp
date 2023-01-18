@@ -55,6 +55,7 @@ namespace ft{
 			key_compare			_comp;
 			size_t				_size;
 			bool				flag;
+			size_t				_tmp;
 
 			/*__________________AVL TREE__________________AVL TREE__________________AVL TREE_________________*/
 			struct Node {
@@ -260,6 +261,7 @@ namespace ft{
 					return NULL;
 				}
 				else if(_size == 1){
+					_alloca.destroy(node);
 					_alloca.deallocate(node, 1);
 					return NULL;
 				}
@@ -275,6 +277,7 @@ namespace ft{
 				}
 				else {
 					if (crnt->left == NULL && crnt->right == NULL) {
+						_alloca.destroy(crnt);
 						_alloca.deallocate(crnt, 1);
 						if (_size == 1)
 							node = NULL;
@@ -282,11 +285,13 @@ namespace ft{
 					}
 					else if (crnt->left == NULL) {
 						Node* temp = crnt->right;
+						_alloca.destroy(crnt);
 						_alloca.deallocate(crnt, 1);
 						return temp;
 					}
 					else if (crnt->right == NULL) {
 						Node* temp = crnt->left;
+						_alloca.destroy(crnt);
 						_alloca.deallocate(crnt, 1);
 						return temp;
 					}
@@ -333,11 +338,6 @@ namespace ft{
 			}
 
 			value_type &insert(key_type key, mapped_type value){
-				// if (_size == 0){
-				// 	flag = true;
-				// 	end = _alloca.allocate(1);
-				// 	_alloca.construct(end, Node());
-				// }
 				if (node != NULL){
 					Node *tmp1 = node;
 					while (tmp1->right != NULL)
@@ -362,14 +362,6 @@ namespace ft{
 			}
 
 			void deleteAll(){
-				// Node *l = node;
-				// if (l == NULL)
-				// 	return ;
-				// while (l->right != NULL){
-				// 	l = l->right;
-				// }
-				// _alloca.destroy(l->last);
-				// _alloca.deallocate(l->last, 1);
 				delete_node(node);
 				if (node != NULL){
 					_alloca.destroy(node);
@@ -381,18 +373,12 @@ namespace ft{
 			void delete_node(Node *nodes){
 				if (nodes == NULL)
 					return ;
-				if (nodes->right == NULL){
-					_alloca.deallocate(nodes->right, 1);
-				}
-				else if (nodes->right){
+				if (nodes->right){
 					delete_node(nodes->right);
 					_alloca.destroy(nodes->right);
 					_alloca.deallocate(nodes->right, 1);
 				}
-				if (nodes->left == NULL){
-					_alloca.deallocate(nodes->left, 1);
-				}
-				else if (nodes->left){
+				if (nodes->left){
 					delete_node(nodes->left);
 					_alloca.destroy(nodes->left);
 					_alloca.deallocate(nodes->left, 1);
@@ -448,7 +434,6 @@ namespace ft{
 				for (int i = 10; i < space; i++) std::cout << " ";
 					if (root->parent)
 						std::cout << "Parent: " << root->parent->all.first << std::endl;
-				// std::cout << "NODE: " << root->all.first << "            ";
 				print2DUtil(root->left, space);
 			}
 			/*_____________________2D map printer_____________________*/
@@ -479,6 +464,7 @@ namespace ft{
 				_alloca.construct(endi, Node());
 				this->flag = false;
 				this->_size = 0;
+				_tmp = x._size;
 				this->_comp = x._comp;
 				this->_alloc = x._alloc;
 				node = NULL;
@@ -492,8 +478,6 @@ namespace ft{
 			map& operator=(const map& x)
 			{
 				clear();
-				// endi = _alloca.allocate(1);
-				// _alloca.construct(endi, Node());
 				insert(x.begin(), x.end());
 				return (*this);
 			}
@@ -609,11 +593,14 @@ namespace ft{
 				key_type *k = tst.allocate(ft::distance(first1, last1));
 				size_t j = 0;
 				for (;first1 != last1; first1++){
-					k[j] = first1->first;
+					tst.construct(k + j, first1->first);
 					j++;
 				}
 				for (size_t i = 0; i < j; i++){
 					this->erase(k[i]);
+				}
+				for (size_t i = 0; i < j; i++){
+					tst.destroy(k + i);
 				}
 				tst.deallocate(k, ft::distance(first1, last1));
 

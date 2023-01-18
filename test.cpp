@@ -362,13 +362,13 @@ void insertValue(ft::map<key, value> &map, int insert_style,
 	}
 }
 
-template <typename key, typename value>
-void printMapInfo(ft::map<key, value> &map) {
-	std::cout << "--------------------------------------------------" << std::endl
-	          << "map::empty() = " << std::boolalpha << map.empty() << std::endl
-	          << "map::size() = " << map.size() << std::endl
-	          << "Contents:" << std::endl;
-}
+// template <typename key, typename value>
+// void printMapInfo(ft::map<key, value> &map) {
+// 	std::cout << "--------------------------------------------------" << std::endl
+// 	          << "map::empty() = " << std::boolalpha << map.empty() << std::endl
+// 	          << "map::size() = " << map.size() << std::endl
+// 	          << "Contents:" << std::endl;
+// }
 
 template <typename key, typename value>
 void printContent(ft::map<key, value> &map) {
@@ -451,54 +451,65 @@ void insertRandomValues(ft::map<key, value> &map, size_t size) {
 // 	return 0;
 // }
 
+template <typename key1, typename key2, typename value>
+void printMapOfMaps(ft::map<key1, ft::map<key2, value> > &map);
+
+template <typename key, typename value>
+void printMapInfo(ft::map<key, value> &map) {
+	std::cout << "--------------------------------------------------" << std::endl
+	          << "map::empty() = " << std::boolalpha << map.empty() << std::endl
+	          << "map::size() = " << map.size() << std::endl
+	          << "Contents:" << std::endl;
+}
+
 int main() {
 	timeval exec_time;
 	gettimeofday(&exec_time, NULL);
 	double start = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
 
-	ft::map<int, std::string> test;
-	printContent(test);
+	ft::map<std::string, ft::map<int, int> > test;
+	ft::map<int, int> value_for_test[5];
 
-	insertValue(test, INSERT_BY_MAKE_PAIR, -7395, "Hello world!");
-	insertValue(test, INSERT_BY_MAKE_PAIR, -8637, "Lorem ipsum dolor sit amet, consectetur adipiscing elit");
-	insertValue(test, INSERT_BY_MAKE_PAIR, -6296, "");
-	insertValue(test, INSERT_BY_MAKE_PAIR, 9756, "His ultimate dream fantasy consisted of being content and sleeping eight hours in a row");
-	insertValue(test, INSERT_BY_MAKE_PAIR, 733, "ft_containers");
-	insertValue(test, INSERT_BY_MAKE_PAIR, -527, "The quick brown fox jumps over the lazy dog");
-	printContent(test);
+	insertRandomValues(value_for_test[0], 5);
+	insertRandomValues(value_for_test[1], 10);
+	insertRandomValues(value_for_test[2], 15);
+	insertRandomValues(value_for_test[3], 20);
+	insertRandomValues(value_for_test[4], 25);
 
-	{
-		ft::map<int, std::string> clone(test.begin(), test.end());
-		ft::map<int, std::string> copy1(clone);
-		ft::map<int, std::string> copy2 = clone;
-		printContent(copy1);
-		printContent(copy2);
-		clone.clear();
-		printContent(clone);
-		printContent(copy1);
-		printContent(copy2);
-	}
+	test.insert(ft::make_pair("Lorem ipsum dolor sit amet.", value_for_test[0]));
+	test.insert(ft::make_pair("🚀🚀🚀", value_for_test[1]));
+	test.insert(ft::make_pair("Why am I doing this 😭", value_for_test[2]));
+	test.insert(ft::make_pair("42 Abu Dhabi", value_for_test[3]));
+	test.insert(ft::make_pair("The quick brown fox jumps over the lazy dog", value_for_test[4]));
+	printMapOfMaps(test);
 
-	{
-		ft::map<int, std::string> clone(test.begin(), test.end());
-		ft::map<int, std::string> assignment;
-		assignment = clone;
-		printContent(assignment);
-		clone.clear();
-		printContent(clone);
-		printContent(assignment);
-	}
+	ft::map<std::string, ft::map<int, int> > clone = test;
+	clone.erase(clone.begin());
+	clone.erase(++clone.begin());
+	clone.insert(ft::make_pair("It's fascinating that you know all the planets.", value_for_test[4]));
+	clone.insert(ft::make_pair("I admire your courage but I don't admire your singing ability.", value_for_test[2]));
+	printMapOfMaps(clone);
 
-	{
-		ft::map<int, std::string> range(test.begin(), test.end());
-		printContent(range);
-		test.clear();
-		printContent(test);
-		printContent(range);
-	}
+	test.swap(clone);
+	printMapOfMaps(test);
+	printMapOfMaps(clone);
+
+	clone.erase(clone.begin(), clone.end());
+	test.clear();
 
 	gettimeofday(&exec_time, NULL);
 	double end = 1.0e6 * exec_time.tv_sec + exec_time.tv_usec;
 	std::cout << std::fixed << std::setprecision(3) << (end - start) / 1000 << " ms" << std::endl;
 	return 0;
+}
+
+template <typename key1, typename key2, typename value>
+void printMapOfMaps(ft::map<key1, ft::map<key2, value> > &map) {
+	printMapInfo(map);
+	for (typename ft::map<key1, ft::map<key2, value> >::iterator it = map.begin(); it != map.end(); it++) {
+		std::cout << "Key = " << it->first << std::endl;
+		for (typename ft::map<key2, value>::iterator inner = it->second.begin(); inner != it->second.end(); inner++) {
+			std::cout << "Value->first = " << inner->first << "  |  Value->second = " << inner->second << std::endl;
+		}
+	}
 }
